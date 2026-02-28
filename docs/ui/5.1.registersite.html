@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Grave Registration &amp; 3D Capture - Heritage Cloud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style type="text/tailwindcss">
+        :root {
+            --primary-crimson: #8a0000;
+            --antique-gold: #c5a059;
+            --paper-bg: #f4f1ea;
+            --dark-paper: #2d1b1b;
+        }
+        @layer utilities {
+            .wood-carving-border {
+                border-image-source: linear-gradient(45deg, #4b2020 25%, transparent 25%, transparent 75%, #4b2020 75%, #4b2020), 
+                                     linear-gradient(-45deg, #4b2020 25%, transparent 25%, transparent 75%, #4b2020 75%, #4b2020);
+                border-image-size: 10px 10px;
+                border-image-repeat: repeat;
+                border-width: 4px;
+                border-style: solid;
+            }
+            .paper-texture {
+                background-image: url("https://www.transparenttextures.com/patterns/handmade-paper.png");
+                background-color: var(--dark-paper);
+            }
+            .gold-shimmer {
+                background: linear-gradient(135deg, #c5a059 0%, #f1e0b0 50%, #c5a059 100%);
+            }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8a0000",
+                        "gold": "#c5a059",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#230f0f",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-sans text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="relative flex h-screen w-full flex-col overflow-hidden">
+<header class="flex items-center justify-between border-b border-primary/30 px-6 py-4 lg:px-20 bg-background-dark/95 backdrop-blur-md sticky top-0 z-40">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-3xl font-bold">account_tree</span>
+<h2 class="font-display text-xl font-bold leading-tight tracking-tight text-slate-100">Heritage Cloud</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-300 hover:text-primary transition-colors text-sm font-medium" href="#">Lineage</a>
+<a class="text-slate-100 border-b-2 border-primary pb-1 text-sm font-medium" href="#">Map</a>
+<a class="text-slate-300 hover:text-primary transition-colors text-sm font-medium" href="#">Archives</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<div class="h-10 w-10 rounded-full border-2 border-primary bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuARmf1pl2Frzd_tMVAAaag5rKsH40idguU4CNayqAT4MKWvvTOigQpanTu1J1RMQdCMk-W_X5-uk8IorlZlull2fK9o4qTJaOFifX6gOvpw_uuhpzKWGy_xpiSY08venXbPNcGOBi7J-57UTvdid_sGXy6As5UVmsY2_S8woAkUFfXPHiEexfZAvnPiFePzYVG-k-u174mareP_TrCqpz8yX9ZmYdx5daC2RQpZ4gdbWJNFwhBVNoI7xpuwkQy7MKegnnhN3qQKLRad");'></div>
+</div>
+</header>
+<main class="flex-grow flex relative">
+<div class="flex-grow relative bg-background-dark">
+<div class="absolute inset-0 bg-cover bg-center opacity-40 grayscale" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDG9vuEg9tuZfO5Rj6BeGQU1B6SLG4ro-UCoeNCTMbiYRKmFaQsb6QPLId1lEuy10pTOYVvG6dGybsjtE9JVSMpvnbsRZBc4mMu5NwiLRMWqwgnfFaNXLOk2nWhLZUOtwS02Byi6rKQNjKKPwxbkMcYLW0xtNZqeh8xknPU1I49yOGjYu9B7UxMF2FAGQaJJFG1L643m2QXmOaOOOOek20_0_14LezK7EyhABv2EIy7LIIvUJY_1a102gKW6va28U9322-lHeM4em8n");'></div>
+<div class="absolute inset-0 bg-gradient-to-r from-background-dark via-transparent to-transparent"></div>
+</div>
+<div class="w-full max-w-2xl bg-background-dark border-l border-gold/30 shadow-2xl z-50 overflow-y-auto flex flex-col paper-texture">
+<div class="p-8 border-b border-gold/20 flex justify-between items-start bg-primary/5">
+<div>
+<h1 class="font-display text-3xl font-black text-gold">Register New Site</h1>
+<p class="text-gold/60 text-sm font-display italic mt-1">Preserving Eternal Memory for the Lineage</p>
+</div>
+<button class="text-gold/40 hover:text-gold transition-colors">
+<span class="material-symbols-outlined text-3xl">close</span>
+</button>
+</div>
+<form class="p-8 space-y-8">
+<section class="space-y-4">
+<div class="flex items-center gap-2 text-gold">
+<span class="material-symbols-outlined">person_pin</span>
+<h3 class="font-display font-bold uppercase tracking-widest text-xs">Lineage Details</h3>
+</div>
+<div class="grid grid-cols-1 gap-6">
+<div class="space-y-2">
+<label class="text-xs font-bold text-gold/70 uppercase">Ancestor Name</label>
+<input class="w-full bg-background-dark/50 border border-gold/20 rounded-lg p-3 text-slate-100 focus:border-gold focus:ring-1 focus:ring-gold transition-all" placeholder="Enter full name of the departed..." type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="text-xs font-bold text-gold/70 uppercase">Cemetery Section/Plot</label>
+<input class="w-full bg-background-dark/50 border border-gold/20 rounded-lg p-3 text-slate-100 focus:border-gold transition-all" placeholder="e.g. Sector C-14" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-gold/70 uppercase">Maintenance Condition</label>
+<select class="w-full bg-background-dark/50 border border-gold/20 rounded-lg p-3 text-slate-100 focus:border-gold transition-all appearance-none">
+<option>Maintained</option>
+<option>Needs Visitation</option>
+<option>Weathered</option>
+<option>Restoration Required</option>
+</select>
+</div>
+</div>
+</div>
+</section>
+<section class="space-y-4">
+<div class="flex items-center gap-2 text-gold">
+<span class="material-symbols-outlined">map</span>
+<h3 class="font-display font-bold uppercase tracking-widest text-xs">Geographic coordinates</h3>
+</div>
+<div class="relative h-48 rounded-xl border border-gold/30 overflow-hidden wood-carving-border">
+<div class="absolute inset-0 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDG9vuEg9tuZfO5Rj6BeGQU1B6SLG4ro-UCoeNCTMbiYRKmFaQsb6QPLId1lEuy10pTOYVvG6dGybsjtE9JVSMpvnbsRZBc4mMu5NwiLRMWqwgnfFaNXLOk2nWhLZUOtwS02Byi6rKQNjKKPwxbkMcYLW0xtNZqeh8xknPU1I49yOGjYu9B7UxMF2FAGQaJJFG1L643m2QXmOaOOOOek20_0_14LezK7EyhABv2EIy7LIIvUJY_1a102gKW6va28U9322-lHeM4em8n"); filter: contrast(1.2) brightness(0.6);'></div>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="flex flex-col items-center">
+<span class="material-symbols-outlined text-primary text-4xl mb-1 animate-pulse">location_on</span>
+<div class="bg-background-dark/90 border border-gold px-2 py-0.5 rounded text-[10px] text-gold font-bold">DROP PIN</div>
+</div>
+</div>
+<div class="absolute bottom-2 right-2 flex flex-col gap-1">
+<button class="size-8 bg-background-dark/80 border border-gold/20 rounded flex items-center justify-center text-gold hover:bg-gold/10"><span class="material-symbols-outlined text-sm">add</span></button>
+<button class="size-8 bg-background-dark/80 border border-gold/20 rounded flex items-center justify-center text-gold hover:bg-gold/10"><span class="material-symbols-outlined text-sm">remove</span></button>
+</div>
+</div>
+<div class="flex items-center justify-between px-2">
+<span class="text-[10px] text-gold/40 font-mono uppercase tracking-tighter">Lat: 55.9486° N | Long: 3.1999° W</span>
+<button class="text-gold text-xs font-bold hover:underline" type="button">Get Current Location</button>
+</div>
+</section>
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-gold">
+<span class="material-symbols-outlined">3d_rotation</span>
+<h3 class="font-display font-bold uppercase tracking-widest text-xs">Visual Preservation</h3>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gold/30 text-gold text-[10px] font-bold hover:bg-gold/10 transition-all" type="button">
+<span class="material-symbols-outlined text-sm">sync</span> MOBILE SYNC
+                        </button>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<div class="border-2 border-dashed border-gold/30 rounded-xl p-8 flex flex-col items-center justify-center gap-3 bg-gold/5 hover:bg-gold/10 transition-all cursor-pointer group">
+<div class="size-16 rounded-full bg-gold/20 flex items-center justify-center text-gold group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl">cloud_upload</span>
+</div>
+<div class="text-center">
+<p class="text-slate-100 font-bold">Upload &amp; Convert to 3D</p>
+<p class="text-gold/50 text-xs mt-1 italic">Drag and drop multiple grave photos for stitching</p>
+</div>
+</div>
+<button class="w-full py-4 rounded-xl border border-primary bg-primary/10 text-primary font-bold flex items-center justify-center gap-3 hover:bg-primary/20 transition-all" type="button">
+<span class="material-symbols-outlined">panorama_photosphere</span>
+<span>CAPTURE REAL-TIME 360</span>
+</button>
+</div>
+<div class="grid grid-cols-4 gap-2">
+<div class="aspect-square rounded border border-gold/20 bg-cover bg-center grayscale hover:grayscale-0 transition-all" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBG4w4bZgwAxjRHLH7peiQZS6fbBYk3B0-o7zaXp82reYkTvitd04GIhy5sDNHG2tkxMM2znLIuqB8Pasws4hU0xNvr42hWc9vS6bV8a57-ec8b2exyq39R0Ytl4T1FFzCrIOEAyLOri2-Gyaukv3MXmLDTOM1FKe_aNw8ovw1UuUgZL3jitNlP9ZDsk8ziYUva6HP5tNVGe5U36bHVItjIFxjZCiDfMHkXKz8MLwAsSvcyplY5kjRGmm6M7rlLzsT7VKutEsIUyb-F");'></div>
+<div class="aspect-square rounded border border-gold/20 bg-primary/5 flex items-center justify-center text-gold/20">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+</section>
+<div class="pt-8 border-t border-gold/20 flex gap-4">
+<button class="flex-1 py-4 px-6 rounded-lg bg-gold text-background-dark font-black text-sm uppercase tracking-widest gold-shimmer hover:brightness-110 shadow-xl shadow-gold/10 transition-all">
+                        Commit to Archives
+                    </button>
+<button class="py-4 px-8 rounded-lg border border-gold/30 text-gold font-bold text-sm uppercase tracking-widest hover:bg-gold/5">
+                        Cancel
+                    </button>
+</div>
+</form>
+<div class="p-8 mt-auto bg-primary/10 border-t border-primary/20">
+<div class="flex gap-4 items-start">
+<span class="material-symbols-outlined text-primary">verified_user</span>
+<div>
+<p class="text-slate-100 text-xs font-bold uppercase tracking-wide">Sacred Custody</p>
+<p class="text-gold/60 text-[10px] mt-1 leading-relaxed">All data is encrypted with lineage-specific keys. Your family's resting places are preserved in our eternal decentralized vault.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<div class="fixed inset-0 bg-background-dark/80 backdrop-blur-sm z-40 pointer-events-none"></div>
+
+</body></html>

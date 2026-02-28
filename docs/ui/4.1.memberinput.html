@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ancestor Information Entry - Heritage Cloud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&amp;family=Noto+Serif:wght@400;700&amp;family=Playfair+Display:wght@400;700&amp;family=Noto+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8a0000",
+                        "imperial-crimson": "#8a0000",
+                        "lacquer-dark": "#1a0808",
+                        "background-dark": "#230f0f",
+                        "charcoal": "#2d2d2d",
+                        "gold-leaf": "#d4af37"
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif"],
+                        "serif": ["Playfair Display"],
+                        "sans": ["Noto Sans"],
+                        "cinzel": ["Cinzel"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        :root {
+            --silk-texture: url('https://www.transparenttextures.com/patterns/silk.png');
+        }
+        .ink-wash-bg {
+            background-color: #230f0f;
+            background-image: radial-gradient(circle at 50% 50%, rgba(138, 0, 0, 0.05) 0%, transparent 70%),
+                              linear-gradient(45deg, rgba(0,0,0,0.2) 25%, transparent 25%, transparent 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2) 75%, transparent 75%, transparent);
+            background-size: 100% 100%, 400px 400px;
+        }
+        .silk-overlay {
+            background-image: var(--silk-texture);
+            background-repeat: repeat;
+        }
+        .neural-line {
+            stroke: rgba(138, 0, 0, 0.3);
+            stroke-width: 1.5;
+            fill: none;
+        }
+        .gold-border {
+            border: 2px solid #d4af37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none !important;
+            border-color: #8a0000 !important;
+            box-shadow: 0 0 0 1px #8a0000 !important;
+        }
+    </style>
+</head>
+<body class="bg-background-dark font-sans text-slate-100 overflow-hidden">
+<div class="relative flex h-screen w-full flex-col">
+<div class="absolute inset-0 z-0 flex pointer-events-none opacity-40">
+<aside class="w-72 border-r border-primary/10"></aside>
+<div class="flex-1 ink-wash-bg relative">
+<svg class="absolute inset-0 w-full h-full opacity-40">
+<path class="neural-line" d="M400,300 C450,300 450,150 500,150"></path>
+<path class="neural-line" d="M400,300 C450,300 450,450 500,450"></path>
+</svg>
+</div>
+<aside class="w-80 border-l border-primary/10"></aside>
+</div>
+<header class="flex items-center justify-between border-b border-primary/20 bg-background-dark/80 backdrop-blur-md px-8 py-3 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-3xl font-bold">account_tree</span>
+<h2 class="font-display text-xl font-bold leading-tight tracking-tight text-slate-100">Heritage Cloud</h2>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full border-2 border-primary bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAatJuCl00LHzsgWnYlBTwk4TrjVU13MM3qSpDmT_hZP3AKjBfQt9GWfK7ClBqlmV1PCne3g2XrFcjTD3o07EowtbK0k8XjYg9mp9R8d1hMRxw4g88F0calogqqPTd4JclFYRBAoSzdV0iNMiAxLVguQS3bFLei8k0V9v6VL-rAo21cWlIWqyZBlqkEJykdZwMVKUfOdZ6OFQsJ31Bdb1TwkugbKhUOUBnqgy_eYIJFY5abh0QGE1rZTsUy01aaTKJNdk4GOKwLNMCY');"></div>
+</div>
+</header>
+<div class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto">
+<div class="relative w-full max-w-4xl bg-lacquer-dark border border-primary/30 rounded-xl shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[600px]">
+<div class="absolute inset-0 silk-overlay opacity-10 pointer-events-none"></div>
+<div class="w-full md:w-1/3 bg-background-dark/50 p-8 border-r border-primary/10 relative z-10 flex flex-col items-center">
+<h3 class="font-cinzel text-xl text-primary mb-8 tracking-widest uppercase text-center">Sanctified Profile</h3>
+<div class="relative group cursor-pointer mb-8">
+<div class="w-48 h-48 rounded-full gold-border p-1 bg-lacquer-dark overflow-hidden transition-transform duration-500 group-hover:scale-105">
+<div class="w-full h-full rounded-full bg-cover bg-center flex items-center justify-center bg-primary/5" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBw__Zna9HoUYaz9NFb-v7UqEg688nb1RWCglJ7DP97BMWedNMKQeXf3nVNlMuTC75O-2Ye-f6V_HD44QdcF3HLKAKzbQlBaLGF_omAmwrtQEvJ-uzzyhwaz5YH22MBftdBfnr54wXXOiGjN9NoKrgD_ke-Wp-6UyVIWde4cDj-z7kajFvJ_Cf5xvidJm9iVgnAsGu8qJ3waIMl9PUmbt2RZrdiTC4lRv_nb_VCvEfTVgU9U-LtaAdeXVe8Mps3eO7HtpW42pGbPtMZ');">
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+<span class="material-symbols-outlined text-white text-3xl">add_a_photo</span>
+</div>
+</div>
+</div>
+<div class="absolute -bottom-2 right-4 bg-gold-leaf text-background-dark p-2 rounded-full border-2 border-background-dark">
+<span class="material-symbols-outlined text-sm">edit</span>
+</div>
+</div>
+<div class="w-full space-y-6">
+<div class="space-y-1">
+<label class="text-[10px] font-sans text-primary/70 uppercase tracking-widest font-bold">Lineage Name</label>
+<input class="w-full bg-primary/5 border border-primary/20 rounded px-4 py-2 font-serif text-lg focus:ring-1 focus:ring-primary text-slate-100" type="text" value="Alistair Thorne"/>
+</div>
+<div class="flex gap-4">
+<div class="flex-1 space-y-1">
+<label class="text-[10px] font-sans text-primary/70 uppercase tracking-widest font-bold">Gender</label>
+<select class="w-full bg-primary/5 border border-primary/20 rounded px-4 py-2 text-sm focus:ring-1 focus:ring-primary appearance-none">
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+</div>
+<div class="flex-1 space-y-1">
+<label class="text-[10px] font-sans text-primary/70 uppercase tracking-widest font-bold">Status</label>
+<div class="flex items-center h-10 gap-2">
+<span class="text-[11px] text-slate-400">Living</span>
+<button class="relative inline-flex h-5 w-10 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-primary focus:outline-none">
+<span class="translate-x-5 inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+</button>
+<span class="text-[11px] text-slate-200">Deceased</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 p-8 relative z-10 overflow-y-auto max-h-[80vh]">
+<div class="space-y-8">
+<section>
+<div class="flex items-center gap-3 mb-4 border-b border-primary/20 pb-2">
+<span class="material-symbols-outlined text-primary text-xl">event_note</span>
+<h4 class="font-cinzel text-sm tracking-widest font-bold text-slate-100">Vital Records</h4>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="space-y-1">
+<label class="text-[10px] font-sans text-slate-400 uppercase tracking-widest">Solar Birth Date</label>
+<div class="relative">
+<input class="w-full bg-primary/5 border border-primary/20 rounded px-4 py-2 text-sm focus:ring-1 focus:ring-primary [color-scheme:dark]" type="date" value="1982-05-14"/>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] font-sans text-slate-400 uppercase tracking-widest">Lunar Birth Epoch</label>
+<input class="w-full bg-primary/5 border border-primary/20 rounded px-4 py-2 text-sm focus:ring-1 focus:ring-primary" placeholder="Cycle of the Phoenix" type="text"/>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] font-sans text-slate-400 uppercase tracking-widest">Solar Death Date</label>
+<input class="w-full bg-primary/5 border border-primary/20 rounded px-4 py-2 text-sm focus:ring-1 focus:ring-primary [color-scheme:dark]" type="date"/>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] font-sans text-slate-400 uppercase tracking-widest">Departure Rite</label>
+<input class="w-full bg-primary/5 border border-primary/20 rounded px-4 py-2 text-sm focus:ring-1 focus:ring-primary" placeholder="Ashen Ritual" type="text"/>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-center gap-3 mb-4 border-b border-primary/20 pb-2">
+<span class="material-symbols-outlined text-primary text-xl">hub</span>
+<h4 class="font-cinzel text-sm tracking-widest font-bold text-slate-100">Lineage Placement</h4>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="space-y-1">
+<label class="text-[10px] font-sans text-slate-400 uppercase tracking-widest">Parent A (Nodes)</label>
+<select class="w-full bg-primary/5 border border-primary/20 rounded px-4 py-2 text-sm focus:ring-1 focus:ring-primary">
+<option>Arthur Thorne (A1-002)</option>
+<option>Samuel Thorne (A1-001)</option>
+<option>Search Ancestors...</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] font-sans text-slate-400 uppercase tracking-widest">Life Partner</label>
+<select class="w-full bg-primary/5 border border-primary/20 rounded px-4 py-2 text-sm focus:ring-1 focus:ring-primary">
+<option>No current union</option>
+<option>Isabella Vance (V2-981)</option>
+<option>Search Ancestors...</option>
+</select>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-center gap-3 mb-4 border-b border-primary/20 pb-2">
+<span class="material-symbols-outlined text-primary text-xl">military_tech</span>
+<h4 class="font-cinzel text-sm tracking-widest font-bold text-slate-100">Legacy &amp; Duty</h4>
+</div>
+<div class="space-y-6">
+<div class="space-y-1">
+<label class="text-[10px] font-sans text-slate-400 uppercase tracking-widest">Life Summary</label>
+<textarea class="w-full bg-primary/5 border border-primary/20 rounded px-4 py-2 text-sm font-serif italic focus:ring-1 focus:ring-primary resize-none" rows="3">A formidable keeper of the Thorne traditions, whose life was dedicated to the preservation of the manor archives and the 14th-century lineage ledgers.</textarea>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] font-sans text-slate-400 uppercase tracking-widest block">Sacred Duties Assigned</label>
+<div class="flex flex-wrap gap-2">
+<div class="flex items-center gap-2 px-3 py-1 bg-primary/20 border border-primary/30 rounded text-xs text-primary">
+<span>Archival Guardian</span>
+<span class="material-symbols-outlined text-xs cursor-pointer">close</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 bg-primary/20 border border-primary/30 rounded text-xs text-primary">
+<span>Legacy Herald</span>
+<span class="material-symbols-outlined text-xs cursor-pointer">close</span>
+</div>
+<button class="flex items-center gap-1 px-3 py-1 border border-dashed border-primary/30 rounded text-xs text-primary hover:bg-primary/5">
+<span class="material-symbols-outlined text-xs">add</span>
+                                            Assign Duty
+                                        </button>
+</div>
+</div>
+</div>
+</section>
+<div class="flex gap-4 pt-6 border-t border-primary/10">
+<button class="flex-1 bg-charcoal hover:bg-charcoal/80 text-slate-300 py-3 rounded-lg font-cinzel text-xs tracking-[0.2em] transition-colors border border-primary/10 uppercase">
+                                Discard
+                            </button>
+<button class="flex-[2] bg-imperial-crimson hover:bg-primary/90 text-white py-3 rounded-lg font-cinzel text-xs tracking-[0.2em] transition-all shadow-lg shadow-primary/20 uppercase">
+                                Sanctify Entry
+                            </button>
+</div>
+</div>
+</div>
+<button class="absolute top-4 right-4 text-primary/40 hover:text-primary transition-colors z-[110]">
+<span class="material-symbols-outlined text-3xl">close</span>
+</button>
+</div>
+</div>
+<footer class="h-10 bg-background-dark/90 border-t border-primary/10 px-6 flex items-center justify-between z-50">
+<div class="flex items-center gap-2 text-[10px] font-sans text-slate-500 uppercase tracking-widest">
+<span>World</span>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span class="text-primary font-bold">Thorne Dynasty</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="h-2 w-2 rounded-full bg-emerald-500"></div>
+<span class="text-[10px] text-slate-500">Database Secure</span>
+</div>
+</footer>
+</div>
+
+</body></html>

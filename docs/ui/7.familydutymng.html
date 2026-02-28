@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Family Duty Management | Heritage Cloud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#8a0000",
+            "background-light": "#f8f5f5",
+            "background-dark": "#230f0f",
+          },
+          fontFamily: {
+            "display": ["Noto Serif", "serif"],
+            "sans": ["Noto Sans", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>.paper-texture {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDWz43uqctIs1OyDTw9sBbJk-WI4RcEP1JzsJtaM7Hcf_cp0zsa25_xQqY-wajhCF_D0zrwNLrAPZiWBpk_I8FRrhWVIwhJ4TNnx5u6_itSKrLIMDDyM3HsoNxBo2f3GnDZD9CWK4RiD2mF01APTgQKa3PIzgRSsty-aUJCKprymaobbDpTiFWEa6USj_iYht9KsPXYFYLOGvvOsW4IJKXds9Yb1g3oDfc3xEnWsUx_jtUXDByDiGTioMaQQaMlNuopi8sJUb_uCcJb);
+    background-blend-mode: overlay
+    }
+.soft-glow {
+    box-shadow: 0 0 15px rgba(138, 0, 0, 0.1)
+    }
+.sidebar-active {
+    background-color: rgba(138, 0, 0, 0.2);
+    border-left: 3px solid #8a0000
+    }</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-sans text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 border-r border-primary/20 bg-background-light dark:bg-background-dark flex flex-col">
+<div class="p-6 border-b border-primary/20 flex items-center gap-3">
+<div class="size-8 bg-primary rounded flex items-center justify-center text-white">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<h1 class="font-display font-bold text-xl tracking-tight">Heritage</h1>
+</div>
+<nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+<div class="px-3 py-2 text-xs font-bold uppercase tracking-widest text-primary/60">Core Lineage</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">account_tree</span>
+<span class="font-medium text-sm">Family Tree</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">history_edu</span>
+<span class="font-medium text-sm">Ancestral Records</span>
+</a>
+<div class="px-3 py-2 mt-6 text-xs font-bold uppercase tracking-widest text-primary/60">Governance</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg sidebar-active text-primary" href="#">
+<span class="material-symbols-outlined">assignment_ind</span>
+<span class="font-medium text-sm">Duty Delegation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">monetization_on</span>
+<span class="font-medium text-sm">Estate Management</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary">gavel</span>
+<span class="font-medium text-sm">Protocol &amp; Law</span>
+</a>
+</nav>
+<div class="p-4 border-t border-primary/20">
+<div class="flex items-center gap-3 p-2 rounded-lg bg-primary/5">
+<div class="size-10 rounded-full bg-primary/20 border border-primary/30 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of an elderly distinguished man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPQwJpFh-NflW1f5EZ6Xm7tITRk6cZBG78CCgUlj5AN5EkbNJZCUpDMMo2hisRDggTgzRkYcZf8ftlDXWGSljCkCMHmjWJVTc1c1Wrgqw2EjHlzX7fQqo-83e10KebO_J4J-qfcJKs2pDpSxCQ6kpq2IKBybBGxqaPFbqAqDi10VqSsT1mChxqYI2n2ok9ZUpx7-PGis5y-P9Kxq0njH4Y_UKiClewNie6SBI6lkJgKyRqw57kX2_-PrDc0O_tO9SVjK4qOwEoVP1J"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold truncate">Lord Sterling</p>
+<p class="text-[10px] text-primary/60 uppercase">Head of House</p>
+</div>
+<span class="material-symbols-outlined text-xs">settings</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- Top Navigation -->
+<header class="h-16 border-b border-primary/10 bg-background-light dark:bg-background-dark/50 flex items-center justify-between px-8 backdrop-blur-md">
+<div class="flex items-center gap-4">
+<h2 class="font-display text-xl font-bold">Duty Delegation</h2>
+<div class="flex items-center bg-primary/5 border border-primary/10 rounded-full px-3 py-1">
+<span class="material-symbols-outlined text-primary text-sm mr-2">notifications_active</span>
+<span class="text-xs font-medium">3 Pending Requests</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform">search</span>
+</div>
+<div class="h-8 w-[1px] bg-primary/10"></div>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-sm">add</span>
+            Assign New Duty
+          </button>
+</div>
+</header>
+<div class="flex-1 overflow-x-auto p-8 bg-gradient-to-br from-background-light to-slate-200 dark:from-background-dark dark:to-black/40">
+<!-- Descendant Overview Row -->
+<div class="mb-8 grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="bg-background-light dark:bg-background-dark p-4 rounded-xl border border-primary/10 soft-glow">
+<p class="text-[10px] uppercase font-bold text-primary/60 mb-1">Total Duties</p>
+<p class="text-3xl font-display font-bold">24 Active</p>
+</div>
+<div class="bg-background-light dark:bg-background-dark p-4 rounded-xl border border-primary/10 soft-glow">
+<p class="text-[10px] uppercase font-bold text-primary/60 mb-1">Pending Review</p>
+<p class="text-3xl font-display font-bold">08 Due</p>
+</div>
+<div class="bg-background-light dark:bg-background-dark p-4 rounded-xl border border-primary/10 soft-glow">
+<p class="text-[10px] uppercase font-bold text-primary/60 mb-1">Efficiency Rating</p>
+<div class="flex items-end gap-2">
+<p class="text-3xl font-display font-bold">92%</p>
+<span class="text-green-600 text-xs font-bold mb-1 flex items-center"><span class="material-symbols-outlined text-xs">arrow_upward</span> 4%</span>
+</div>
+</div>
+<div class="bg-background-light dark:bg-background-dark p-4 rounded-xl border border-primary/10 soft-glow">
+<p class="text-[10px] uppercase font-bold text-primary/60 mb-1">Descendant Workload</p>
+<div class="flex items-center gap-2 mt-2">
+<div class="flex -space-x-2">
+<div class="size-6 rounded-full border-2 border-background-dark bg-primary/20"></div>
+<div class="size-6 rounded-full border-2 border-background-dark bg-primary/40"></div>
+<div class="size-6 rounded-full border-2 border-background-dark bg-primary/60"></div>
+<div class="size-6 rounded-full border-2 border-background-dark bg-primary/80"></div>
+</div>
+<p class="text-xs font-medium">12 Assigned</p>
+</div>
+</div>
+</div>
+<!-- Kanban-style Duty Board -->
+<div class="flex gap-8 h-[calc(100%-150px)] min-w-[1000px]">
+<!-- Column: To Do -->
+<div class="flex-1 flex flex-col gap-4">
+<div class="flex items-center justify-between px-2">
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-slate-400"></span>
+<h3 class="font-display font-bold text-lg">Duty Queue</h3>
+</div>
+<span class="bg-slate-200 dark:bg-slate-800 px-2 py-0.5 rounded text-[10px] font-bold">6</span>
+</div>
+<div class="flex-1 bg-primary/5 rounded-xl p-4 border border-primary/5 flex flex-col gap-4 overflow-y-auto">
+<!-- Card 1 -->
+<div class="bg-white dark:bg-zinc-900/80 p-5 rounded-lg border border-primary/10 paper-texture soft-glow cursor-grab active:cursor-grabbing hover:border-primary/30 transition-all group">
+<div class="flex justify-between items-start mb-3">
+<span class="text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded font-bold uppercase tracking-tighter">Religious Duty</span>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors text-lg">drag_indicator</span>
+</div>
+<h4 class="font-display font-bold text-base mb-1">Grave Visiting: Autumn Rites</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">Annual cleaning and ritual offering at the Sterling Crypt in Highgate.</p>
+<div class="mt-4 pt-4 border-t border-primary/5 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-xs text-primary">calendar_today</span>
+<span class="text-[10px] font-medium opacity-70">Oct 12, 1892</span>
+</div>
+<div class="size-6 rounded-full bg-primary/20 flex items-center justify-center text-[10px] font-bold">AS</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-zinc-900/80 p-5 rounded-lg border border-primary/10 paper-texture soft-glow cursor-grab active:cursor-grabbing hover:border-primary/30 transition-all group">
+<div class="flex justify-between items-start mb-3">
+<span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold uppercase tracking-tighter">Maintenance</span>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors text-lg">drag_indicator</span>
+</div>
+<h4 class="font-display font-bold text-base mb-1">Estate Grounds Audit</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">Visual inspection of boundary walls and primary carriage gates.</p>
+<div class="mt-4 pt-4 border-t border-primary/5 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-xs text-primary">priority_high</span>
+<span class="text-[10px] font-medium text-amber-600">High Urgency</span>
+</div>
+<div class="size-6 rounded-full bg-primary/20 flex items-center justify-center text-[10px] font-bold">JV</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: In Progress -->
+<div class="flex-1 flex flex-col gap-4">
+<div class="flex items-center justify-between px-2">
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-primary"></span>
+<h3 class="font-display font-bold text-lg">Active Mandates</h3>
+</div>
+<span class="bg-primary/20 text-primary px-2 py-0.5 rounded text-[10px] font-bold">3</span>
+</div>
+<div class="flex-1 bg-primary/10 rounded-xl p-4 border border-primary/10 flex flex-col gap-4 overflow-y-auto">
+<!-- Card Active -->
+<div class="bg-white dark:bg-zinc-900/90 p-5 rounded-lg border-2 border-primary paper-texture soft-glow cursor-grab active:cursor-grabbing relative overflow-hidden">
+<div class="absolute top-0 right-0 p-1 bg-primary text-white text-[8px] font-bold uppercase px-2">Active</div>
+<div class="flex justify-between items-start mb-3">
+<span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-bold uppercase tracking-tighter">Archival</span>
+</div>
+<h4 class="font-display font-bold text-base mb-1">Archive Digitization</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">Transferring 17th Century ledger scans to the Heritage Cloud core.</p>
+<div class="mt-4 space-y-2">
+<div class="flex justify-between text-[10px] font-bold">
+<span>PROGRESS</span>
+<span>75%</span>
+</div>
+<div class="w-full h-1 bg-primary/10 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[75%]"></div>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-primary/5 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full border-2 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a young woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDc8sAg2wYursBQl9rYmVlZo4nlRIYyERwpR6rbINnwHF62EEk9VxHsOynbyBIIXYj2rv5CbfnY5LqIcP5Hn9lA5p3_9CIgTFZMxKQOffHrxys4rdT0RuJjlmYTgYNTbQlXysaXngOYKWuqgspeS240dqlvpqr8Dpc3lQ2F0oR_pkEvndpvmJuhFy7WsioqsINU2BwsjA6Nr8CXhQO9XJJeqKcR6eMOBDkU-ROlzbPwBJxNIn-0GJQfRWRM0cgLTUJaYTYPKIuyJgy_"/>
+</div>
+<span class="text-[10px] font-bold">Eleanor T.</span>
+</div>
+<span class="material-symbols-outlined text-primary text-sm">schedule</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column: Completed -->
+<div class="flex-1 flex flex-col gap-4">
+<div class="flex items-center justify-between px-2">
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-green-500"></span>
+<h3 class="font-display font-bold text-lg">Accomplished Tasks</h3>
+</div>
+<span class="bg-green-100 dark:bg-green-900/30 text-green-600 px-2 py-0.5 rounded text-[10px] font-bold">15</span>
+</div>
+<div class="flex-1 bg-green-500/5 rounded-xl p-4 border border-green-500/10 flex flex-col gap-4 overflow-y-auto opacity-70 hover:opacity-100 transition-opacity">
+<!-- Card Completed -->
+<div class="bg-white dark:bg-zinc-900/80 p-5 rounded-lg border border-green-500/20 paper-texture soft-glow grayscale-[0.5]">
+<div class="flex justify-between items-start mb-3">
+<span class="text-[10px] bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold uppercase tracking-tighter">Social Ritual</span>
+<span class="material-symbols-outlined text-green-500 text-lg">check_circle</span>
+</div>
+<h4 class="font-display font-bold text-base mb-1 text-slate-500 line-through">Floral Arrangement: Gala</h4>
+<div class="mt-4 pt-4 border-t border-primary/5 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-medium text-slate-400 italic">Verified by Lord Sterling</span>
+</div>
+<div class="size-6 rounded-full bg-green-100 flex items-center justify-center text-[10px] font-bold text-green-700">BV</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Descendant Workload List (Bottom) -->
+<div class="mt-12">
+<h3 class="font-display font-bold text-xl mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">groups</span>
+            Descendant Workload Status
+          </h3>
+<div class="bg-background-light dark:bg-background-dark rounded-xl border border-primary/10 overflow-hidden shadow-xl">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-primary/5 text-primary text-[10px] font-bold uppercase tracking-widest">
+<th class="px-6 py-4">Descendant</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4">Current Duty</th>
+<th class="px-6 py-4">Workload Intensity</th>
+<th class="px-6 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-primary/5">
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary">AS</div>
+<div>
+<p class="text-sm font-bold">Arthur Sterling</p>
+<p class="text-[10px] opacity-60">Third Lineage</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 text-[10px] font-bold uppercase">Available</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm">None Assigned</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-1.5 bg-primary/10 rounded-full overflow-hidden max-w-[100px]">
+<div class="h-full bg-primary w-[15%]"></div>
+</div>
+<span class="text-xs font-medium">Low</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:underline text-xs font-bold">Assign Task</button>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Small portrait of a woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKtVV3qWgD2RRkRmxBWElWLPMzYClsv86-0s_RpGKJW2ZYMQzmqK4igKGw8Y9h4EUupzyLx3KFwQsGQihxNW3xIzDHDWL_kyjy4ORQHaFVv0ObV5kOxejKweftM28qcNcst4BO97HQducb2mqwr2UVsfvcK9iSVA4786_fXP6xjNGIhq3FIaW_BygSwRL2kPJTtF8jR-q9eAgOfq5ds84u0blV03RlK5QuQdhnhdMCVnPbj5qKz8CR9wGIarj7UN7STGX6y1HbGpcL"/>
+</div>
+<div>
+<p class="text-sm font-bold">Eleanor Thorne</p>
+<p class="text-[10px] opacity-60">Second Lineage</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded-full bg-primary/20 text-primary text-[10px] font-bold uppercase">On Duty</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm italic">Archive Digitization</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-1.5 bg-primary/10 rounded-full overflow-hidden max-w-[100px]">
+<div class="h-full bg-primary w-[85%]"></div>
+</div>
+<span class="text-xs font-medium text-primary">Critical</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:underline text-xs font-bold">Manage</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

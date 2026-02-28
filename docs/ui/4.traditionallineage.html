@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Traditional Lineage Flow View - Heritage Cloud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8a0000",
+                        "accent-gold": "#d4af37",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#230f0f",
+                        "panel-dark": "#361818",
+                        "border-muted": "#4b2020",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .lineage-connector {
+            position: absolute;
+            background-color: #d4af37;
+            opacity: 0.4;
+        }
+        .parchment-card {
+            background: linear-gradient(135deg, #3d1c1c 0%, #2d1414 100%);
+            border: 1px solid #4b2020;
+        }
+        .deceased-card {
+            filter: grayscale(0.6);
+            border: 2px solid #d4af37;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Top Navigation Bar (Imperial Crimson Header) -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-border-muted bg-primary px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-white">
+<div class="size-6 flex items-center justify-center">
+<span class="material-symbols-outlined text-accent-gold">account_tree</span>
+</div>
+<h2 class="text-white text-xl font-bold leading-tight tracking-tight">Heritage Cloud</h2>
+</div>
+<nav class="flex items-center gap-9">
+<a class="text-white/80 hover:text-white text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-white text-sm font-bold border-b-2 border-accent-gold pb-1" href="#">Lineage Tree</a>
+<a class="text-white/80 hover:text-white text-sm font-medium transition-colors" href="#">Documents</a>
+<a class="text-white/80 hover:text-white text-sm font-medium transition-colors" href="#">DNA Analysis</a>
+<a class="text-white/80 hover:text-white text-sm font-medium transition-colors" href="#">Archives</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full overflow-hidden">
+<div class="text-white/60 flex border-none bg-black/20 items-center justify-center pl-4">
+<span class="material-symbols-outlined text-lg">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-black/20 text-white focus:ring-0 h-full placeholder:text-white/40 px-4 text-sm font-normal" placeholder="Search Ancestors" value=""/>
+</div>
+</label>
+<button class="flex min-w-[140px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-accent-gold text-primary text-sm font-bold tracking-wide">
+<span>Imperial Gold Access</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-accent-gold" data-alt="User profile portrait of an elegant man" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDU5yc2DbXgHPag6kcVQQ-iwcxVW04FaVLLR6_aoMH5yak88WjQ8CgIijLA42CbbCV6MRscvgMHO5bZ5vKk990oL8ByBB-TjNFpSXS_y7xikjLquw0Lp8emQqXnrnkQFhkx2s31oTYf8AjIn8WSSTuq-0UsXABlt7f-Ie9V0FIQBfgRbTkAHoYm8RTebcxCWTMOYwH1MDy29a1K-UJ0RNjcwzHR5EJ791PzLpSaNfcS6orWe86ehkBHkwp6Djb6S5vabzSV_9ms8Frf");'></div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar Tools -->
+<aside class="w-64 border-r border-border-muted bg-panel-dark p-4 flex flex-col gap-6">
+<div class="flex flex-col gap-4">
+<div class="flex gap-3 items-center">
+<div class="bg-primary/20 p-2 rounded-lg">
+<span class="material-symbols-outlined text-accent-gold">build</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-base font-bold">Tree Tools</h1>
+<p class="text-accent-gold/60 text-xs uppercase tracking-widest">Navigation</p>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<button class="flex items-center gap-3 px-3 py-2 text-white/80 hover:bg-white/5 rounded-lg transition-all">
+<span class="material-symbols-outlined">zoom_in</span>
+<p class="text-sm font-medium">Zoom In</p>
+</button>
+<button class="flex items-center gap-3 px-3 py-2 text-white/80 hover:bg-white/5 rounded-lg transition-all">
+<span class="material-symbols-outlined">zoom_out</span>
+<p class="text-sm font-medium">Zoom Out</p>
+</button>
+<button class="flex items-center gap-3 px-3 py-2 bg-primary/40 text-white rounded-lg border border-primary">
+<span class="material-symbols-outlined text-accent-gold">filter_list</span>
+<p class="text-sm font-medium">Filter View</p>
+</button>
+<button class="flex items-center gap-3 px-3 py-2 text-white/80 hover:bg-white/5 rounded-lg transition-all">
+<span class="material-symbols-outlined">person_search</span>
+<p class="text-sm font-medium">Search Ancestor</p>
+</button>
+<button class="flex items-center gap-3 px-3 py-2 text-white/80 hover:bg-white/5 rounded-lg transition-all">
+<span class="material-symbols-outlined">print</span>
+<p class="text-sm font-medium">Print Pedigree</p>
+</button>
+</div>
+</div>
+<div class="mt-auto p-4 rounded-xl bg-black/20 border border-border-muted">
+<p class="text-xs text-accent-gold font-bold uppercase mb-2">Active Generation</p>
+<p class="text-lg font-display text-white">House of Valerius</p>
+<p class="text-xs text-white/40 mt-1">Founding Lineage: 1742 - Present</p>
+</div>
+</aside>
+<!-- Main Tree Content -->
+<main class="flex-1 flex flex-col bg-background-dark overflow-auto relative">
+<!-- Breadcrumbs and Header -->
+<div class="px-8 pt-8 flex flex-col gap-4">
+<div class="flex items-center gap-2 text-sm text-accent-gold/60">
+<a class="hover:text-accent-gold" href="#">Archives</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<a class="hover:text-accent-gold" href="#">Imperial Lineage</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-white">Traditional Flow View</span>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-4xl font-bold text-white mb-1">Traditional Lineage Flow</h2>
+<p class="text-accent-gold/80 italic font-display">Ancestral Hierarchy of the Imperial House</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-panel-dark border border-border-muted rounded-lg text-white font-bold text-sm hover:bg-border-muted transition-colors">
+<span class="material-symbols-outlined text-sm">person_add</span>
+                            Add New Member
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary rounded-lg text-white font-bold text-sm hover:brightness-110 transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-sm text-accent-gold">download</span>
+                            Export Pedigree
+                        </button>
+</div>
+</div>
+</div>
+<!-- The Visual Hierarchy -->
+<div class="flex-1 p-12 flex flex-col items-center gap-16 relative">
+<!-- Generation 1: The Founders (Deceased) -->
+<div class="flex flex-col items-center relative z-10">
+<div class="parchment-card deceased-card p-4 rounded-xl shadow-2xl flex flex-col items-center text-center w-64 relative">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent-gold text-primary text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">Patriarch</div>
+<div class="size-20 rounded-full border-2 border-accent-gold mb-3 bg-center bg-cover" data-alt="Vintage black and white portrait of an elderly man" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBt2JNXs9vHNOiok_VWVWw5I8scI6YM4-KMwiNvxgcLagrIZCarx0AONRLB-gkjCaIqcsaX-eUKKuSqyqs77Z41rfCVbTFKJXEkrUVxRpLZpmj-rP_ocj55sFX-2D-8-7Brdv1T-9AuozT4jJGo-g6oskO33xFf0-SwSVS6CRKtzEBclMduGLCf-yERQSeKU5k_8hp8C_JZGToSZ4S3N-Mnj7bksrScIUsMMgEMf3r3ujJMOoTWF7XKUAGq7AEsqYMlPElGKUrJ07rH");'></div>
+<h4 class="text-white font-bold text-lg">Maximilian Valerius I</h4>
+<p class="text-accent-gold text-sm">1845 — 1912</p>
+<p class="text-white/40 text-xs mt-2 italic">Founder of the Royal Merchant Guild</p>
+</div>
+<!-- Connector Down -->
+<div class="w-0.5 h-16 bg-accent-gold/40"></div>
+</div>
+<!-- Generation 2: Successors -->
+<div class="relative flex gap-24 items-start">
+<!-- Horizontal Line -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-[calc(100%-16rem)] h-0.5 bg-accent-gold/40"></div>
+<!-- Branch 1 (Deceased) -->
+<div class="flex flex-col items-center relative">
+<div class="w-0.5 h-10 bg-accent-gold/40 absolute -top-10"></div>
+<div class="parchment-card deceased-card p-4 rounded-xl shadow-xl flex flex-col items-center text-center w-64 border-accent-gold/50">
+<div class="size-20 rounded-full border-2 border-accent-gold mb-3 bg-center bg-cover" data-alt="Sepia toned portrait of a woman in vintage clothing" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBw_SxhORnST2b0_iXrHp7fhEXg4uSj0gn4UrAVGKB5a5_fhzqm0aeJpoJxEIQrR6lcHxVjj7FbGcmbxLxHI3pAKxirQDc21df5Rl8WslI0LNjuFKeiWC-kJOGz_MWcsjsJJLPI3c1xCDjmfGTCcBmpNJHkJYF0mDPanWTo7DOyW6l-WbC0DIMNw1CvdDfl_HHENXPcugsycmURaNuzF42MQnLtUdAP6xu0syzvi75ilqgC1mM7yNREZqI7x4KHdM7cjHuiZgZwWAl9");'></div>
+<h4 class="text-white font-bold text-lg">Elena Valerius</h4>
+<p class="text-accent-gold text-sm">1878 — 1945</p>
+</div>
+<div class="w-0.5 h-16 bg-accent-gold/40"></div>
+</div>
+<!-- Branch 2 (Active Heir) -->
+<div class="flex flex-col items-center relative">
+<div class="w-0.5 h-10 bg-accent-gold/40 absolute -top-10"></div>
+<div class="parchment-card p-4 rounded-xl shadow-xl flex flex-col items-center text-center w-64 border-primary">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-bold px-3 py-0.5 rounded-full uppercase tracking-widest border border-accent-gold">Current Head</div>
+<div class="size-20 rounded-full border-2 border-primary mb-3 bg-center bg-cover" data-alt="Modern professional portrait of a middle-aged man" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDbFw3mH1wzVjW2rJBIUQXtKb73KBa25DqHezMJDRz8YzRJtvHa0x6LN--tBEesmN1acaNGHMRUzxz3GVzNw1I3f9TBAdrorKEShe7F0vLv9PXCG4uGF28BEFg4zrDTQ_qzjbNUeHneGKl4cBtEqGmEOCUYGggG_lHh_ozPYKYYBL0PoaYElQa2QQTcxNmSzo1JBW1hbtX9QrawOy6D_fLqUwwOcJqDCIrlIw_lNNqZtSLUZ6hzUo-VkE9KFIaDggLgr5elvpKaRC6a");'></div>
+<h4 class="text-white font-bold text-lg">Marcus Valerius II</h4>
+<p class="text-accent-gold text-sm">1882 — Present</p>
+</div>
+<div class="w-0.5 h-16 bg-accent-gold/40"></div>
+</div>
+</div>
+<!-- Generation 3: Descendants -->
+<div class="relative flex gap-12 items-start">
+<!-- Branch from Branch 2 -->
+<div class="flex flex-col items-center relative">
+<div class="parchment-card p-4 rounded-xl shadow-lg flex flex-col items-center text-center w-56">
+<div class="size-16 rounded-full border-2 border-primary mb-3 bg-center bg-cover" data-alt="Portrait of a young adult man" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDCVzrcGwiZZXzxXgBXgBwB465ZXk6T3dxfnxNLJHpbovUVtgF0yTXgPOVUZI4HKrCPjOTGCpWMAe0cdIezSqNHx8VAitPsHTqBhppDeArjewFX_nLG1b4ouCwwPPQaMzJUU89ly9OPgb4gYV3fogqIyPO2kOGMAWTvKiLYpaARfKANaPS-t5xa7T9fq1p9hCX5ZGDPKUi_E9KhqaEYLZh5ZlLW0AXeT9FJErL-Imu8FiI_M9D6RjOYLd1SK8Mx2mZloS_ar2SjctFK");'></div>
+<h4 class="text-white font-bold text-base">Arthur Valerius</h4>
+<p class="text-accent-gold text-xs">1910 — Present</p>
+</div>
+</div>
+<div class="flex flex-col items-center relative">
+<div class="parchment-card p-4 rounded-xl shadow-lg flex flex-col items-center text-center w-56">
+<div class="size-16 rounded-full border-2 border-primary mb-3 bg-center bg-cover" data-alt="Portrait of a young adult woman" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBfmCdbM5VrwK2XPP5irOj0yKFrEbYuOx0PnzmHtR9kU5qW143GNq-icGzEe4oX7cAVUFbCn14xIUBuN-MKXiJ-H4jV6j5H9_DRumjSY7bu7xryXAPy1_1O4DAyC4I2SeEKG2PnKjmoYDQqTibTKzvNCTZxNPhGr12WScPjc61ixZEAzPDFWk5sEdzJMeYTtAgtEjxo7AB7iaS7RbTCPuXe4ZVXhw5NHHrgSER3Bv4WmWCLwrI5iuM9vtKBInV1n3BFCo_spL5i-4G0");'></div>
+<h4 class="text-white font-bold text-base">Sofia Valerius</h4>
+<p class="text-accent-gold text-xs">1912 — Present</p>
+</div>
+</div>
+</div>
+<!-- Tree Background Decoration (Subtle Crest) -->
+<div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-5">
+<span class="material-symbols-outlined text-[40rem] text-accent-gold">shield_with_heart</span>
+</div>
+</div>
+<!-- Bottom Toolbar for Map/Calendar/List Views -->
+<div class="bg-panel-dark/80 backdrop-blur-md border-t border-border-muted p-4 sticky bottom-0 flex justify-between items-center">
+<div class="flex items-center gap-1 bg-black/30 p-1 rounded-lg">
+<button class="p-2 text-white bg-primary rounded shadow-sm">
+<span class="material-symbols-outlined">account_tree</span>
+</button>
+<button class="p-2 text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined">group</span>
+</button>
+<button class="p-2 text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined">calendar_month</span>
+</button>
+<button class="p-2 text-white/40 hover:text-white transition-colors">
+<span class="material-symbols-outlined">location_on</span>
+</button>
+</div>
+<div class="flex items-center gap-4">
+<div class="text-xs text-white/60">
+<span class="text-accent-gold font-bold">128</span> Members Tracked
+                    </div>
+<div class="h-4 w-px bg-border-muted"></div>
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-green-500"></div>
+<span class="text-xs text-white/60">System Synchronized</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
