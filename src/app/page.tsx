@@ -1,65 +1,181 @@
-import Image from "next/image";
+import Link from "next/link";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
-export default function Home() {
+async function getClanStats() {
+  try {
+    const session = await auth();
+    const clanId = (session?.user as any)?.clanId;
+    if (!clanId) return null;
+
+    const [totalMembers, deceasedMembers, graveSites, upcomingRituals, clan] = await Promise.all([
+      prisma.member.count({ where: { clanId, deletedAt: null } }),
+      prisma.member.count({ where: { clanId, deletedAt: null, isDeceased: true } }),
+      prisma.graveSite.count({ where: { clanId, deletedAt: null } }),
+      prisma.ritualEvent.findMany({
+        where: { clanId, deletedAt: null, dateSolar: { gte: new Date() } },
+        take: 3,
+        orderBy: { dateSolar: "asc" },
+        include: { ancestor: { select: { fullName: true } } },
+      }),
+      prisma.clan.findUnique({ where: { id: clanId } }),
+    ]);
+
+    return { totalMembers, deceasedMembers, livingMembers: totalMembers - deceasedMembers, graveSites, upcomingRituals, clan };
+  } catch {
+    return null;
+  }
+}
+
+export default async function Home() {
+  const stats = await getClanStats();
+
+  const heroTitle = stats?.clan?.name ?? "HERITAGE CLOUD";
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="min-h-screen">
+      {/* ── Hero Banner ─────────────────────────────────── */}
+      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1599708153386-62bf3f033230?q=80&w=2070&auto=format&fit=crop')" }}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+        <div className="absolute inset-0 bg-black/65" />
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="h-px w-24 bg-antique-gold/60" />
+            <span className="font-header text-antique-gold text-xs tracking-[0.5em] uppercase">Chiếu Chỉ Gia Phả</span>
+            <div className="h-px w-24 bg-antique-gold/60" />
+          </div>
+          <h1
+            className="font-ornate text-5xl md:text-8xl font-black mb-4 tracking-tight"
+            style={{
+              background: "linear-gradient(to bottom, #fceabb 0%, #fccd4d 50%, #f8b500 51%, #fbdf93 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              filter: "drop-shadow(0 4px 4px rgba(0,0,0,0.7))",
+            }}
+          >
+            {heroTitle}
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="font-calligraphy text-antique-gold text-3xl md:text-4xl mb-8 leading-relaxed">
+            &ldquo;Trăm năm sống bởi tổ tiên, nghìn đời nối mãi khói hương&rdquo;
           </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link
+              href="/lineage"
+              className="btn-lacquer flex items-center gap-2 px-8 py-3 text-sm font-header tracking-widest uppercase"
+            >
+              Xem Gia Phả
+            </Link>
+            <Link
+              href="/rituals"
+              className="btn-gold-shimmer flex items-center gap-2 px-8 py-3 text-sm font-header tracking-widest uppercase"
+            >
+              Ngày Cúng Kỵ
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* ── Stats Bar ──────────────────────────────────── */}
+      {stats && (
+        <section className="bg-royal-lacquer border-y border-antique-gold/40 py-6">
+          <div className="max-w-5xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            {[
+              { label: "Thành Viên", value: stats.totalMembers },
+              { label: "Còn Sống", value: stats.livingMembers },
+              { label: "Đã Mất", value: stats.deceasedMembers },
+              { label: "Mộ Phần", value: stats.graveSites },
+            ].map((s) => (
+              <div key={s.label}>
+                <p
+                  className="font-ornate text-3xl font-black"
+                  style={{
+                    background: "linear-gradient(to bottom, #fceabb, #fccd4d)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
+                >
+                  {s.value}
+                </p>
+                <p className="font-header text-antique-gold/70 text-xs tracking-widest uppercase mt-1">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ── Main Content ───────────────────────────────── */}
+      <div className="max-w-6xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-3 gap-10">
+        {/* Quick Actions */}
+        <div className="lg:col-span-2 space-y-8">
+          <div className="flex items-center gap-4 border-b border-antique-gold/30 pb-4">
+            <h2 className="font-header text-2xl text-gold-leaf tracking-widest uppercase">Chức Năng Chính</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {[
+              { href: "/lineage", title: "Cây Gia Phả", subtitle: "Sơ đồ quan hệ trực quan", color: "border-red-900/50 hover:border-red-700/70 from-red-950 to-red-900" },
+              { href: "/map", title: "Bản Đồ Mộ Phần", subtitle: "Vị trí phần mộ tổ tiên", color: "border-stone-700/50 hover:border-stone-500/70 from-stone-900 to-stone-800" },
+              { href: "/rituals", title: "Lịch Cúng Kỵ", subtitle: "Âm lịch & ngày lễ giỗ", color: "border-amber-900/50 hover:border-amber-700/70 from-amber-950 to-amber-900" },
+              { href: "/duties", title: "Phân Công Việc", subtitle: "Theo dõi nhiệm vụ gia tộc", color: "border-emerald-900/50 hover:border-emerald-700/70 from-emerald-950 to-emerald-900" },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`group relative overflow-hidden rounded-sm bg-gradient-to-br border transition-all duration-300 p-6 block ${item.color}`}
+              >
+                <h3 className="font-header text-gold-leaf text-lg tracking-wider uppercase mb-1">{item.title}</h3>
+                <p className="font-sans text-parchment/60 text-sm">{item.subtitle}</p>
+                <div className="mt-4 text-antique-gold/50 group-hover:text-antique-gold text-xs font-header tracking-widest uppercase transition-colors">
+                  Mở →
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
-      </main>
+
+        {/* Upcoming Rituals */}
+        <div>
+          <div className="flex items-center gap-4 border-b border-antique-gold/30 pb-4 mb-6">
+            <h2 className="font-header text-xl text-gold-leaf tracking-widest uppercase">Kỵ Sắp Đến</h2>
+          </div>
+          {stats?.upcomingRituals && stats.upcomingRituals.length > 0 ? (
+            <div className="space-y-4">
+              {stats.upcomingRituals.map((r) => (
+                <Link key={r.id} href="/rituals" className="card-parchment block p-4">
+                  <p className="font-header text-temple-stone text-sm font-bold tracking-wide uppercase truncate">{r.title}</p>
+                  {r.ancestor && (
+                    <p className="text-xs text-temple-stone/60 mt-0.5 font-sans">Giỗ: {r.ancestor.fullName}</p>
+                  )}
+                  <p className="text-xs text-imperial-crimson font-header tracking-widest mt-2">
+                    {r.dateSolar ? new Date(r.dateSolar).toLocaleDateString("vi-VN") : "—"}
+                  </p>
+                  {r.dateLunar && (
+                    <p className="text-xs text-temple-stone/50 font-sans">Âm: {r.dateLunar}</p>
+                  )}
+                </Link>
+              ))}
+              <Link href="/rituals" className="block text-center text-antique-gold/70 hover:text-antique-gold text-xs font-header tracking-widest uppercase mt-2 transition-colors">
+                Xem Tất Cả →
+              </Link>
+            </div>
+          ) : (
+            <div className="text-center py-8">
+              <p className="font-sans text-parchment/40 text-sm">Chưa có ngày kỵ sắp tới.</p>
+              {!stats && (
+                <p className="font-sans text-parchment/30 text-xs mt-2">Vui lòng đăng nhập để xem dữ liệu.</p>
+              )}
+              <Link href="/rituals" className="text-antique-gold text-xs font-header tracking-widest uppercase mt-3 block hover:text-gold-leaf transition-colors">
+                Thêm ngày kỵ →
+              </Link>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── Decorative footer band ──────────────────────── */}
+      <div className="h-px bg-gradient-to-r from-transparent via-antique-gold/40 to-transparent" />
     </div>
   );
 }
