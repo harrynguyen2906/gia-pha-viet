@@ -3,21 +3,21 @@
 @theme {
   /* ── Core Colors ─────────────────────────────────────── */
   --color-primary: #8a0000;
-  --color-imperial-crimson: #8B0000;
+  --color-imperial-crimson: #8b0000;
   --color-bg-dark: #230f0f;
   --color-bg-light: #f8f5f5;
   --color-lacquer-dark: #1a0808;
   --color-royal-lacquer: #1a0000;
 
   /* ── Gold ────────────────────────────────────────────── */
-  --color-antique-gold: #C5A059;
-  --color-gold-leaf: #E5C17C;
+  --color-antique-gold: #c5a059;
+  --color-gold-leaf: #e5c17c;
   --color-accent-gold: #d4af37;
 
   /* ── Surface ─────────────────────────────────────────── */
-  --color-parchment: #F4EBD0;
-  --color-aged-silk: #FFF8DC;
-  --color-temple-stone: #2D241E;
+  --color-parchment: #f4ebd0;
+  --color-aged-silk: #fff8dc;
+  --color-temple-stone: #2d241e;
   --color-panel-dark: #361818;
   --color-dark-paper: #2d1b1b;
   --color-charcoal: #1a1a1a;
@@ -26,11 +26,13 @@
   --color-border-muted: #4b2020;
 
   /* ── Typography ──────────────────────────────────────── */
+  /* NOTE: font variables are injected by next/font/google onto <html>.
+     Decorative roles prioritize Vietnamese support + ceremonial tone. */
   --font-display: "Noto Serif", serif;
-  --font-header: "Cinzel", serif;
-  --font-ornate: "Cinzel Decorative", serif;
-  --font-calligraphy: "Pinyon Script", cursive;
-  --font-serif: "Playfair Display", serif;
+  --font-header: "Spectral SC", "Cormorant SC", "Noto Serif", serif;
+  --font-ornate: "EB Garamond", "Playfair Display", "Noto Serif", serif;
+  --font-calligraphy: "WindSong", "Great Vibes", "Noto Serif", cursive;
+  --font-serif: "Playfair Display", "Noto Serif", serif;
   --font-sans: "Noto Sans", sans-serif;
 
   /* ── Shadows ─────────────────────────────────────────── */
@@ -48,20 +50,38 @@
 
 /* ── Keyframes ───────────────────────────────────────────── */
 @keyframes fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes slide-in-right {
-  from { transform: translateX(100%); }
-  to   { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 @keyframes scale-in {
-  from { transform: scale(0.95); opacity: 0; }
-  to   { transform: scale(1);    opacity: 1; }
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 @keyframes shimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position:  200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* ── Base Layer ──────────────────────────────────────────── */
@@ -69,7 +89,26 @@
   body {
     background-color: var(--color-bg-dark);
     color: var(--color-parchment);
-    font-family: var(--font-sans);
+    font-family: var(--font-sans, "Noto Sans", sans-serif);
+  }
+
+  .font-header {
+    font-family: "Spectral SC", "Cormorant SC", "Noto Serif", serif;
+  }
+  .font-ornate {
+    font-family: "EB Garamond", "Playfair Display", "Noto Serif", serif;
+  }
+  .font-calligraphy {
+    font-family: "WindSong", "Great Vibes", "Noto Serif", cursive;
+  }
+  .font-serif {
+    font-family: "Playfair Display", "Noto Serif", serif;
+  }
+  .font-display {
+    font-family: "Noto Serif", serif;
+  }
+  .font-sans {
+    font-family: "Noto Sans", sans-serif;
   }
 
   *:focus-visible {
@@ -78,7 +117,9 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
@@ -89,8 +130,8 @@
 /* ── Component Layer ─────────────────────────────────────── */
 @layer components {
   .card-parchment {
-    background: radial-gradient(ellipse at center, #F4EBD0, #E6D5B8);
-    border: 1px solid #C5A059;
+    background: radial-gradient(ellipse at center, #f4ebd0, #e6d5b8);
+    border: 1px solid #c5a059;
     box-shadow: var(--shadow-parchment);
     position: relative;
     transition: transform 300ms ease;
@@ -107,14 +148,16 @@
   }
 
   .btn-lacquer {
-    background: linear-gradient(145deg, #3a0000, #8B0000);
-    border: 1px solid #C5A059;
+    background: linear-gradient(145deg, #3a0000, #8b0000);
+    border: 1px solid #c5a059;
     box-shadow: var(--shadow-lacquer);
-    color: #E5C17C;
-    font-family: "Cinzel", serif;
+    color: #e5c17c;
+    font-family: "Spectral SC", "Cormorant SC", "Noto Serif", serif;
     text-transform: uppercase;
     letter-spacing: 0.2em;
-    transition: filter 200ms ease, color 200ms ease;
+    transition:
+      filter 200ms ease,
+      color 200ms ease;
     cursor: pointer;
   }
   .btn-lacquer:hover {
@@ -170,13 +213,13 @@
   }
 
   .bg-lacquer-gradient {
-    background: linear-gradient(145deg, #3a0000, #8B0000);
+    background: linear-gradient(145deg, #3a0000, #8b0000);
   }
   .bg-gold-shimmer {
     background: linear-gradient(135deg, #c5a059 0%, #f1e0b0 50%, #c5a059 100%);
   }
   .bg-parchment-gradient {
-    background: radial-gradient(ellipse at center, #F4EBD0, #E6D5B8);
+    background: radial-gradient(ellipse at center, #f4ebd0, #e6d5b8);
   }
 
   .text-shadow-gold {

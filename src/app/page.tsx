@@ -31,16 +31,70 @@ export default async function Home() {
   const stats = await getClanStats();
 
   const heroTitle = stats?.clan?.name ?? "HERITAGE CLOUD";
+  const leftCouplet = "Tiên Tổ Tôn Nghiêm Lưu Phúc Ấm";
+  const rightCouplet = "Tử Tôn Hiếu Kính Kế Gia Phong";
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      {/* ── Side Couplet Pillars (Desktop) ─────────────── */}
+      <aside className="hidden xl:flex fixed top-16 bottom-0 left-0 w-24 z-20 items-center justify-center pointer-events-none">
+        <div className="relative h-full w-full bg-gradient-to-b from-royal-lacquer via-imperial-crimson to-royal-lacquer border-r border-antique-gold/45 shadow-2xl">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.25)_0%,rgba(255,255,255,0.06)_18%,rgba(255,255,255,0.04)_82%,rgba(0,0,0,0.22)_100%)]" />
+          <div className="absolute top-0 inset-x-0 h-7 bg-gold-shimmer border-b border-antique-gold/80" />
+          <div className="absolute bottom-0 inset-x-0 h-9 bg-gold-shimmer border-t border-antique-gold/80" />
+          <div className="absolute top-7 bottom-9 left-3 right-3 bg-gradient-to-b from-dark-paper via-black to-dark-paper border-2 border-antique-gold/70 shadow-inner">
+            <div className="absolute inset-1 border border-antique-gold/35" />
+            <div className="absolute -top-1.5 -left-1.5 w-3 h-3 rounded-full border border-antique-gold/80 bg-royal-lacquer" />
+            <div className="absolute -top-1.5 -right-1.5 w-3 h-3 rounded-full border border-antique-gold/80 bg-royal-lacquer" />
+            <div className="absolute -bottom-1.5 -left-1.5 w-3 h-3 rounded-full border border-antique-gold/80 bg-royal-lacquer" />
+            <div className="absolute -bottom-1.5 -right-1.5 w-3 h-3 rounded-full border border-antique-gold/80 bg-royal-lacquer" />
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 text-antique-gold/85 text-xs">✦</div>
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-antique-gold/85 text-xs">✦</div>
+            <div className="h-full w-full flex items-center justify-center px-1">
+              <p className="font-header text-gold-leaf text-[17px] tracking-[0.14em] leading-[1.65] [writing-mode:vertical-rl] [text-orientation:mixed] drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)]">
+                {leftCouplet}
+              </p>
+            </div>
+          </div>
+          <div className="absolute top-7 left-1/2 -translate-x-1/2 w-14 h-3.5 bg-gold-shimmer rounded-b-full border-x border-b border-antique-gold/80" />
+          <div className="absolute bottom-9 left-1/2 -translate-x-1/2 w-14 h-3.5 bg-gold-shimmer rounded-t-full border-x border-t border-antique-gold/80" />
+        </div>
+      </aside>
+      <aside className="hidden xl:flex fixed top-16 bottom-0 right-0 w-24 z-20 items-center justify-center pointer-events-none">
+        <div className="relative h-full w-full bg-gradient-to-b from-royal-lacquer via-imperial-crimson to-royal-lacquer border-l border-antique-gold/45 shadow-2xl">
+          <div className="absolute inset-0 bg-[linear-gradient(to_left,rgba(0,0,0,0.25)_0%,rgba(255,255,255,0.06)_18%,rgba(255,255,255,0.04)_82%,rgba(0,0,0,0.22)_100%)]" />
+          <div className="absolute top-0 inset-x-0 h-7 bg-gold-shimmer border-b border-antique-gold/80" />
+          <div className="absolute bottom-0 inset-x-0 h-9 bg-gold-shimmer border-t border-antique-gold/80" />
+          <div className="absolute top-7 bottom-9 left-3 right-3 bg-gradient-to-b from-dark-paper via-black to-dark-paper border-2 border-antique-gold/70 shadow-inner">
+            <div className="absolute inset-1 border border-antique-gold/35" />
+            <div className="absolute -top-1.5 -left-1.5 w-3 h-3 rounded-full border border-antique-gold/80 bg-royal-lacquer" />
+            <div className="absolute -top-1.5 -right-1.5 w-3 h-3 rounded-full border border-antique-gold/80 bg-royal-lacquer" />
+            <div className="absolute -bottom-1.5 -left-1.5 w-3 h-3 rounded-full border border-antique-gold/80 bg-royal-lacquer" />
+            <div className="absolute -bottom-1.5 -right-1.5 w-3 h-3 rounded-full border border-antique-gold/80 bg-royal-lacquer" />
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 text-antique-gold/85 text-xs">✦</div>
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-antique-gold/85 text-xs">✦</div>
+            <div className="h-full w-full flex items-center justify-center px-1">
+              <p className="font-header text-gold-leaf text-[17px] tracking-[0.14em] leading-[1.65] [writing-mode:vertical-rl] [text-orientation:mixed] drop-shadow-[0_1px_1px_rgba(0,0,0,0.7)]">
+                {rightCouplet}
+              </p>
+            </div>
+          </div>
+          <div className="absolute top-7 left-1/2 -translate-x-1/2 w-14 h-3.5 bg-gold-shimmer rounded-b-full border-x border-b border-antique-gold/80" />
+          <div className="absolute bottom-9 left-1/2 -translate-x-1/2 w-14 h-3.5 bg-gold-shimmer rounded-t-full border-x border-t border-antique-gold/80" />
+        </div>
+      </aside>
+
       {/* ── Hero Banner ─────────────────────────────────── */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1599708153386-62bf3f033230?q=80&w=2070&auto=format&fit=crop')" }}
-        />
-        <div className="absolute inset-0 bg-black/65" />
+      <section className="relative min-h-[64vh] flex items-center justify-center overflow-hidden xl:px-20">
+        <div className="absolute inset-0">
+          <div
+            className="absolute inset-0 bg-cover bg-center scale-110 blur-[3px]"
+            style={{ backgroundImage: "url('https://images.unsplash.com/photo-1545569341-9eb8b30979d9?q=80&w=2070&auto=format&fit=crop')" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/75 to-bg-dark/95" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.05)_10%,rgba(0,0,0,0.55)_70%,rgba(0,0,0,0.75)_100%)]" />
+        </div>
+
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <div className="flex items-center justify-center gap-4 mb-6">
             <div className="h-px w-24 bg-antique-gold/60" />
@@ -80,7 +134,7 @@ export default async function Home() {
 
       {/* ── Stats Bar ──────────────────────────────────── */}
       {stats && (
-        <section className="bg-royal-lacquer border-y border-antique-gold/40 py-6">
+        <section className="bg-royal-lacquer border-y border-antique-gold/40 py-6 xl:px-20">
           <div className="max-w-5xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
               { label: "Thành Viên", value: stats.totalMembers },
@@ -107,7 +161,7 @@ export default async function Home() {
       )}
 
       {/* ── Main Content ───────────────────────────────── */}
-      <div className="max-w-6xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <div className="max-w-6xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-3 gap-10 xl:px-20">
         {/* Quick Actions */}
         <div className="lg:col-span-2 space-y-8">
           <div className="flex items-center gap-4 border-b border-antique-gold/30 pb-4">

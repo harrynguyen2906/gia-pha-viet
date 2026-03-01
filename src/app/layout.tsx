@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import {
   Noto_Serif,
   Noto_Sans,
-  Cinzel,
-  Cinzel_Decorative,
   Playfair_Display,
-  Pinyon_Script,
+  WindSong,
+  Spectral_SC,
+  EB_Garamond,
 } from "next/font/google";
 import "./globals.css";
 import AppShell from "@/components/layout/AppShell";
@@ -22,15 +22,15 @@ const notoSans = Noto_Sans({
   variable: "--font-sans",
   display: "swap",
 });
-const cinzel = Cinzel({
-  subsets: ["latin"],
+const spectralSC = Spectral_SC({
+  subsets: ["latin", "vietnamese"],
   weight: ["400", "600", "700"],
   variable: "--font-header",
   display: "swap",
 });
-const cinzelDecorative = Cinzel_Decorative({
-  subsets: ["latin"],
-  weight: ["400", "700"],
+const ebGaramond = EB_Garamond({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "700", "800"],
   variable: "--font-ornate",
   display: "swap",
 });
@@ -40,9 +40,9 @@ const playfair = Playfair_Display({
   variable: "--font-serif",
   display: "swap",
 });
-const pinyonScript = Pinyon_Script({
-  subsets: ["latin"],
-  weight: ["400"],
+const windSong = WindSong({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "500"],
   variable: "--font-calligraphy",
   display: "swap",
 });
@@ -62,7 +62,7 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`dark ${notoSerif.variable} ${notoSans.variable} ${cinzel.variable} ${cinzelDecorative.variable} ${playfair.variable} ${pinyonScript.variable}`}
+      className={`dark ${notoSerif.variable} ${notoSans.variable} ${spectralSC.variable} ${ebGaramond.variable} ${playfair.variable} ${windSong.variable}`}
     >
       <body className="bg-bg-dark text-parchment font-sans antialiased min-h-screen">
         <AppShell>{children}</AppShell>
