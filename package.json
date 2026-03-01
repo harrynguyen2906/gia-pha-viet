@@ -34,6 +34,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-dropzone": "^15.0.0",
+    "react-force-graph-2d": "^1.29.1",
     "react-hook-form": "^7.71.2",
     "sharp": "^0.34.5",
     "swr": "^2.4.1",

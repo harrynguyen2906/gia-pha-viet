@@ -7,6 +7,7 @@ import Link from "next/link";
 import Modal from "@/components/ui/Modal";
 import { useModal } from "@/hooks/useModal";
 import AddMemberForm from "@/components/lineage/AddMemberForm";
+import BrainView from "@/components/lineage/BrainView";
 import { X, Cross, ChevronRight, Plus } from "lucide-react";
 
 const D3LineageTree = dynamic(() => import("@/components/lineage/D3LineageTree"), { ssr: false });
@@ -210,43 +211,51 @@ export default function LineageClient() {
 
       {/* ── Main Area ── */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Tree canvas */}
-        <div className="flex-1 relative bg-bg-dark">
-          {isLoading && (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <p className="font-header text-antique-gold/60 text-sm tracking-widest animate-pulse">
-                Đang tải dữ liệu…
-              </p>
-            </div>
-          )}
-          {!isLoading && nodes.length === 0 && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-              <p className="font-header text-antique-gold/40 text-sm tracking-widest">
-                Chưa có thành viên nào.
-              </p>
-              <button
-                type="button"
-                onClick={openAddMemberModal}
-                className="btn-lacquer px-6 py-3 text-xs font-header tracking-widest uppercase flex items-center gap-1.5"
-              >
-                <Plus className="w-3.5 h-3.5" strokeWidth={2} aria-hidden="true" />
-                Thêm Thành Viên Đầu Tiên
-              </button>
-            </div>
-          )}
-          {!isLoading && nodes.length > 0 && (
-            <D3LineageTree
-              members={nodes}
-              onSelectMember={setSelectedId}
-              selectedMemberId={selectedId}
-              onAddChild={handleAddChild}
-            />
-          )}
-        </div>
+        {/* Brain Node View */}
+        {view === "neural" && (
+          <BrainView canEdit={false} onAddMember={openAddMemberModal} />
+        )}
 
-        {/* Detail Panel */}
-        {selectedMember && (
-          <aside className="w-72 bg-lacquer-dark/95 border-l border-antique-gold/20 p-6 overflow-y-auto flex flex-col gap-5">
+        {/* Traditional Tree View */}
+        {view === "tree" && (
+          <>
+            {/* Tree canvas */}
+            <div className="flex-1 relative bg-bg-dark">
+              {isLoading && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <p className="font-header text-antique-gold/60 text-sm tracking-widest animate-pulse">
+                    Đang tải dữ liệu…
+                  </p>
+                </div>
+              )}
+              {!isLoading && nodes.length === 0 && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+                  <p className="font-header text-antique-gold/40 text-sm tracking-widest">
+                    Chưa có thành viên nào.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={openAddMemberModal}
+                    className="btn-lacquer px-6 py-3 text-xs font-header tracking-widest uppercase flex items-center gap-1.5"
+                  >
+                    <Plus className="w-3.5 h-3.5" strokeWidth={2} aria-hidden="true" />
+                    Thêm Thành Viên Đầu Tiên
+                  </button>
+                </div>
+              )}
+              {!isLoading && nodes.length > 0 && (
+                <D3LineageTree
+                  members={nodes}
+                  onSelectMember={setSelectedId}
+                  selectedMemberId={selectedId}
+                  onAddChild={handleAddChild}
+                />
+              )}
+            </div>
+
+            {/* Detail Panel (tree view only) */}
+            {selectedMember && (
+              <aside className="w-72 bg-lacquer-dark/95 border-l border-antique-gold/20 p-6 overflow-y-auto flex flex-col gap-5">
             <div className="flex items-center justify-between">
               <h3 className="font-header text-gold-leaf text-sm tracking-widest uppercase">Chi Tiết</h3>
               <button
@@ -361,7 +370,9 @@ export default function LineageClient() {
             >
               Xem Hồ Sơ Đầy Đủ
             </Link>
-          </aside>
+            </aside>
+            )}
+          </>
         )}
       </div>
 
