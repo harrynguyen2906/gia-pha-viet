@@ -6,12 +6,26 @@ import { countAllDescendants } from "./treeUtils";
 type SvgSel = d3.Selection<SVGSVGElement, unknown, null, undefined>;
 type GSel = d3.Selection<SVGGElement, unknown, null, undefined>;
 
+const DEFAULT_ANIMATION_MS = 280;
+
 // ── Elbow / org-chart connector path ─────────────────────────────────────────
 export function elbowPath(d: TreeLink): string {
   const sx = d.source.x;
   const sy = d.source.y + NODE_H / 2;
   const tx = d.target.x;
   const ty = d.target.y - NODE_H / 2;
+  const midY = (sy + ty) / 2;
+  return `M ${sx},${sy} V ${midY} H ${tx} V ${ty}`;
+}
+
+function elbowPathByPoints(
+  sx: number,
+  syCenter: number,
+  tx: number,
+  tyCenter: number
+): string {
+  const sy = syCenter + NODE_H / 2;
+  const ty = tyCenter - NODE_H / 2;
   const midY = (sy + ty) / 2;
   return `M ${sx},${sy} V ${midY} H ${tx} V ${ty}`;
 }
@@ -47,19 +61,40 @@ export function setupDefs(svg: SvgSel, nodes: TreeNode[]): void {
 }
 
 // ── Elbow connector links ─────────────────────────────────────────────────────
-export function drawLinks(g: GSel, links: TreeLink[]): void {
+export function drawLinks(
+  g: GSel,
+  links: TreeLink[],
+  previousPositions: Map<string, { x: number; y: number }>,
+  animationMs = DEFAULT_ANIMATION_MS
+): void {
   g.selectAll(".link")
     .data(links)
     .join("path")
     .attr("class", "link")
-    .attr("d", elbowPath as any)
+    .attr("d", (d) => {
+      const sourcePrev = previousPositions.get(d.source.data.id) ?? {
+        x: d.source.x,
+        y: d.source.y,
+      };
+      const targetPrev = previousPositions.get(d.target.data.id) ?? sourcePrev;
+      return elbowPathByPoints(sourcePrev.x, sourcePrev.y, targetPrev.x, targetPrev.y);
+    })
     .attr("fill", "none")
     .attr("stroke", "rgba(197,160,89,0.35)")
-    .attr("stroke-width", 1.5);
+    .attr("stroke-width", 1.5)
+    .transition()
+    .duration(animationMs)
+    .ease(d3.easeCubicOut)
+    .attr("d", elbowPath as any);
 }
 
 // ── Dashed spouse lines ───────────────────────────────────────────────────────
-export function drawSpouseLines(g: GSel, nodes: TreeNode[]): void {
+export function drawSpouseLines(
+  g: GSel,
+  nodes: TreeNode[],
+  previousPositions: Map<string, { x: number; y: number }>,
+  animationMs = DEFAULT_ANIMATION_MS
+): void {
   const drawn = new Set<string>();
   for (const node of nodes) {
     if (node.data.id === "__root__") continue;
@@ -68,14 +103,23 @@ export function drawSpouseLines(g: GSel, nodes: TreeNode[]): void {
       const key = [node.data.id, spouseId].sort().join("|");
       if (spouse && !drawn.has(key)) {
         drawn.add(key);
+        const fromNode = previousPositions.get(node.data.id) ?? { x: node.x, y: node.y };
+        const fromSpouse = previousPositions.get(spouseId) ?? fromNode;
         g.append("line")
+          .attr("x1", fromNode.x)
+          .attr("y1", fromNode.y)
+          .attr("x2", fromSpouse.x)
+          .attr("y2", fromSpouse.y)
+          .attr("stroke", "rgba(197,160,89,0.45)")
+          .attr("stroke-width", 1)
+          .attr("stroke-dasharray", "6 4")
+          .transition()
+          .duration(animationMs)
+          .ease(d3.easeCubicOut)
           .attr("x1", node.x)
           .attr("y1", node.y)
           .attr("x2", spouse.x)
-          .attr("y2", spouse.y)
-          .attr("stroke", "rgba(197,160,89,0.45)")
-          .attr("stroke-width", 1)
-          .attr("stroke-dasharray", "6 4");
+          .attr("y2", spouse.y);
       }
     }
   }
@@ -83,7 +127,16 @@ export function drawSpouseLines(g: GSel, nodes: TreeNode[]): void {
 
 // ── Node groups with all visual layers ───────────────────────────────────────
 export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void {
-  const { selectedMemberId, collapsedNodes, childrenMap, onSelectMember, onAddChild, setCollapsedNodes } = ctx;
+  const {
+    selectedMemberId,
+    collapsedNodes,
+    childrenMap,
+    onSelectMember,
+    onAddChild,
+    setCollapsedNodes,
+    previousPositions,
+    animationMs,
+  } = ctx;
   const visible = nodes.filter((n) => n.data.id !== "__root__");
 
   const nodeGroups = g
@@ -91,7 +144,17 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
     .data(visible)
     .join("g")
     .attr("class", "node")
+    .attr("transform", (d) => {
+      const previous = previousPositions.get(d.data.id) ??
+        (d.parent ? previousPositions.get(d.parent.data.id) : undefined) ??
+        { x: d.x, y: d.y };
+      return `translate(${previous.x},${previous.y})`;
+    })
+    .transition()
+    .duration(animationMs)
+    .ease(d3.easeCubicOut)
     .attr("transform", (d) => `translate(${d.x},${d.y})`)
+    .selection()
     .style("cursor", "pointer")
     .on("click", (_e, d) => onSelectMember(d.data.id));
 
@@ -296,7 +359,7 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
     const addBtns = nodeGroups
       .append("g")
       .attr("class", "add-child-btn")
-      .attr("transform", `translate(0, ${NODE_H / 2 + 30})`)
+      .attr("transform", `translate(${NODE_W / 2 - 16}, ${NODE_H / 2 - 16})`)
       .style("opacity", 0)
       .style("pointer-events", "none");
 

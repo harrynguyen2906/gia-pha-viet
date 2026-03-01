@@ -8,6 +8,8 @@ import { renderMiniMap } from "./tree/minimap";
 import { MINI_W, MINI_H } from "./tree/constants";
 import type { Props, TreeNode, TreeLink, TreeBounds } from "./tree/types";
 
+const COLLAPSE_ANIMATION_MS = 280;
+
 export default function D3LineageTree({
   members,
   onSelectMember,
@@ -34,6 +36,7 @@ export default function D3LineageTree({
     links: TreeLink[];
     bounds: TreeBounds;
   } | null>(null);
+  const previousPositionsRef = useRef<Map<string, { x: number; y: number }>>(new Map());
 
   // Observe container size changes
   useEffect(() => {
@@ -103,8 +106,8 @@ export default function D3LineageTree({
     transformRef.current = initTransform;
 
     // Draw tree content into g
-    drawLinks(g, links);
-    drawSpouseLines(g, nodes);
+    drawLinks(g, links, previousPositionsRef.current, COLLAPSE_ANIMATION_MS);
+    drawSpouseLines(g, nodes, previousPositionsRef.current, COLLAPSE_ANIMATION_MS);
     drawNodes(g, nodes, {
       selectedMemberId,
       collapsedNodes,
@@ -112,7 +115,15 @@ export default function D3LineageTree({
       onSelectMember,
       onAddChild,
       setCollapsedNodes,
+      previousPositions: previousPositionsRef.current,
+      animationMs: COLLAPSE_ANIMATION_MS,
     });
+
+    previousPositionsRef.current = new Map(
+      nodes
+        .filter((node) => node.data.id !== "__root__")
+        .map((node) => [node.data.id, { x: node.x, y: node.y }])
+    );
 
     // Initial mini-map render
     if (showMiniMapRef.current && miniSvgRef.current && svgRef.current && zoomRef.current) {
@@ -128,6 +139,11 @@ export default function D3LineageTree({
 
   return (
     <div ref={containerRef} className="w-full h-full relative">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/35 to-black/55" />
+        <div className="absolute -top-20 -left-20 h-72 w-72 rounded-full bg-imperial-crimson/20 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-antique-gold/10 blur-3xl" />
+      </div>
       <svg ref={svgRef} className="w-full h-full" />
 
       {/* Mini-map overlay */}

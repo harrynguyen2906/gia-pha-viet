@@ -120,6 +120,7 @@ async function main() {
         isDeceased: true,
         gender: GenderType.MALE,
         lineageRole: LineageRole.HEAD_OF_HOUSE,
+        avatarUrl: "/images/demo/male-elder.svg",
       },
     }),
     prisma.member.upsert({
@@ -150,6 +151,7 @@ async function main() {
         isDeceased: true,
         gender: GenderType.FEMALE,
         lineageRole: LineageRole.MEMBER,
+        avatarUrl: "/images/demo/female-elder.svg",
       },
     }),
   ]);
@@ -177,6 +179,7 @@ async function main() {
       isDeceased: true,
       gender: GenderType.MALE,
       lineageRole: LineageRole.ELDER,
+      avatarUrl: "/images/demo/male-adult.svg",
     },
   });
 
@@ -275,6 +278,7 @@ async function main() {
         fullName: "Nguyễn Văn An",
         generation: 5,
         birthDateSolar: new Date("1950-03-15"),
+        avatarUrl: "/images/demo/male-adult.svg",
         isDeceased: false,
         gender: GenderType.MALE,
         lineageRole: LineageRole.HEAD_OF_HOUSE,
@@ -290,6 +294,7 @@ async function main() {
         fullName: "Nguyễn Văn Bình",
         generation: 5,
         birthDateSolar: new Date("1955-06-20"),
+        avatarUrl: "/images/demo/male-young.svg",
         isDeceased: false,
         gender: GenderType.MALE,
         lineageRole: LineageRole.MEMBER,
@@ -304,6 +309,7 @@ async function main() {
         fullName: "Nguyễn Thị Mai",
         generation: 5,
         birthDateSolar: new Date("1958-09-10"),
+        avatarUrl: "/images/demo/female-young.svg",
         isDeceased: false,
         gender: GenderType.FEMALE,
         lineageRole: LineageRole.MEMBER,

@@ -38,4 +38,6 @@ export interface RenderContext {
   onSelectMember: (id: string) => void;
   onAddChild?: (parentId: string) => void;
   setCollapsedNodes: (fn: (prev: Set<string>) => Set<string>) => void;
+  previousPositions: Map<string, { x: number; y: number }>;
+  animationMs: number;
 }
