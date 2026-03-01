@@ -1,10 +1,12 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState, useCallback, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import useSWR from "swr";
 import Link from "next/link";
+import Modal from "@/components/ui/Modal";
+import { useModal } from "@/hooks/useModal";
+import AddMemberForm from "@/components/lineage/AddMemberForm";
 
 const D3LineageTree = dynamic(() => import("@/components/lineage/D3LineageTree"), { ssr: false });
 
@@ -39,6 +41,13 @@ interface MemberNode {
   spouseIds: string[];
 }
 
+interface ParentSeed {
+  id: string;
+  fullName: string;
+  generation?: number | null;
+  isDeceased: boolean;
+}
+
 function toNode(m: Member): MemberNode {
   return {
     id: m.id,
@@ -56,22 +65,38 @@ function toNode(m: Member): MemberNode {
 }
 
 export default function LineageClient() {
-  const router = useRouter();
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  // Use a ref for the pending parent seed so it's synchronously available
+  // when the modal renders — avoids any React batching race condition.
+  const pendingParentRef = useRef<ParentSeed | null>(null);
+  const [modalKey, setModalKey] = useState(0);
   const [search, setSearch] = useState("");
   const [view, setView] = useState<"tree" | "neural">("tree");
+  const { isOpen, open, close } = useModal();
+  const {
+    isOpen: isRelinkOpen,
+    open: openRelink,
+    close: closeRelink,
+  } = useModal();
+  const [relinkParentId, setRelinkParentId] = useState("");
+  const [relinkSubmitting, setRelinkSubmitting] = useState(false);
+  const [relinkError, setRelinkError] = useState<string | null>(null);
 
   const handleAddChild = useCallback(
-    (parentId: string) => router.push(`/lineage/add?parentId=${parentId}`),
-    [router]
+    (parent: ParentSeed) => {
+      pendingParentRef.current = parent;
+      setModalKey((k) => k + 1);
+      open();
+    },
+    [open]
   );
 
-  const { data: membersData, isLoading } = useSWR(
+  const { data: membersData, isLoading, mutate: mutateMembers } = useSWR(
     "/api/v1/members?limit=200",
     fetcher
   );
 
-  const { data: selectedData } = useSWR(
+  const { data: selectedData, mutate: mutateSelectedMember } = useSWR(
     selectedId ? `/api/v1/members/${selectedId}` : null,
     fetcher
   );
@@ -88,6 +113,57 @@ export default function LineageClient() {
   );
 
   const selectedMember = selectedData?.data ?? null;
+
+  const relinkParentOptions = useMemo(
+    () => members.filter((m) => m.id !== selectedMember?.id),
+    [members, selectedMember?.id]
+  );
+
+  useEffect(() => {
+    if (!isRelinkOpen) return;
+    setRelinkParentId("");
+    setRelinkError(null);
+  }, [selectedMember?.id, isRelinkOpen]);
+
+  const openAddMemberModal = () => {
+    pendingParentRef.current = null;
+    setModalKey((k) => k + 1);
+    open();
+  };
+
+  const handleCreateMemberSuccess = async () => {
+    close();
+    await mutateMembers();
+  };
+
+  const handleRelinkSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedMember?.id || !relinkParentId) return;
+
+    setRelinkSubmitting(true);
+    setRelinkError(null);
+
+    try {
+      const res = await fetch("/api/v1/relationships", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          parentId: relinkParentId,
+          childId: selectedMember.id,
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data?.error ?? "Khong the lien ket cha/me");
+
+      closeRelink();
+      await Promise.all([mutateMembers(), mutateSelectedMember()]);
+    } catch (error: any) {
+      setRelinkError(error?.message ?? "Da xay ra loi");
+    } finally {
+      setRelinkSubmitting(false);
+    }
+  };
 
   return (
     <div className="flex flex-col h-[calc(100vh-64px)]">
@@ -120,12 +196,13 @@ export default function LineageClient() {
           >
             Mạng Lưới
           </button>
-          <Link
-            href="/lineage/add"
+          <button
+            onClick={openAddMemberModal}
             className="btn-lacquer px-4 py-2 text-xs font-header tracking-widest uppercase ml-2"
+            type="button"
           >
             + Thêm
-          </Link>
+          </button>
         </div>
       </div>
 
@@ -145,9 +222,13 @@ export default function LineageClient() {
               <p className="font-header text-antique-gold/40 text-sm tracking-widest">
                 Chưa có thành viên nào.
               </p>
-              <Link href="/lineage/add" className="btn-lacquer px-6 py-3 text-xs font-header tracking-widest uppercase">
+              <button
+                type="button"
+                onClick={openAddMemberModal}
+                className="btn-lacquer px-6 py-3 text-xs font-header tracking-widest uppercase"
+              >
                 Thêm Thành Viên Đầu Tiên
-              </Link>
+              </button>
             </div>
           )}
           {!isLoading && nodes.length > 0 && (
@@ -240,6 +321,15 @@ export default function LineageClient() {
               </div>
             )}
 
+            {/* Relink action for existing/orphan members */}
+            <button
+              type="button"
+              onClick={openRelink}
+              className="w-full py-2 border border-antique-gold/30 text-antique-gold/80 hover:text-parchment hover:border-antique-gold/60 text-xs font-header tracking-widest uppercase transition-colors"
+            >
+              {selectedMember.parents?.length > 0 ? "Them Cha/Me" : "Gan Cha/Me"}
+            </button>
+
             {/* Children */}
             {selectedMember.children?.length > 0 && (
               <div>
@@ -265,6 +355,82 @@ export default function LineageClient() {
           </aside>
         )}
       </div>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={close}
+        size="lg"
+        title="Thêm Thành Viên"
+      >
+        <AddMemberForm
+          key={modalKey}
+          mode="modal"
+          defaultParentId={pendingParentRef.current?.id ?? ""}
+          defaultParentOption={pendingParentRef.current}
+          onSuccess={handleCreateMemberSuccess}
+          onCancel={close}
+        />
+      </Modal>
+
+      <Modal
+        isOpen={isRelinkOpen}
+        onClose={closeRelink}
+        size="md"
+        title="Gan Cha/Me Cho Thanh Vien"
+      >
+        <form onSubmit={handleRelinkSubmit} className="px-5 py-5 space-y-4">
+          {relinkError && (
+            <div className="bg-red-950/40 border border-imperial-crimson/50 text-parchment/80 text-sm px-3 py-2">
+              {relinkError}
+            </div>
+          )}
+
+          <div>
+            <p className="text-xs font-header tracking-widest uppercase text-antique-gold/60 mb-1.5">
+              Thanh Vien
+            </p>
+            <p className="text-sm text-parchment/90">{selectedMember?.fullName ?? "-"}</p>
+          </div>
+
+          <div>
+            <label className="text-xs font-header tracking-widest uppercase text-antique-gold/60 block mb-1.5">
+              Chon Cha/Me
+            </label>
+            <select
+              required
+              value={relinkParentId}
+              onChange={(e) => setRelinkParentId(e.target.value)}
+              className="w-full bg-panel-dark border border-antique-gold/20 text-parchment text-sm px-3 py-2.5 focus:outline-none focus:border-antique-gold/60"
+            >
+              <option value="">- Chon thanh vien -</option>
+              {relinkParentOptions.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.fullName}
+                  {m.generation ? ` (Doi ${m.generation})` : ""}
+                  {m.isDeceased ? " +" : ""}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 pt-1">
+            <button
+              type="button"
+              onClick={closeRelink}
+              className="py-2.5 border border-antique-gold/20 text-parchment/70 text-xs font-header tracking-widest uppercase"
+            >
+              Huy
+            </button>
+            <button
+              type="submit"
+              disabled={relinkSubmitting || !relinkParentId}
+              className="py-2.5 btn-lacquer text-xs font-header tracking-widest uppercase disabled:opacity-50"
+            >
+              {relinkSubmitting ? "Dang Luu..." : "Luu Lien Ket"}
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }

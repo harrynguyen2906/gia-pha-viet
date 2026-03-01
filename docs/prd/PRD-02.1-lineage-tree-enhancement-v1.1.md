@@ -23,6 +23,7 @@ Bản MVP hiện tại của chức năng Cây Gia Phả (Traditional Lineage Tr
 | 5 | Không có cách thêm node con nhanh trực tiếp từ cây | UX — Trung bình |
 | 6 | Không có hình ảnh demo, thiếu avatar cho seed data | Visual — Thấp |
 | 7 | Không có mini-map, người dùng mất phương hướng trong cây lớn | UX — Cao |
+| 8 | Thành viên đã tạo nhưng thiếu relationship (orphan) không có thao tác gắn lại cha/mẹ ngay trên cây | UX/Bug — Cao |
 
 ### 1.2 Mục Tiêu v1.1
 
@@ -33,6 +34,7 @@ Bản MVP hiện tại của chức năng Cây Gia Phả (Traditional Lineage Tr
 - **Quick-add child**: Hover node → nút "+" để thêm con nhanh
 - **Mini-map**: Bản đồ thu nhỏ góc phải dưới để định vị trong cây lớn
 - **Demo assets**: Ảnh avatar mẫu cho dữ liệu seed
+- **Relink orphan member**: Cho phép gắn lại cha/mẹ cho thành viên đã tạo nhưng chưa có relationship
 
 ---
 
@@ -237,6 +239,43 @@ Bản MVP hiện tại của chức năng Cây Gia Phả (Traditional Lineage Tr
 
 ---
 
+### 3.8 Gắn Lại Cha/Mẹ Cho Thành Viên Đã Tạo (Relink Orphan Member)
+
+**Mô tả:** Trong thực tế có trường hợp member được tạo thành công nhưng không tạo được relationship (ví dụ dữ liệu seed UUID không theo strict RFC). Khi đó member trở thành orphan (`parentIds: []`) và không nằm đúng nhánh cây mong muốn.
+
+**Yêu cầu:**
+- Trong detail panel của Lineage, thêm action `Gan Cha/Me` (hoặc `Them Cha/Me` nếu member đã có parent).
+- Click action mở modal chọn parent từ danh sách member cùng clan.
+- Submit sẽ gọi `POST /api/v1/relationships` với `{ parentId, childId }`.
+- Thành công phải refresh ngay:
+  - Danh sách members để cây rerender.
+  - Detail member hiện tại để cập nhật `parents`/`children`.
+- Khi member chưa được gắn parent, member vẫn phải hiển thị trong cây như một root tạm thời để người dùng thao tác relink.
+
+**Chi tiết UI:**
+- Nút action trong panel bên phải: kiểu secondary outline, text uppercase theo style hiện tại.
+- Modal gồm:
+  - Tên member đang relink (read-only).
+  - Dropdown chọn cha/mẹ.
+  - Nút `Luu Lien Ket` + `Huy`.
+  - Error banner nếu API trả lỗi.
+
+**Hành vi:**
+1. User chọn một orphan member trên cây.
+2. Click `Gan Cha/Me`.
+3. Chọn parent và bấm `Luu Lien Ket`.
+4. API tạo relationship thành công.
+5. Cây tự refresh và member chuyển về đúng nhánh parent.
+
+**Acceptance Criteria:**
+- [ ] Detail panel có action relink parent cho member hiện tại.
+- [ ] Modal relink hiển thị danh sách parent hợp lệ (loại trừ chính member đó).
+- [ ] Submit thành công tạo relationship và tự refresh tree/detail.
+- [ ] Member orphan sau relink không còn `parentIds: []` (trừ root thật sự).
+- [ ] Trường hợp lỗi API hiển thị message rõ ràng trong modal.
+
+---
+
 ## 4. Style & Tokens Bổ Sung
 
 Giữ nguyên toàn bộ design tokens từ [PRD-00](PRD-00-global-design-system.md) và [design-tokens.md](../implementation/design-tokens.md). Bổ sung:
@@ -281,7 +320,7 @@ Các tính năng sau **KHÔNG** nằm trong v1.1:
 
 ## 7. Định Nghĩa Hoàn Thành (Definition of Done)
 
-- [ ] Tất cả 7 acceptance criteria sections ở mục 3 đều pass
+- [ ] Tất cả 8 acceptance criteria sections ở mục 3 đều pass
 - [ ] `npx tsc --noEmit` — zero errors
 - [ ] Responsive: cây hiển thị đúng trên desktop (1280+) và tablet (768+)
 - [ ] Performance: smooth 60fps zoom/pan với 50 nodes

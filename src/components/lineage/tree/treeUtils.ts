@@ -29,18 +29,23 @@ export function buildHierarchy(
     .filter((g): g is number => g != null);
   const minGeneration = allGenerations.length > 0 ? Math.min(...allGenerations) : 1;
 
-  const roots = members.filter((m) => {
+  const rootCandidates = members.filter((m) => {
     const parentsInDataset = m.parentIds.filter((pid) => memberMap.has(pid));
-    if (parentsInDataset.length === 0) {
-      return (m.generation ?? minGeneration) <= minGeneration;
-    }
-    return false;
+    return parentsInDataset.length === 0;
   });
 
-  const effectiveRoots =
-    roots.length > 0
-      ? roots
-      : members.filter((m) => (m.generation ?? 1) === minGeneration);
+  // Keep the canonical top ancestor roots (minimum generation), but also include
+  // disconnected/orphan members so newly created unlinked members are still visible.
+  const topRoots = rootCandidates.filter(
+    (m) => (m.generation ?? minGeneration) <= minGeneration
+  );
+
+  const fallbackRoots = members.filter((m) => (m.generation ?? 1) === minGeneration);
+
+  const mainRoots = topRoots.length > 0 ? topRoots : fallbackRoots;
+  const mainRootIds = new Set(mainRoots.map((m) => m.id));
+  const orphanRoots = rootCandidates.filter((m) => !mainRootIds.has(m.id));
+  const effectiveRoots = [...mainRoots, ...orphanRoots];
 
   const virtualRoot: MemberNode = {
     id: "__root__",

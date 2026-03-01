@@ -3,9 +3,13 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { ok, err, requireAuth, getClanId, canEdit } from "@/lib/api";
 
+// Accept canonical 36-char UUID form used in DB, including legacy seeded IDs
+// that may not match strict RFC version/variant constraints.
+const uuidLike = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 const schema = z.object({
-  parentId: z.string().uuid(),
-  childId: z.string().uuid(),
+  parentId: z.string().trim().regex(uuidLike, "Invalid parentId format"),
+  childId: z.string().trim().regex(uuidLike, "Invalid childId format"),
   relationshipType: z.enum(["BIOLOGICAL", "ADOPTED", "STEP"]).default("BIOLOGICAL"),
 });
 

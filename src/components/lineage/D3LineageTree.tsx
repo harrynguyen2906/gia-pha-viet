@@ -29,6 +29,7 @@ export default function D3LineageTree({
   // Refs to avoid stale closures inside the zoom handler
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
   const transformRef = useRef<d3.ZoomTransform>(d3.zoomIdentity);
+  const hasInitializedTransformRef = useRef(false);
   const showMiniMapRef = useRef(showMiniMap);
   showMiniMapRef.current = showMiniMap;
 
@@ -94,18 +95,23 @@ export default function D3LineageTree({
     zoomRef.current = zoom;
     svg.call(zoom as any);
 
-    // Apply initial centering transform (fires zoom handler → g.attr() is safe now)
+    // Keep the current viewport on rerenders; only auto-center the first time.
     const { minX, minY, totalW, totalH } = bounds;
     const scale = Math.min(dimensions.w / totalW, dimensions.h / totalH, 0.9);
-    const initTransform = d3.zoomIdentity
+    const centeredTransform = d3.zoomIdentity
       .translate(
         dimensions.w / 2 - (minX + totalW / 2) * scale,
         dimensions.h / 2 - (minY + totalH / 2) * scale
       )
       .scale(scale);
 
-    svg.call((zoom as any).transform, initTransform);
-    transformRef.current = initTransform;
+    const nextTransform = hasInitializedTransformRef.current
+      ? transformRef.current
+      : centeredTransform;
+
+    svg.call((zoom as any).transform, nextTransform);
+    transformRef.current = nextTransform;
+    hasInitializedTransformRef.current = true;
 
     // Draw tree content into g
     drawLinks(g, links, previousPositionsRef.current, COLLAPSE_ANIMATION_MS);
@@ -131,7 +137,7 @@ export default function D3LineageTree({
     if (showMiniMapRef.current && miniSvgRef.current && svgRef.current && zoomRef.current) {
       renderMiniMap(
         miniSvgRef.current, nodes, links, bounds,
-        initTransform, dimensions,
+        nextTransform, dimensions,
         svgRef.current, zoomRef.current, selectedMemberId
       );
     }

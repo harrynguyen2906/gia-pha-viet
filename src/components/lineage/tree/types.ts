@@ -21,7 +21,12 @@ export interface Props {
   members: MemberNode[];
   onSelectMember: (id: string) => void;
   selectedMemberId: string | null;
-  onAddChild?: (parentId: string) => void;
+  onAddChild?: (parent: {
+    id: string;
+    fullName: string;
+    generation?: number | null;
+    isDeceased: boolean;
+  }) => void;
 }
 
 export interface TreeBounds {
@@ -36,7 +41,12 @@ export interface RenderContext {
   collapsedNodes: Set<string>;
   childrenMap: Map<string, string[]>;
   onSelectMember: (id: string) => void;
-  onAddChild?: (parentId: string) => void;
+  onAddChild?: (parent: {
+    id: string;
+    fullName: string;
+    generation?: number | null;
+    isDeceased: boolean;
+  }) => void;
   setCollapsedNodes: (fn: (prev: Set<string>) => Set<string>) => void;
   previousPositions: Map<string, { x: number; y: number }>;
   animationMs: number;

@@ -366,7 +366,12 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
 
     addBtns.on("click", (event, d) => {
       event.stopPropagation();
-      onAddChild(d.data.id);
+      onAddChild({
+        id: d.data.id,
+        fullName: d.data.fullName,
+        generation: d.data.generation,
+        isDeceased: d.data.isDeceased,
+      });
     });
   }
 }
