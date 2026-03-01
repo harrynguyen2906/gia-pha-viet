@@ -76,6 +76,7 @@ async function main() {
       isDeceased: true,
       gender: GenderType.MALE,
       lineageRole: LineageRole.HEAD_OF_HOUSE,
+      avatarUrl: "/images/demo/male-elder.svg",
       biography: "Nguyễn Văn Tổ là người đầu tiên khai khẩn đất tại làng Bình An, Quảng Ngãi.",
     },
   });
@@ -93,6 +94,7 @@ async function main() {
       isDeceased: true,
       gender: GenderType.FEMALE,
       lineageRole: LineageRole.ELDER,
+      avatarUrl: "/images/demo/female-elder.svg",
     },
   });
 

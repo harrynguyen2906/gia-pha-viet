@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface MemberOption {
   id: string;
@@ -12,8 +12,11 @@ interface MemberOption {
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
-export default function AddMemberPage() {
+function AddMemberForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const defaultParentId = searchParams.get("parentId") ?? "";
+
   const [form, setForm] = useState({
     fullName: "",
     gender: "MALE",
@@ -27,7 +30,7 @@ export default function AddMemberPage() {
     deathDateLunar: "",
     biography: "",
   });
-  const [parentId, setParentId] = useState<string>("");
+  const [parentId, setParentId] = useState<string>(defaultParentId);
   const [members, setMembers] = useState<MemberOption[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -35,7 +38,18 @@ export default function AddMemberPage() {
   useEffect(() => {
     fetch("/api/v1/members?limit=200")
       .then((r) => r.json())
-      .then((d) => setMembers(d?.data?.data ?? []));
+      .then((d) => {
+        const list: MemberOption[] = d?.data?.data ?? [];
+        setMembers(list);
+        // Auto-fill generation from parent if parentId pre-selected
+        if (defaultParentId) {
+          const parent = list.find((m) => m.id === defaultParentId);
+          if (parent?.generation) {
+            setForm((f) => ({ ...f, generation: parent.generation! + 1 }));
+          }
+        }
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -308,5 +322,17 @@ export default function AddMemberPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function AddMemberPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center h-[calc(100vh-64px)]">
+        <p className="font-header text-antique-gold/60 text-sm tracking-widest animate-pulse">Đang tải…</p>
+      </div>
+    }>
+      <AddMemberForm />
+    </Suspense>
   );
 }

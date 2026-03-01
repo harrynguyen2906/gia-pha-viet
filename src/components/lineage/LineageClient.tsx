@@ -1,7 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import useSWR from "swr";
 import Link from "next/link";
 
@@ -18,6 +19,7 @@ interface Member {
   generation?: number | null;
   avatarUrl?: string | null;
   gender?: string | null;
+  lineageRole?: string | null;
   parentIds?: string[];
   childIds?: string[];
   spouseIds?: string[];
@@ -32,6 +34,7 @@ interface MemberNode {
   generation?: number | null;
   avatarUrl?: string | null;
   gender?: string | null;
+  lineageRole?: string | null;
   parentIds: string[];
   spouseIds: string[];
 }
@@ -46,15 +49,22 @@ function toNode(m: Member): MemberNode {
     generation: m.generation,
     avatarUrl: m.avatarUrl,
     gender: m.gender,
+    lineageRole: m.lineageRole,
     parentIds: m.parentIds ?? [],
     spouseIds: m.spouseIds ?? [],
   };
 }
 
 export default function LineageClient() {
+  const router = useRouter();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [view, setView] = useState<"tree" | "neural">("tree");
+
+  const handleAddChild = useCallback(
+    (parentId: string) => router.push(`/lineage/add?parentId=${parentId}`),
+    [router]
+  );
 
   const { data: membersData, isLoading } = useSWR(
     "/api/v1/members?limit=200",
@@ -141,6 +151,7 @@ export default function LineageClient() {
               members={nodes}
               onSelectMember={setSelectedId}
               selectedMemberId={selectedId}
+              onAddChild={handleAddChild}
             />
           )}
         </div>

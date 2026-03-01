@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1a1225"/>
+      <stop offset="100%" stop-color="#0e0818"/>
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="100" fill="url(#bg)"/>
+  <circle cx="100" cy="100" r="98" fill="none" stroke="rgba(197,160,89,0.4)" stroke-width="2"/>
+  <!-- Body / robe -->
+  <ellipse cx="100" cy="162" rx="38" ry="28" fill="rgba(197,160,89,0.1)" stroke="rgba(197,160,89,0.25)" stroke-width="1.5"/>
+  <path d="M72 148 Q100 138 128 148 L130 178 Q100 170 70 178 Z" fill="rgba(197,160,89,0.15)" stroke="rgba(197,160,89,0.3)" stroke-width="1"/>
+  <!-- Head -->
+  <circle cx="100" cy="85" r="26" fill="rgba(244,235,208,0.8)" stroke="rgba(197,160,89,0.35)" stroke-width="1.5"/>
+  <!-- Hair bun (traditional Vietnamese) -->
+  <ellipse cx="100" cy="60" rx="18" ry="12" fill="rgba(50,35,20,0.85)" stroke="rgba(197,160,89,0.3)" stroke-width="1"/>
+  <path d="M78 72 Q80 60 100 58 Q120 60 122 72" fill="rgba(50,35,20,0.7)" stroke="none"/>
+  <!-- Hairpin decoration -->
+  <line x1="90" y1="56" x2="95" y2="48" stroke="rgba(197,160,89,0.8)" stroke-width="1.5"/>
+  <circle cx="95" cy="47" r="2.5" fill="rgba(197,160,89,0.9)"/>
+  <!-- Eyes (narrower, longer) -->
+  <path d="M87 83 Q90 80 93 83" stroke="rgba(40,25,15,0.9)" stroke-width="1.5" fill="rgba(40,25,15,0.85)" stroke-linecap="round"/>
+  <path d="M107 83 Q110 80 113 83" stroke="rgba(40,25,15,0.9)" stroke-width="1.5" fill="rgba(40,25,15,0.85)" stroke-linecap="round"/>
+  <!-- Eyebrows (arched) -->
+  <path d="M86 77 Q90 74 94 76" stroke="rgba(50,35,20,0.7)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <path d="M106 76 Q110 74 114 77" stroke="rgba(50,35,20,0.7)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <!-- Nose -->
+  <path d="M99 88 Q100 93 101 88" stroke="rgba(180,140,110,0.5)" stroke-width="1" fill="none"/>
+  <!-- Lips (small, gentle) -->
+  <path d="M93 97 Q100 101 107 97" stroke="rgba(190,120,100,0.8)" stroke-width="2" fill="rgba(190,120,100,0.3)" stroke-linecap="round"/>
+  <!-- Cheek blush -->
+  <ellipse cx="84" cy="92" rx="7" ry="4" fill="rgba(220,140,120,0.18)"/>
+  <ellipse cx="116" cy="92" rx="7" ry="4" fill="rgba(220,140,120,0.18)"/>
+  <!-- White strands in hair (elderly) -->
+  <path d="M82 70 Q86 64 90 68" stroke="rgba(220,210,200,0.4)" stroke-width="1" fill="none"/>
+  <path d="M110 68 Q114 64 118 70" stroke="rgba(220,210,200,0.4)" stroke-width="1" fill="none"/>
+</svg>
