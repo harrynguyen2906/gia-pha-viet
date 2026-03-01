@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 import Link from "next/link";
@@ -76,12 +76,16 @@ export default function LineageClient() {
     fetcher
   );
 
-  const members: Member[] = membersData?.data?.data ?? [];
-  const nodes: MemberNode[] = members
-    .filter((m) =>
-      !search || m.fullName.toLowerCase().includes(search.toLowerCase())
-    )
-    .map(toNode);
+  const members: Member[] = useMemo(() => membersData?.data?.data ?? [], [membersData]);
+  const nodes: MemberNode[] = useMemo(
+    () =>
+      members
+        .filter((m) =>
+          !search || m.fullName.toLowerCase().includes(search.toLowerCase())
+        )
+        .map(toNode),
+    [members, search]
+  );
 
   const selectedMember = selectedData?.data ?? null;
 

@@ -32,7 +32,7 @@ export interface TreeBounds {
 }
 
 export interface RenderContext {
-  selectedMemberId: string | null;
+  getSelectedMemberId: () => string | null;
   collapsedNodes: Set<string>;
   childrenMap: Map<string, string[]>;
   onSelectMember: (id: string) => void;

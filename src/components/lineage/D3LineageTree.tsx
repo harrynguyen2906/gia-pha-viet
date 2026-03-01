@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { buildHierarchy } from "./tree/treeUtils";
-import { setupDefs, drawLinks, drawSpouseLines, drawNodes } from "./tree/renderer";
+import { setupDefs, drawLinks, drawSpouseLines, drawNodes } from "@/components/lineage/tree/renderer";
 import { renderMiniMap } from "./tree/minimap";
 import { MINI_W, MINI_H } from "./tree/constants";
 import type { Props, TreeNode, TreeLink, TreeBounds } from "./tree/types";
@@ -23,6 +23,8 @@ export default function D3LineageTree({
   const [dimensions, setDimensions] = useState({ w: 1200, h: 700 });
   const [collapsedNodes, setCollapsedNodes] = useState<Set<string>>(new Set());
   const [showMiniMap, setShowMiniMap] = useState(true);
+  const selectedMemberIdRef = useRef<string | null>(selectedMemberId);
+  selectedMemberIdRef.current = selectedMemberId;
 
   // Refs to avoid stale closures inside the zoom handler
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
@@ -109,7 +111,7 @@ export default function D3LineageTree({
     drawLinks(g, links, previousPositionsRef.current, COLLAPSE_ANIMATION_MS);
     drawSpouseLines(g, nodes, previousPositionsRef.current, COLLAPSE_ANIMATION_MS);
     drawNodes(g, nodes, {
-      selectedMemberId,
+      getSelectedMemberId: () => selectedMemberIdRef.current,
       collapsedNodes,
       childrenMap,
       onSelectMember,
@@ -135,7 +137,47 @@ export default function D3LineageTree({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [members, dimensions, selectedMemberId, onSelectMember, onAddChild, collapsedNodes]);
+  }, [members, dimensions, onSelectMember, onAddChild, collapsedNodes]);
+
+  useEffect(() => {
+    if (!svgRef.current) return;
+
+    const svg = d3.select(svgRef.current);
+
+    svg.selectAll<SVGGElement, TreeNode>(".node").each(function (d) {
+      const isSelected = d.data.id === selectedMemberId;
+      d3.select(this)
+        .select<SVGRectElement>(".card-rect")
+        .attr("fill", () => {
+          if (isSelected) return "#8a0000";
+          if (d.data.isDeceased) return "#231212";
+          return "#1a0808";
+        })
+        .attr("stroke", isSelected ? "#e5c17c" : "rgba(197,160,89,0.35)")
+        .attr("stroke-width", isSelected ? 2 : 1);
+    });
+
+    if (
+      showMiniMapRef.current &&
+      miniSvgRef.current &&
+      svgRef.current &&
+      zoomRef.current &&
+      treeStateRef.current
+    ) {
+      const { nodes, links, bounds } = treeStateRef.current;
+      renderMiniMap(
+        miniSvgRef.current,
+        nodes,
+        links,
+        bounds,
+        transformRef.current,
+        dimensions,
+        svgRef.current,
+        zoomRef.current,
+        selectedMemberId
+      );
+    }
+  }, [selectedMemberId, dimensions]);
 
   return (
     <div ref={containerRef} className="w-full h-full relative">

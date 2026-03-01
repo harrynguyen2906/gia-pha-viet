@@ -8,7 +8,6 @@ type GSel = d3.Selection<SVGGElement, unknown, null, undefined>;
 
 const DEFAULT_ANIMATION_MS = 280;
 
-// ── Elbow / org-chart connector path ─────────────────────────────────────────
 export function elbowPath(d: TreeLink): string {
   const sx = d.source.x;
   const sy = d.source.y + NODE_H / 2;
@@ -30,7 +29,6 @@ function elbowPathByPoints(
   return `M ${sx},${sy} V ${midY} H ${tx} V ${ty}`;
 }
 
-// ── SVG defs (filters + avatar clip-paths) ────────────────────────────────────
 export function setupDefs(svg: SvgSel, nodes: TreeNode[]): void {
   const defs = svg.append("defs");
 
@@ -60,7 +58,6 @@ export function setupDefs(svg: SvgSel, nodes: TreeNode[]): void {
     });
 }
 
-// ── Elbow connector links ─────────────────────────────────────────────────────
 export function drawLinks(
   g: GSel,
   links: TreeLink[],
@@ -88,7 +85,6 @@ export function drawLinks(
     .attr("d", elbowPath as any);
 }
 
-// ── Dashed spouse lines ───────────────────────────────────────────────────────
 export function drawSpouseLines(
   g: GSel,
   nodes: TreeNode[],
@@ -125,10 +121,9 @@ export function drawSpouseLines(
   }
 }
 
-// ── Node groups with all visual layers ───────────────────────────────────────
 export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void {
   const {
-    selectedMemberId,
+    getSelectedMemberId,
     collapsedNodes,
     childrenMap,
     onSelectMember,
@@ -137,6 +132,7 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
     previousPositions,
     animationMs,
   } = ctx;
+  const isSelected = (id: string) => id === getSelectedMemberId();
   const visible = nodes.filter((n) => n.data.id !== "__root__");
 
   const nodeGroups = g
@@ -158,7 +154,6 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
     .style("cursor", "pointer")
     .on("click", (_e, d) => onSelectMember(d.data.id));
 
-  // Card background
   nodeGroups
     .append("rect")
     .attr("class", "card-rect")
@@ -168,17 +163,16 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
     .attr("height", NODE_H)
     .attr("rx", 4)
     .attr("fill", (d) => {
-      if (d.data.id === selectedMemberId) return "#8a0000";
+      if (isSelected(d.data.id)) return "#8a0000";
       if (d.data.isDeceased) return "#231212";
       return "#1a0808";
     })
     .attr("stroke", (d) =>
-      d.data.id === selectedMemberId ? "#e5c17c" : "rgba(197,160,89,0.35)"
+      isSelected(d.data.id) ? "#e5c17c" : "rgba(197,160,89,0.35)"
     )
-    .attr("stroke-width", (d) => (d.data.id === selectedMemberId ? 2 : 1))
+    .attr("stroke-width", (d) => (isSelected(d.data.id) ? 2 : 1))
     .attr("filter", (d) => (d.data.isDeceased ? "url(#grayscale-filter)" : null));
 
-  // Avatar circle background
   nodeGroups
     .append("circle")
     .attr("cx", -NODE_W / 2 + 28)
@@ -189,7 +183,6 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
     .attr("stroke-width", 1)
     .attr("filter", (d) => (d.data.isDeceased ? "url(#grayscale-filter)" : null));
 
-  // Avatar image (when available)
   nodeGroups
     .filter((d) => !!d.data.avatarUrl)
     .append("image")
@@ -201,7 +194,6 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
     .attr("clip-path", (d) => `url(#avatar-clip-${d.data.id.replace(/[^a-zA-Z0-9]/g, "_")})`)
     .attr("filter", (d) => (d.data.isDeceased ? "url(#grayscale-filter)" : null));
 
-  // Gender icon (when no avatar)
   nodeGroups
     .filter((d) => !d.data.avatarUrl)
     .append("svg")
@@ -220,7 +212,6 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
       d.data.isDeceased ? "rgba(197,160,89,0.35)" : "rgba(197,160,89,0.65)"
     );
 
-  // Role badge (top-right dot)
   nodeGroups
     .filter((d) => !!(d.data.lineageRole && ROLE_COLORS[d.data.lineageRole]))
     .append("circle")
@@ -231,7 +222,6 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
     .attr("stroke", "rgba(26,8,8,0.8)")
     .attr("stroke-width", 1);
 
-  // Full name
   nodeGroups
     .append("text")
     .attr("x", -NODE_W / 2 + 58)
@@ -241,7 +231,6 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
     .attr("fill", (d) => (d.data.isDeceased ? "rgba(244,235,208,0.6)" : "#f4ebd0"))
     .text((d) => (d.data.fullName.length > 16 ? d.data.fullName.slice(0, 14) + "…" : d.data.fullName));
 
-  // Birth / death years
   nodeGroups
     .append("text")
     .attr("x", -NODE_W / 2 + 58)
@@ -255,7 +244,6 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
       return String(b);
     });
 
-  // Generation label
   nodeGroups
     .append("text")
     .attr("x", -NODE_W / 2 + 58)
@@ -265,7 +253,6 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
     .attr("fill", "rgba(197,160,89,0.4)")
     .text((d) => (d.data.generation ? `Đời ${d.data.generation}` : ""));
 
-  // Deceased cross mark
   nodeGroups
     .filter((d) => d.data.isDeceased)
     .append("text")
@@ -275,12 +262,11 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
     .attr("fill", "rgba(197,160,89,0.5)")
     .text("✝");
 
-  // Hover highlight
   nodeGroups
     .on("mouseenter", function (_e, d) {
       d3.select(this)
         .select(".card-rect")
-        .attr("stroke", d.data.id === selectedMemberId ? "#e5c17c" : "rgba(197,160,89,0.7)");
+        .attr("stroke", isSelected(d.data.id) ? "#e5c17c" : "rgba(197,160,89,0.7)");
       if (onAddChild) {
         d3.select(this)
           .select(".add-child-btn")
@@ -293,7 +279,7 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
     .on("mouseleave", function (_e, d) {
       d3.select(this)
         .select(".card-rect")
-        .attr("stroke", d.data.id === selectedMemberId ? "#e5c17c" : "rgba(197,160,89,0.35)");
+        .attr("stroke", isSelected(d.data.id) ? "#e5c17c" : "rgba(197,160,89,0.35)");
       if (onAddChild) {
         d3.select(this)
           .select(".add-child-btn")
@@ -304,7 +290,6 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
       }
     });
 
-  // ── Collapse/expand button ─────────────────────────────────────────────────
   const collapsible = nodeGroups.filter(
     (d) => (childrenMap.get(d.data.id)?.length ?? 0) > 0
   );
@@ -329,7 +314,6 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
     .attr("pointer-events", "none")
     .text((d) => (collapsedNodes.has(d.data.id) ? "▸" : "▾"));
 
-  // Collapsed descendant count badge
   visible.forEach((d) => {
     if (collapsedNodes.has(d.data.id)) {
       const count = countAllDescendants(d.data.id, childrenMap);
@@ -354,7 +338,6 @@ export function drawNodes(g: GSel, nodes: TreeNode[], ctx: RenderContext): void 
     });
   });
 
-  // ── Add-child hover button ─────────────────────────────────────────────────
   if (onAddChild) {
     const addBtns = nodeGroups
       .append("g")
