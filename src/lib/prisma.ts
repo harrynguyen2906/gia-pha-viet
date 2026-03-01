@@ -5,13 +5,13 @@ import { Pool } from "pg";
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
 function createPrismaClient() {
-  // Use DIRECT_URL (plain postgres://) for a proper pool — avoids the
-  // Prisma proxy overhead which forces connection_limit=1 & single_use_connections=true.
+  // Use DATABASE_URL (Supabase pooler / PgBouncer) for serverless-friendly connections.
+  // DIRECT_URL (port 5432) is reserved for migrations only.
   const pool = new Pool({
-    connectionString: process.env.DIRECT_URL!,
+    connectionString: process.env.DATABASE_URL!,
     max: 10,
-    idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 5000,
+    idleTimeoutMillis: 20000,
+    connectionTimeoutMillis: 10000,
   });
   const adapter = new PrismaPg(pool);
   return new PrismaClient({

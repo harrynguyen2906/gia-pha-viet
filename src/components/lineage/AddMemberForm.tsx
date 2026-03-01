@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 
 interface MemberOption {
   id: string;
@@ -169,9 +170,10 @@ export default function AddMemberForm({
         <div className="mb-6">
           <button
             onClick={() => router.back()}
-            className="text-antique-gold/60 hover:text-antique-gold text-xs font-header tracking-widest uppercase transition-colors"
+            className="text-antique-gold/60 hover:text-antique-gold text-xs font-header tracking-widest uppercase transition-colors flex items-center gap-1.5"
           >
-            ← Tro Lai
+            <ArrowLeft className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
+            Tro Lai
           </button>
         </div>
       )}

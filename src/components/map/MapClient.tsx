@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 import useSWR from "swr";
 import Link from "next/link";
+import { Cross, Map, Navigation, ScrollText, X, ChevronRight } from "lucide-react";
 
 // Google Maps must be dynamically imported (needs browser)
 const GoogleMap = dynamic(() => import("@/components/map/GoogleMap"), { ssr: false });
@@ -136,8 +137,11 @@ export default function MapClient() {
                 </>
               ) : (
                 <div className="w-full h-full flex flex-col items-center justify-center gap-3">
-                  <span className="text-4xl opacity-20">
-                    {selectedSite ? "🪦" : "🗺️"}
+                  <span className="opacity-20 text-parchment">
+                    {selectedSite
+                      ? <Cross className="w-10 h-10" strokeWidth={1} aria-hidden="true" />
+                      : <Map className="w-10 h-10" strokeWidth={1} aria-hidden="true" />
+                    }
                   </span>
                   <p className="font-header text-parchment/30 text-xs tracking-widest uppercase text-center px-6">
                     {selectedSite
@@ -165,10 +169,10 @@ export default function MapClient() {
                   </div>
                   <button
                     onClick={() => setSelectedSite(null)}
-                    className="flex-shrink-0 text-parchment/30 hover:text-parchment transition-colors text-sm mt-0.5"
+                    className="flex-shrink-0 text-parchment/30 hover:text-parchment transition-colors mt-0.5"
                     aria-label="Đóng"
                   >
-                    ✕
+                    <X className="w-4 h-4" strokeWidth={1.5} />
                   </button>
                 </div>
 
@@ -186,7 +190,8 @@ export default function MapClient() {
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-1 py-2 bg-imperial-crimson/10 hover:bg-imperial-crimson/20 border border-imperial-crimson/30 text-parchment/70 text-[10px] font-header tracking-widest uppercase transition-all"
                     >
-                      🧭 Dẫn Đường
+                      <Navigation className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
+                      Dẫn Đường
                     </a>
                   ) : (
                     <div />
@@ -195,7 +200,8 @@ export default function MapClient() {
                     href={`/lineage/${selectedSite.memberId}`}
                     className="flex items-center justify-center gap-1 py-2 bg-antique-gold/10 hover:bg-antique-gold/20 border border-antique-gold/20 text-antique-gold/70 text-[10px] font-header tracking-widest uppercase transition-all"
                   >
-                    📜 Hồ Sơ
+                    <ScrollText className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
+                    Hồ Sơ
                   </Link>
                 </div>
               </div>
@@ -225,7 +231,10 @@ export default function MapClient() {
                   href="/map/register"
                   className="text-antique-gold/50 hover:text-antique-gold text-xs font-header tracking-widest uppercase mt-2 block transition-colors"
                 >
-                  Thêm địa điểm →
+                  <span className="inline-flex items-center gap-1.5">
+                    Thêm địa điểm
+                    <ChevronRight className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
+                  </span>
                 </Link>
               </div>
             )}

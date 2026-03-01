@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
+import { Cross, ArrowLeft } from "lucide-react";
 
 export async function generateMetadata({ params }: { params: Promise<{ memberId: string }> }) {
   const { memberId } = await params;
@@ -41,8 +42,9 @@ export default async function MemberProfilePage({ params }: { params: Promise<{ 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       {/* Back */}
-      <Link href="/lineage" className="text-antique-gold/60 hover:text-antique-gold text-xs font-header tracking-widest uppercase mb-6 inline-block transition-colors">
-        ← Về Gia Phả
+      <Link href="/lineage" className="text-antique-gold/60 hover:text-antique-gold text-xs font-header tracking-widest uppercase mb-6 inline-flex items-center gap-1.5 transition-colors">
+        <ArrowLeft className="w-3.5 h-3.5" strokeWidth={1.5} aria-hidden="true" />
+        Về Gia Phả
       </Link>
 
       {/* Header */}
@@ -61,7 +63,10 @@ export default async function MemberProfilePage({ params }: { params: Promise<{ 
           <div className="flex items-center gap-3 mb-1">
             <h1 className="font-header text-3xl text-gold-leaf tracking-wider">{member.fullName}</h1>
             {member.isDeceased && (
-              <span className="text-xs bg-red-950 border border-imperial-crimson/50 text-parchment/60 px-2 py-0.5 font-header tracking-widest">✝ Đã Mất</span>
+              <span className="text-xs bg-red-950 border border-imperial-crimson/50 text-parchment/60 px-2 py-0.5 font-header tracking-widest inline-flex items-center gap-1">
+                <Cross className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
+                Đã Mất
+              </span>
             )}
           </div>
           {member.generation && (
@@ -95,7 +100,7 @@ export default async function MemberProfilePage({ params }: { params: Promise<{ 
                 <div className="flex flex-wrap gap-2">
                   {parents.map((p) => (
                     <Link key={p.id} href={`/lineage/${p.id}`} className="text-parchment/80 hover:text-gold-leaf text-sm font-sans transition-colors border-b border-antique-gold/20 hover:border-antique-gold/60">
-                      {p.fullName}{p.isDeceased ? " ✝" : ""}
+                      {p.fullName}{p.isDeceased ? <Cross className="inline w-3 h-3 ml-1" strokeWidth={1.5} aria-hidden="true" /> : null}
                     </Link>
                   ))}
                 </div>
@@ -107,7 +112,7 @@ export default async function MemberProfilePage({ params }: { params: Promise<{ 
                 <div className="flex flex-wrap gap-2">
                   {spouses.map((s) => (
                     <Link key={s.id} href={`/lineage/${s.id}`} className="text-parchment/80 hover:text-gold-leaf text-sm font-sans transition-colors border-b border-antique-gold/20 hover:border-antique-gold/60">
-                      {s.fullName}{s.isDeceased ? " ✝" : ""}
+                      {s.fullName}{s.isDeceased ? <Cross className="inline w-3 h-3 ml-1" strokeWidth={1.5} aria-hidden="true" /> : null}
                     </Link>
                   ))}
                 </div>
@@ -119,7 +124,7 @@ export default async function MemberProfilePage({ params }: { params: Promise<{ 
                 <div className="flex flex-wrap gap-2">
                   {children.map((c) => (
                     <Link key={c.id} href={`/lineage/${c.id}`} className="text-parchment/80 hover:text-gold-leaf text-sm font-sans transition-colors border-b border-antique-gold/20 hover:border-antique-gold/60">
-                      {c.fullName}{c.isDeceased ? " ✝" : ""}
+                      {c.fullName}{c.isDeceased ? <Cross className="inline w-3 h-3 ml-1" strokeWidth={1.5} aria-hidden="true" /> : null}
                     </Link>
                   ))}
                 </div>

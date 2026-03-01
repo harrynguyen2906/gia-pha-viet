@@ -2,6 +2,7 @@
 
 import { ReactNode, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 
 type ModalSize = "xs" | "md" | "lg" | "xl";
 
@@ -70,10 +71,10 @@ export default function Modal({
           <button
             type="button"
             onClick={onClose}
-            className="text-parchment/60 hover:text-parchment text-xl leading-none"
+            className="text-parchment/60 hover:text-parchment transition-colors"
             aria-label="Close"
           >
-            ×
+            <X className="w-5 h-5" strokeWidth={1.5} />
           </button>
         </div>
 

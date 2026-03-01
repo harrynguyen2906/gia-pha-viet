@@ -7,6 +7,7 @@ import Link from "next/link";
 import Modal from "@/components/ui/Modal";
 import { useModal } from "@/hooks/useModal";
 import AddMemberForm from "@/components/lineage/AddMemberForm";
+import { X, Cross, ChevronRight, Plus } from "lucide-react";
 
 const D3LineageTree = dynamic(() => import("@/components/lineage/D3LineageTree"), { ssr: false });
 
@@ -198,10 +199,11 @@ export default function LineageClient() {
           </button>
           <button
             onClick={openAddMemberModal}
-            className="btn-lacquer px-4 py-2 text-xs font-header tracking-widest uppercase ml-2"
+            className="btn-lacquer px-4 py-2 text-xs font-header tracking-widest uppercase ml-2 flex items-center gap-1.5"
             type="button"
           >
-            + Thêm
+            <Plus className="w-3.5 h-3.5" strokeWidth={2} aria-hidden="true" />
+            Thêm
           </button>
         </div>
       </div>
@@ -225,8 +227,9 @@ export default function LineageClient() {
               <button
                 type="button"
                 onClick={openAddMemberModal}
-                className="btn-lacquer px-6 py-3 text-xs font-header tracking-widest uppercase"
+                className="btn-lacquer px-6 py-3 text-xs font-header tracking-widest uppercase flex items-center gap-1.5"
               >
+                <Plus className="w-3.5 h-3.5" strokeWidth={2} aria-hidden="true" />
                 Thêm Thành Viên Đầu Tiên
               </button>
             </div>
@@ -248,9 +251,10 @@ export default function LineageClient() {
               <h3 className="font-header text-gold-leaf text-sm tracking-widest uppercase">Chi Tiết</h3>
               <button
                 onClick={() => setSelectedId(null)}
-                className="text-parchment/40 hover:text-parchment text-xs"
+                className="text-parchment/40 hover:text-parchment transition-colors"
+                aria-label="Đóng"
               >
-                ✕
+                <X className="w-4 h-4" strokeWidth={1.5} />
               </button>
             </div>
 
@@ -273,7 +277,10 @@ export default function LineageClient() {
                   {selectedMember.fullName}
                 </p>
                 {selectedMember.isDeceased && (
-                  <span className="text-xs text-antique-gold/60 font-header tracking-widest">✝ Đã Mất</span>
+                  <span className="text-xs text-antique-gold/60 font-header tracking-widest flex items-center gap-1">
+                    <Cross className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
+                    Đã Mất
+                  </span>
                 )}
               </div>
             </div>
@@ -315,7 +322,8 @@ export default function LineageClient() {
                     onClick={() => setSelectedId(p.id)}
                     className="block w-full text-left text-parchment/70 hover:text-parchment text-xs font-sans py-1 hover:text-gold-leaf transition-colors"
                   >
-                    → {p.fullName}
+                    <ChevronRight className="w-3.5 h-3.5 opacity-50" strokeWidth={1.5} aria-hidden="true" />
+                    {p.fullName}
                   </button>
                 ))}
               </div>
@@ -340,7 +348,8 @@ export default function LineageClient() {
                     onClick={() => setSelectedId(c.id)}
                     className="block w-full text-left text-parchment/70 hover:text-parchment text-xs font-sans py-1 hover:text-gold-leaf transition-colors"
                   >
-                    → {c.fullName}
+                    <ChevronRight className="w-3.5 h-3.5 opacity-50" strokeWidth={1.5} aria-hidden="true" />
+                    {c.fullName}
                   </button>
                 ))}
               </div>

@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import useSWR from "swr";
 import Link from "next/link";
+import { ChevronLeft, ChevronRight, Check, RefreshCw, Plus } from "lucide-react";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -75,14 +76,16 @@ export default function RitualCalendarClient() {
       <div className="flex-1 p-6 overflow-y-auto">
         {/* Month nav */}
         <div className="flex items-center justify-between mb-6">
-          <button onClick={prevMonth} className="text-antique-gold/60 hover:text-antique-gold px-3 py-2 font-header tracking-widest text-sm transition-colors">
-            ← Trước
+          <button onClick={prevMonth} className="text-antique-gold/60 hover:text-antique-gold px-3 py-2 font-header tracking-widest text-sm transition-colors flex items-center gap-1.5">
+            <ChevronLeft className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
+            Trước
           </button>
           <h2 className="font-header text-2xl text-gold-leaf tracking-widest uppercase">
             {MONTH_NAMES_VI[month - 1]} {year}
           </h2>
-          <button onClick={nextMonth} className="text-antique-gold/60 hover:text-antique-gold px-3 py-2 font-header tracking-widest text-sm transition-colors">
-            Sau →
+          <button onClick={nextMonth} className="text-antique-gold/60 hover:text-antique-gold px-3 py-2 font-header tracking-widest text-sm transition-colors flex items-center gap-1.5">
+            Sau
+            <ChevronRight className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
           </button>
         </div>
 
@@ -152,9 +155,10 @@ export default function RitualCalendarClient() {
           </h3>
           <button
             onClick={() => setShowAddModal(true)}
-            className="btn-lacquer px-3 py-1.5 text-xs font-header tracking-widest uppercase"
+            className="btn-lacquer px-3 py-1.5 text-xs font-header tracking-widest uppercase flex items-center gap-1"
           >
-            + Thêm
+            <Plus className="w-3.5 h-3.5" strokeWidth={2} aria-hidden="true" />
+            Thêm
           </button>
         </div>
 
@@ -199,7 +203,7 @@ function RitualCard({ ritual }: { ritual: Ritual }) {
       <div className="flex items-start justify-between gap-2">
         <p className="font-header text-parchment text-sm tracking-wide leading-snug">{ritual.title}</p>
         {ritual.isCertified && (
-          <span className="text-xs text-emerald-400/70 font-header flex-shrink-0">✓</span>
+          <Check className="w-3.5 h-3.5 text-emerald-400/70 flex-shrink-0" strokeWidth={2} aria-label="Đã xác nhận" />
         )}
       </div>
       {ritual.ancestor && (
@@ -209,7 +213,10 @@ function RitualCard({ ritual }: { ritual: Ritual }) {
         <p className="font-sans text-antique-gold/50 text-xs">Âm lịch: {ritual.dateLunar}</p>
       )}
       {ritual.isRecurring && (
-        <span className="text-xs text-antique-gold/40 font-header tracking-widest">↻ Hàng Năm</span>
+        <span className="text-xs text-antique-gold/40 font-header tracking-widest flex items-center gap-1">
+          <RefreshCw className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
+          Hàng Năm
+        </span>
       )}
     </div>
   );

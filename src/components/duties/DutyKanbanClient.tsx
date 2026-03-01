@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import useSWR from "swr";
+import { UserCircle } from "lucide-react";
 import {
   DndContext,
   DragEndEvent,
@@ -387,7 +388,10 @@ function DutyCardDisplay({
         </div>
       )}
       {duty.assignee && (
-        <p className="font-sans text-parchment/40 text-xs truncate">→ {duty.assignee.fullName}</p>
+        <p className="font-sans text-parchment/40 text-xs truncate flex items-center gap-1">
+          <UserCircle className="w-3.5 h-3.5 shrink-0" strokeWidth={1.5} aria-hidden="true" />
+          {duty.assignee.fullName}
+        </p>
       )}
       {duty.dueDate && (
         <p className="font-sans text-parchment/30 text-xs mt-1">

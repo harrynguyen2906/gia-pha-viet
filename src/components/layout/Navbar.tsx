@@ -6,13 +6,14 @@ import { signOut, useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { useState, useRef, useEffect } from "react";
 import useSWR from "swr";
+import { Landmark, TreePine, Map, Flame, ClipboardList, Bell, type LucideIcon } from "lucide-react";
 
-const NAV_LINKS = [
-  { href: "/",         label: "Trang Chủ",   icon: "🏮" },
-  { href: "/lineage",  label: "Gia Phả",     icon: "🌳" },
-  { href: "/map",      label: "Mộ Phần",     icon: "🗺️" },
-  { href: "/rituals",  label: "Lịch Giỗ",    icon: "🕯️" },
-  { href: "/duties",   label: "Công Việc",   icon: "📋" },
+const NAV_LINKS: { href: string; label: string; icon: LucideIcon }[] = [
+  { href: "/",         label: "Trang Chủ",   icon: Landmark },
+  { href: "/lineage",  label: "Gia Phả",     icon: TreePine },
+  { href: "/map",      label: "Mộ Phần",     icon: Map },
+  { href: "/rituals",  label: "Lịch Giỗ",    icon: Flame },
+  { href: "/duties",   label: "Công Việc",   icon: ClipboardList },
 ];
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
@@ -73,7 +74,7 @@ function NotificationBell() {
         className="relative p-2 text-parchment/60 hover:text-antique-gold transition-colors"
         aria-label="Thông báo"
       >
-        <span className="text-base">🔔</span>
+        <Bell className="w-5 h-5" strokeWidth={1.5} aria-hidden="true" />
         {unreadCount > 0 && (
           <span className="absolute top-1 right-1 min-w-[16px] h-4 px-0.5 flex items-center justify-center rounded-full bg-imperial-crimson text-white text-[10px] font-bold leading-none">
             {unreadCount > 9 ? "9+" : unreadCount}
@@ -167,7 +168,7 @@ export default function Navbar() {
                   : "text-parchment/60 hover:text-parchment hover:bg-panel-dark"
               )}
             >
-              <span>{link.icon}</span>
+              <link.icon className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
               {link.label}
             </Link>
           ))}
