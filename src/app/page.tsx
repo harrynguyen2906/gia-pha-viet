@@ -30,7 +30,7 @@ async function getClanStats() {
 export default async function Home() {
   const stats = await getClanStats();
 
-  const heroTitle = stats?.clan?.name ?? "HERITAGE CLOUD";
+  const heroTitle = "Nguyễn Văn Tộc";
   const leftCouplet = "Tiên Tổ Tôn Nghiêm Lưu Phúc Ấm";
   const rightCouplet = "Tử Tôn Hiếu Kính Kế Gia Phong";
 
@@ -96,22 +96,47 @@ export default async function Home() {
         </div>
 
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-px w-24 bg-antique-gold/60" />
-            <span className="font-header text-antique-gold text-xs tracking-[0.5em] uppercase">Chiếu Chỉ Gia Phả</span>
-            <div className="h-px w-24 bg-antique-gold/60" />
+          {/* ── Hoành Phi (橫匾) ── */}
+          <div className="mb-10 flex justify-center">
+            <div className="relative w-[min(92vw,620px)] h-[126px] md:h-[142px]">
+              {/* Scroll rolls (chiếu chỉ mở ra) */}
+              <div className="absolute left-0 md:-left-2 top-[38px] md:top-[42px] w-[86px] md:w-[98px] h-[34px] md:h-[40px] rounded-full bg-gradient-to-r from-[#4a1608] via-[#7a2d12] to-[#4a1608] border-2 border-antique-gold/70 -rotate-12 shadow-[0_8px_16px_rgba(0,0,0,0.5)]" />
+              <div className="absolute right-0 md:-right-2 top-[38px] md:top-[42px] w-[86px] md:w-[98px] h-[34px] md:h-[40px] rounded-full bg-gradient-to-l from-[#4a1608] via-[#7a2d12] to-[#4a1608] border-2 border-antique-gold/70 rotate-12 shadow-[0_8px_16px_rgba(0,0,0,0.5)]" />
+
+              {/* Outer frame – trapezoid perspective (top wider than bottom) */}
+              <div
+                className="absolute left-7 right-7 top-2 bottom-3 border-[6px] border-antique-gold/80 bg-gradient-to-b from-[#6b2413] via-[#8B0000] to-[#4a1608] shadow-[0_16px_32px_rgba(0,0,0,0.62),inset_0_2px_6px_rgba(255,215,0,0.12)]"
+                style={{ clipPath: "polygon(0% 0%, 100% 0%, 92.5% 100%, 7.5% 100%)" }}
+              >
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.16)_0%,rgba(255,255,255,0.05)_24%,rgba(0,0,0,0.06)_50%,rgba(255,255,255,0.05)_76%,rgba(0,0,0,0.16)_100%)]" />
+
+                {/* Inner plaque */}
+                <div
+                  className="absolute left-4 right-4 top-3 bottom-3 border-[3px] border-antique-gold/65 bg-gradient-to-b from-[#1a0a04] via-[#0d0602] to-[#1a0a04] shadow-inner"
+                  style={{ clipPath: "polygon(0% 0%, 100% 0%, 94.5% 100%, 5.5% 100%)" }}
+                >
+                  <div
+                    className="absolute inset-[6px] border border-antique-gold/35"
+                    style={{ clipPath: "polygon(0% 0%, 100% 0%, 95% 100%, 5% 100%)" }}
+                  />
+
+                  <div className="absolute top-1.5 left-2.5 text-antique-gold/60 text-[10px]">❧</div>
+                  <div className="absolute top-1.5 right-2.5 text-antique-gold/60 text-[10px] scale-x-[-1]">❧</div>
+                  <div className="absolute bottom-1 left-2.5 text-antique-gold/60 text-[10px] scale-y-[-1]">❧</div>
+                  <div className="absolute bottom-1 right-2.5 text-antique-gold/60 text-[10px] scale-x-[-1] scale-y-[-1]">❧</div>
+
+                  <div className="h-full flex items-center justify-center px-8">
+                    <p className="font-ornate text-gold-leaf text-[31px] md:text-[44px] tracking-[0.12em] leading-none drop-shadow-[0_2px_3px_rgba(0,0,0,0.7)] text-center">
+                      {heroTitle}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-[84px] h-3 bg-gradient-to-b from-antique-gold to-[#a08030] rounded-b-full border border-antique-gold/90 shadow-md" />
+              </div>
+            </div>
           </div>
-          <h1
-            className="font-ornate text-5xl md:text-8xl font-black mb-4 tracking-tight"
-            style={{
-              background: "linear-gradient(to bottom, #fceabb 0%, #fccd4d 50%, #f8b500 51%, #fbdf93 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              filter: "drop-shadow(0 4px 4px rgba(0,0,0,0.7))",
-            }}
-          >
-            {heroTitle}
-          </h1>
+
           <p className="font-calligraphy text-antique-gold text-3xl md:text-4xl mb-8 leading-relaxed">
             &ldquo;Trăm năm sống bởi tổ tiên, nghìn đời nối mãi khói hương&rdquo;
           </p>

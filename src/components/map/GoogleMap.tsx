@@ -109,6 +109,7 @@ export default function GoogleMap({ sites, onSelectSite, selectedSiteId }: Props
         )}
 
         <FitBounds sites={geo} />
+        <PanToSelected sites={geo} selectedSiteId={selectedSiteId} />
       </Map>
     </APIProvider>
   );
@@ -130,7 +131,23 @@ function FitBounds({ sites }: { sites: Site[] }) {
     const bounds = new google.maps.LatLngBounds();
     sites.forEach((s) => bounds.extend({ lat: s.latitude!, lng: s.longitude! }));
     map.fitBounds(bounds, 80);
-  }, [map, sites]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [map, sites.length]);
+
+  return null;
+}
+
+/** Pans smoothly to the selected marker whenever the selection changes from the sidebar. */
+function PanToSelected({ sites, selectedSiteId }: { sites: Site[]; selectedSiteId: string | null }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!map || !selectedSiteId) return;
+    const site = sites.find((s) => s.id === selectedSiteId);
+    if (!site || site.latitude == null || site.longitude == null) return;
+    map.panTo({ lat: site.latitude, lng: site.longitude });
+    map.setZoom(Math.max(map.getZoom() ?? 0, 14));
+  }, [map, selectedSiteId, sites]);
 
   return null;
 }
