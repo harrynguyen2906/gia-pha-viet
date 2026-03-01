@@ -5,8 +5,8 @@ import { useState } from "react";
 import useSWR from "swr";
 import Link from "next/link";
 
-// Mapbox-gl must be dynamically imported (needs browser)
-const MapboxMap = dynamic(() => import("@/components/map/MapboxMap"), { ssr: false });
+// Google Maps must be dynamically imported (needs browser)
+const GoogleMap = dynamic(() => import("@/components/map/GoogleMap"), { ssr: false });
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -77,7 +77,7 @@ export default function MapClient() {
               </p>
             </div>
           ) : (
-            <MapboxMap
+            <GoogleMap
               sites={displayed}
               onSelectSite={setSelectedSite}
               selectedSiteId={selectedSite?.id ?? null}
