@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { useState, useRef, useEffect } from "react";
@@ -144,7 +145,13 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
-          <span className="text-2xl">𝕳</span>
+          <Image 
+            src="/images/logo.png" 
+            alt="Heritage Cloud Logo" 
+            width={32} 
+            height={32} 
+            className="w-8 h-8 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" 
+          />
           <div className="leading-none">
             <div className="font-ornate text-antique-gold text-sm tracking-widest">
               Heritage Cloud
