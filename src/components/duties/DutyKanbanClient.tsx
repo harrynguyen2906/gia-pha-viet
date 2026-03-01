@@ -2,7 +2,6 @@
 
 import { useState, useCallback } from "react";
 import useSWR from "swr";
-import { UserCircle } from "lucide-react";
 import {
   DndContext,
   DragEndEvent,
@@ -48,7 +47,7 @@ interface Duty {
   category: string;
   progress: number;
   dueDate?: string | null;
-  assignee?: { id: string; fullName: string } | null;
+  assignee?: { id: string; fullName: string; avatarUrl?: string | null } | null;
 }
 
 const COLUMNS: { key: string; label: string; color: string }[] = [
@@ -73,6 +72,42 @@ const CATEGORY_BADGE: Record<string, string> = {
   ADMIN: "bg-indigo-950/50 text-indigo-300/70",
   OTHER: "bg-zinc-800 text-zinc-400",
 };
+
+function UserAvatar({
+  name,
+  avatarUrl,
+  size = "sm",
+}: {
+  name: string;
+  avatarUrl?: string | null;
+  size?: "sm" | "md";
+}) {
+  const dim = size === "sm" ? "w-6 h-6 text-[10px]" : "w-8 h-8 text-xs";
+  const initials = name
+    .split(" ")
+    .filter(Boolean)
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+  if (avatarUrl) {
+    return (
+      <img
+        src={avatarUrl}
+        alt={name}
+        className={`${dim} rounded-full object-cover border border-antique-gold/30 shrink-0`}
+      />
+    );
+  }
+  return (
+    <div
+      className={`${dim} rounded-full bg-imperial-crimson/20 text-parchment/70 font-header flex items-center justify-center border border-antique-gold/20 shrink-0`}
+      aria-label={name}
+    >
+      {initials}
+    </div>
+  );
+}
 
 export default function DutyKanbanClient() {
   const { data, mutate } = useSWR("/api/v1/duties?limit=200", fetcher);
@@ -126,7 +161,7 @@ export default function DutyKanbanClient() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-64px)]">
+    <div className="flex flex-col h-full">
       {/* ── Stats Header ── */}
       {stats && (
         <div className="border-b border-antique-gold/15 bg-lacquer-dark/60 px-6 py-3 grid grid-cols-3 sm:grid-cols-6 gap-4">
@@ -212,7 +247,10 @@ export default function DutyKanbanClient() {
                 {workload.map((w) => (
                   <tr key={w.member.id} className="border-b border-antique-gold/10 hover:bg-antique-gold/5 transition-colors">
                     <td className="py-3 pr-4">
-                      <span className="font-header text-parchment/90 text-sm tracking-wide">{w.member.fullName}</span>
+                      <div className="flex items-center gap-2.5">
+                        <UserAvatar name={w.member.fullName} avatarUrl={w.member.avatarUrl} size="md" />
+                        <span className="font-header text-parchment/90 text-sm tracking-wide">{w.member.fullName}</span>
+                      </div>
                     </td>
                     <td className="py-3 pr-4 text-parchment/50 text-xs font-sans">
                       {w.member.generation ? `Đời ${w.member.generation}` : "—"}
@@ -256,7 +294,7 @@ export default function DutyKanbanClient() {
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
         >
-          <div className="flex-1 overflow-x-auto overflow-y-hidden">
+          <div className="flex-1 overflow-x-auto overflow-y-hidden heritage-scroll">
             <div className="flex h-full gap-4 p-6 min-w-max">
               {COLUMNS.map((col) => {
                 const colDuties = byColumn(col.key);
@@ -315,7 +353,7 @@ function KanbanColumn({
 
       {/* Cards */}
       <SortableContext items={duties.map((d) => d.id)} strategy={verticalListSortingStrategy}>
-        <div className="flex-1 overflow-y-auto p-3 space-y-3">
+        <div className="flex-1 overflow-y-auto p-3 space-y-3 heritage-scroll">
           {duties.map((duty) => (
             <SortableDutyCard key={duty.id} duty={duty} onVerify={onVerify} />
           ))}
@@ -364,7 +402,7 @@ function DutyCardDisplay({
         isDragging ? "opacity-50 shadow-2xl ring-2 ring-antique-gold/30" : "hover:border-antique-gold/30"
       }`}
     >
-      <p className="font-header text-parchment/90 text-xs tracking-wide leading-snug mb-2">{duty.title}</p>
+      <p className="font-header text-parchment/90 text-sm tracking-wide leading-snug mb-2">{duty.title}</p>
       <div className="flex flex-wrap gap-1.5 mb-2">
         <span className={`text-xs px-1.5 py-0.5 font-sans rounded-sm ${PRIORITY_BADGE[duty.priority] ?? "bg-zinc-800 text-zinc-400"}`}>
           {duty.priority}
@@ -375,7 +413,7 @@ function DutyCardDisplay({
       </div>
       {typeof duty.progress === "number" && duty.progress > 0 && (
         <div className="mb-2">
-          <div className="flex justify-between text-xs text-parchment/30 font-sans mb-0.5">
+          <div className="flex justify-between text-xs text-parchment/50 font-sans mb-0.5">
             <span>Tiến độ</span>
             <span>{duty.progress}%</span>
           </div>
@@ -388,13 +426,13 @@ function DutyCardDisplay({
         </div>
       )}
       {duty.assignee && (
-        <p className="font-sans text-parchment/40 text-xs truncate flex items-center gap-1">
-          <UserCircle className="w-3.5 h-3.5 shrink-0" strokeWidth={1.5} aria-hidden="true" />
-          {duty.assignee.fullName}
-        </p>
+        <div className="flex items-center gap-2 mt-1" title={duty.assignee.fullName}>
+          <UserAvatar name={duty.assignee.fullName} avatarUrl={duty.assignee.avatarUrl} />
+          <span className="font-sans text-parchment/50 text-xs truncate">{duty.assignee.fullName}</span>
+        </div>
       )}
       {duty.dueDate && (
-        <p className="font-sans text-parchment/30 text-xs mt-1">
+        <p className="font-sans text-parchment/40 text-xs mt-1">
           Hạn: {new Date(duty.dueDate).toLocaleDateString("vi-VN")}
         </p>
       )}
@@ -402,9 +440,9 @@ function DutyCardDisplay({
         <button
           onClick={handleVerify}
           disabled={verifying}
-          className="mt-2 w-full text-xs font-header tracking-widest uppercase border border-emerald-700/40 text-emerald-400/60 hover:text-emerald-400 hover:border-emerald-700/70 py-1 transition-colors disabled:opacity-40"
+          className="mt-2 w-full text-xs font-bold font-header tracking-widest uppercase border border-emerald-700/40 text-emerald-400/60 hover:text-emerald-400 hover:border-emerald-700/70 py-2.5 transition-colors disabled:opacity-40 min-h-[44px]"
         >
-          {verifying ? "…" : "Xác Nhận"}
+          {verifying ? "…" : "✓ Xác Nhận"}
         </button>
       )}
     </div>

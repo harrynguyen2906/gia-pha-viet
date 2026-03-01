@@ -1,16 +1,16 @@
-import { Suspense } from "react";
-import DutyKanbanClient from "@/components/duties/DutyKanbanClient";
+"use client";
 
-export const metadata = { title: "Phân Công Việc | Heritage Cloud" };
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function DutiesPage() {
+  const router = useRouter();
+  useEffect(() => {
+    router.replace("/rituals#tasks");
+  }, [router]);
   return (
-    <Suspense fallback={
-      <div className="flex items-center justify-center h-[calc(100vh-64px)]">
-        <p className="font-header text-antique-gold/60 text-sm tracking-widest animate-pulse">Đang tải nhiệm vụ…</p>
-      </div>
-    }>
-      <DutyKanbanClient />
-    </Suspense>
+    <div className="flex items-center justify-center h-[calc(100vh-64px)]">
+      <p className="font-header text-antique-gold/60 text-sm tracking-widest animate-pulse">Đang chuyển hướng…</p>
+    </div>
   );
 }

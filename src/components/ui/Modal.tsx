@@ -78,7 +78,7 @@ export default function Modal({
           </button>
         </div>
 
-        <div className="max-h-[calc(90vh-56px)] overflow-y-auto">{children}</div>
+        <div className="max-h-[calc(90vh-56px)] overflow-y-auto px-6 py-5">{children}</div>
       </div>
     </div>
   );
