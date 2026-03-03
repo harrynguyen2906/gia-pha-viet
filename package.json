@@ -13,7 +13,10 @@
     "db:studio": "prisma studio",
     "db:types": "SUPABASE_ACCESS_TOKEN=$SUPABASE_ACCESS_TOKEN supabase gen types typescript --project-id wfkadhesbujtxjakplac --schema public > src/types/supabase.ts",
     "supabase:start": "supabase start",
-    "supabase:status": "supabase status"
+    "supabase:status": "supabase status",
+    "vercel:login": "vercel login",
+    "vercel:link": "vercel link",
+    "vercel:deploy": "vercel --prod"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
@@ -66,6 +69,7 @@
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vercel": "^50.25.6"
   }
 }
