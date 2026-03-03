@@ -10,7 +10,6 @@ import useSWR from "swr";
 import { Landmark, TreePine, Map, Flame, ClipboardList, Bell, type LucideIcon } from "lucide-react";
 
 const NAV_LINKS: { href: string; label: string; icon: LucideIcon }[] = [
-  { href: "/",         label: "Trang Chủ",   icon: Landmark },
   { href: "/lineage",  label: "Gia Phả",     icon: TreePine },
   { href: "/map",      label: "Mộ Phần",     icon: Map },
   { href: "/rituals",  label: "Lịch Giỗ",    icon: Flame },

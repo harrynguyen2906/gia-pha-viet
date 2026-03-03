@@ -1,0 +1,65 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+
+export default function MobileMenuButton({ isAuthenticated }: { isAuthenticated: boolean }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="md:hidden relative">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="p-2 text-accent-gold border border-accent-gold/30 hover:bg-accent-gold/10 transition-colors"
+        aria-label="Toggle menu"
+      >
+        <span className="block w-5 h-0.5 bg-current mb-1" />
+        <span className="block w-5 h-0.5 bg-current mb-1" />
+        <span className="block w-5 h-0.5 bg-current" />
+      </button>
+
+      {open && (
+        <div className="absolute right-0 top-full mt-2 w-52 bg-lacquer-dark border border-accent-gold/20 shadow-2xl py-2">
+          <a
+            href="#features"
+            onClick={() => setOpen(false)}
+            className="block px-4 py-2 font-header text-xs tracking-widest text-slate-300 hover:text-accent-gold hover:bg-accent-gold/5 transition-colors"
+          >
+            TÍNH NĂNG
+          </a>
+          <a
+            href="#how-it-works"
+            onClick={() => setOpen(false)}
+            className="block px-4 py-2 font-header text-xs tracking-widest text-slate-300 hover:text-accent-gold hover:bg-accent-gold/5 transition-colors"
+          >
+            HƯỚNG DẪN
+          </a>
+          <div className="border-t border-accent-gold/20 my-2" />
+          {isAuthenticated ? (
+            <Link
+              href="/dashboard"
+              className="block px-4 py-2 font-header text-xs tracking-widest text-accent-gold hover:bg-accent-gold/5 transition-colors"
+            >
+              VÀO TRANG CHỦ
+            </Link>
+          ) : (
+            <>
+              <Link
+                href="/auth/signin"
+                className="block px-4 py-2 font-header text-xs tracking-widest text-slate-300 hover:text-accent-gold hover:bg-accent-gold/5 transition-colors"
+              >
+                ĐĂNG NHẬP
+              </Link>
+              <Link
+                href="/auth/register"
+                className="block px-4 py-2 font-header text-xs tracking-widest text-primary hover:bg-primary/10 transition-colors"
+              >
+                BẮT ĐẦU MIỄN PHÍ
+              </Link>
+            </>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}

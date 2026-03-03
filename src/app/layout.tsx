@@ -8,7 +8,8 @@ import {
   EB_Garamond,
 } from "next/font/google";
 import "./globals.css";
-import AppShell from "@/components/layout/AppShell";
+import { SessionProvider } from "next-auth/react";
+import ToastContainer from "@/components/ui/ToastContainer";
 
 const notoSerif = Noto_Serif({
   subsets: ["latin", "vietnamese"],
@@ -65,7 +66,10 @@ export default function RootLayout({
       className={`dark ${notoSerif.variable} ${notoSans.variable} ${spectralSC.variable} ${ebGaramond.variable} ${playfair.variable} ${windSong.variable}`}
     >
       <body className="bg-bg-dark text-parchment font-sans antialiased min-h-screen">
-        <AppShell>{children}</AppShell>
+        <SessionProvider>
+          {children}
+          <ToastContainer />
+        </SessionProvider>
       </body>
     </html>
   );
