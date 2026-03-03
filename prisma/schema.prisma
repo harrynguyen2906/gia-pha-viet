@@ -121,10 +121,11 @@ model User {
   createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
 
-  clan          Clan?          @relation(fields: [clanId], references: [id])
-  member        Member?        @relation(fields: [memberId], references: [id])
-  profile       UserProfile?
-  notifications Notification[]
+  clan                Clan?                @relation(fields: [clanId], references: [id])
+  member              Member?              @relation(fields: [memberId], references: [id])
+  profile             UserProfile?
+  notifications       Notification[]
+  passwordResetTokens PasswordResetToken[]
 
   @@index([email])
   @@index([clanId])
@@ -476,5 +477,20 @@ model AuditLog {
   @@index([userId, createdAt(sort: Desc)])
   @@index([clanId, createdAt(sort: Desc)])
   @@map("audit_logs")
+}
+
+model PasswordResetToken {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  token     String    @unique @db.VarChar(255)
+  expiresAt DateTime  @map("expires_at") @db.Timestamptz()
+  usedAt    DateTime? @map("used_at") @db.Timestamptz()
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([userId])
+  @@map("password_reset_tokens")
 }
 

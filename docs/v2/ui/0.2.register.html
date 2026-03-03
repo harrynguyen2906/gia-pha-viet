@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login | Heritage Cloud Imperial Decree</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&amp;family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Noto+Sans:wght@300;400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec1313",
+                        "gold": "#d4af37",
+                        "background-dark": "#120808",
+                        "lacquer": "#1a0808",
+                        "scroll-base": "#f5e6d3",
+                    },
+                    fontFamily: {
+                        "display": ["Cinzel", "serif"],
+                        "serif": ["Noto Serif", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer components {
+            .imperial-scroll {
+                background: linear-gradient(to right, #e2d1b3 0%, #f5e6d3 10%, #f5e6d3 90%, #e2d1b3 100%);
+                box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 60px rgba(139, 69, 19, 0.15);
+                position: relative;
+            }
+            .scroll-roller {
+                background: linear-gradient(to right, #4a2511, #8b4513, #4a2511);
+                border: 1px solid rgba(212, 175, 55, 0.4);
+            }
+            .lacquer-pillar {
+                background: linear-gradient(to right, #2d0a0a, #6b0f0f, #2d0a0a);
+                box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+            }
+            .gold-border-detail {
+                border-image: linear-gradient(to bottom, #d4af37, #aa8a2e, #d4af37) 1;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-dark font-sans text-slate-100 antialiased overflow-hidden">
+<div class="flex min-h-screen h-screen">
+<div class="hidden lg:block w-7/12 relative h-full">
+<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuCJRkzWNQYTWHu1-VFZDGP9Yr3nEMXlp1kZ4TTGL6wrUVJLQjM_2MlMPXRvFeZ2ecSPY4OoIODhq0WFL9LWPZp_Ai1PNwucfl235jIvACbLHNEJKn8D5pMTKq3lpKojeoN1PLGfQ3E0kt0NCeIcq_Q7zRHW3v5hCAr5G6SiAHuf5bHujL2p-tNAeiOpmVLszPrRDJN5KNcaiFifPXAam_4G_lRTRUOvmZDGZFajyYGdENBg88OE4i1Xt9l6WjvbvL-HHdfe8VEgjVuR');">
+</div>
+<div class="absolute bottom-20 left-20 w-32 h-32 bg-orange-500/20 blur-[80px] rounded-full"></div>
+<div class="absolute top-1/3 right-1/4 w-48 h-48 bg-yellow-600/10 blur-[100px] rounded-full"></div>
+<div class="absolute bottom-12 left-12 flex items-center gap-4">
+<div class="flex items-center justify-center size-12 rounded-lg bg-primary border border-gold/50 shadow-lg">
+<span class="material-symbols-outlined text-white">castle</span>
+</div>
+<div>
+<h2 class="font-display text-xl tracking-[0.3em] text-white">HERITAGE CLOUD</h2>
+<p class="font-serif italic text-gold/70 text-sm">Eternal Legacy Preserved</p>
+</div>
+</div>
+</div>
+<div class="w-full lg:w-5/12 bg-lacquer relative flex flex-col items-center justify-center px-8 lg:px-16 border-l border-gold/10">
+<div class="hidden xl:block absolute left-4 top-10 bottom-10 w-4 lacquer-pillar rounded-full border border-gold/20"></div>
+<div class="hidden xl:block absolute right-4 top-10 bottom-10 w-4 lacquer-pillar rounded-full border border-gold/20"></div>
+<div class="absolute top-10 flex flex-col items-center">
+<div class="w-20 h-20 border-2 border-gold rounded-full flex items-center justify-center bg-lacquer shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+<span class="material-symbols-outlined text-gold text-5xl">shield_moon</span>
+</div>
+<div class="h-8 w-px bg-gradient-to-b from-gold to-transparent mt-2"></div>
+</div>
+<div class="relative w-full max-w-md mt-12">
+<div class="scroll-roller h-4 w-[104%] -ml-[2%] rounded-full z-20 relative"></div>
+<div class="imperial-scroll p-8 md:p-12 border-x-[1px] border-gold/30">
+<div class="text-center mb-8">
+<h1 class="font-display text-2xl text-lacquer font-bold tracking-widest mb-2">IMPERIAL DECREE</h1>
+<div class="flex justify-center items-center gap-3">
+<div class="h-[1px] w-8 bg-lacquer/20"></div>
+<span class="material-symbols-outlined text-primary text-sm">brightness_7</span>
+<div class="h-[1px] w-8 bg-lacquer/20"></div>
+</div>
+<p class="font-serif text-lacquer/60 italic text-sm mt-3">Identity Authentication Required</p>
+</div>
+<form class="space-y-6">
+<div>
+<label class="block font-sans text-xs font-semibold text-lacquer/80 uppercase tracking-widest mb-2" for="email">
+                                Email / Ancestral ID
+                            </label>
+<input class="w-full bg-transparent border-b-2 border-lacquer/20 focus:border-primary px-0 py-2 outline-none transition-colors text-lacquer font-medium" id="email" placeholder="name@legacy.cloud" type="text"/>
+</div>
+<div>
+<label class="block font-sans text-xs font-semibold text-lacquer/80 uppercase tracking-widest mb-2" for="password">
+                                Secret Keyphrase
+                            </label>
+<input class="w-full bg-transparent border-b-2 border-lacquer/20 focus:border-primary px-0 py-2 outline-none transition-colors text-lacquer font-medium" id="password" placeholder="••••••••" type="password"/>
+</div>
+<div class="flex items-center justify-between pt-2">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="rounded border-lacquer/30 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-xs font-sans text-lacquer/70">Remember Legacy</span>
+</label>
+<a class="text-xs font-sans text-primary hover:underline font-semibold tracking-tighter" href="#">Forgotten Scroll?</a>
+</div>
+<button class="w-full group relative mt-8 overflow-hidden bg-primary text-white font-display tracking-[0.2em] py-4 border border-gold/50 shadow-lg hover:shadow-primary/30 transition-all active:scale-[0.98]">
+<span class="relative z-10 text-sm">COMMENCE ACCESS</span>
+<div class="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500"></div>
+</button>
+</form>
+<div class="absolute bottom-4 left-4 opacity-20 pointer-events-none">
+<span class="material-symbols-outlined text-lacquer text-4xl">filter_vintage</span>
+</div>
+<div class="absolute bottom-4 right-4 opacity-20 pointer-events-none transform scale-x-[-1]">
+<span class="material-symbols-outlined text-lacquer text-4xl">filter_vintage</span>
+</div>
+</div>
+<div class="scroll-roller h-4 w-[104%] -ml-[2%] rounded-full z-20 relative"></div>
+</div>
+<div class="absolute bottom-10 w-full px-12 flex justify-between items-center text-[10px] tracking-[0.2em] font-display text-gold/40">
+<a class="hover:text-gold transition-colors uppercase" href="#">Register New Clan</a>
+<div class="h-px w-12 bg-gold/20"></div>
+<a class="hover:text-gold transition-colors uppercase" href="#">Privacy Decree</a>
+</div>
+</div>
+</div>
+
+</body></html>
