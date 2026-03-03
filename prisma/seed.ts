@@ -1,12 +1,20 @@
 import { PrismaClient, GenderType, UserRole, LineageRole, SiteCondition, SiteType, DutyCategory, DutyPriority, DutyStatus } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
 import bcrypt from "bcrypt";
 import * as dotenv from "dotenv";
 
 dotenv.config({ path: ".env.local" });
 dotenv.config({ path: ".env" });
 
-const adapter = new PrismaPg({ connectionString: process.env.DIRECT_URL! });
+// pg v8 treats 'sslmode=require' as 'verify-full' — strip it and set TLS explicitly.
+const directUrl = new URL(process.env.DIRECT_URL!);
+directUrl.searchParams.delete("sslmode");
+const pool = new Pool({
+  connectionString: directUrl.toString(),
+  ssl: { rejectUnauthorized: false },
+});
+const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {

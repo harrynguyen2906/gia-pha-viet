@@ -5,10 +5,15 @@ import { Pool } from "pg";
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
 function createPrismaClient() {
-  // Use DATABASE_URL (Supabase pooler / PgBouncer) for serverless-friendly connections.
-  // DIRECT_URL (port 5432) is reserved for migrations only.
+  // pg v8 treats 'sslmode=require' as 'verify-full', which fails against
+  // Supabase's cert chain. Strip SSL params from the URL and configure
+  // TLS explicitly via the Pool option instead.
+  const dbUrl = new URL(process.env.DATABASE_URL!);
+  dbUrl.searchParams.delete("sslmode");
+  dbUrl.searchParams.delete("pgbouncer"); // Prisma-specific param; not for pg
   const pool = new Pool({
-    connectionString: process.env.DATABASE_URL!,
+    connectionString: dbUrl.toString(),
+    ssl: { rejectUnauthorized: false },
     max: 10,
     idleTimeoutMillis: 20000,
     connectionTimeoutMillis: 10000,

@@ -732,18 +732,21 @@ GROUP BY clan_id;
 
 ## 10. Prisma Schema
 
-> File tương ứng: `prisma/schema.prisma`
+> File tương ứng: `prisma/schema.prisma`  
+> Datasource URL được cấu hình trong `prisma.config.ts` (không phải trong schema).
+> - Runtime (`pg.Pool`): `DATABASE_URL` (PgBouncer pooler, port 6543)
+> - Migrations only: `DIRECT_URL` (session mode, port 5432)
 
 ```prisma
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["postgresqlExtensions"]
+  provider        = "prisma-client"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider   = "postgresql"
-  url        = env("DATABASE_URL")
-  extensions = [pgcrypto]
+  provider = "postgresql"
+  // url is injected via prisma.config.ts — not set here
 }
 
 // ──────────────── Enums ────────────────

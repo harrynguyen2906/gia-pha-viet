@@ -1,9 +1,9 @@
 # RF-02 — Refactor: Self-hosted PostgreSQL → Supabase + Vercel Deployment
 
-> **Status:** Planned  
+> **Status:** Done  
 > **Priority:** High  
-> **Affected modules:** `src/lib/prisma.ts`, `next.config.ts`, `package.json`, `.env.example`, env config  
-> **Estimated scope:** 4 files modified, 0 files deleted, 0 files created
+> **Affected modules:** `src/lib/prisma.ts`, `next.config.ts`, `package.json`, `.env.example`, `.env.local`, env config  
+> **Actual scope:** 8 files modified, 2 files created (`supabase/config.toml`, `src/types/supabase.ts`), 0 files deleted
 
 ---
 
