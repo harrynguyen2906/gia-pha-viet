@@ -1,7 +1,9 @@
 import { NextRequest } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { ok, err, requireAuth, getClanId, canEdit } from "@/lib/api";
+import { ok, err, canEdit } from "@/lib/api";
+import { getTenantContext } from "@/lib/tenant";
+import { handleApiError } from "@/lib/api-helpers";
 
 // Accept canonical 36-char UUID form used in DB, including legacy seeded IDs
 // that may not match strict RFC version/variant constraints.
@@ -14,10 +16,10 @@ const schema = z.object({
 });
 
 export async function POST(req: NextRequest) {
-  const { session, response } = await requireAuth();
-  if (response) return response;
-  const clanId = getClanId(session);
-  if (!canEdit((session?.user as any)?.role)) return err("Forbidden", 403);
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
+  const { clanId, role } = tc;
+  if (!canEdit(role)) return err("Forbidden", 403);
 
   const body = await req.json();
   const parsed = schema.safeParse(body);
@@ -28,8 +30,8 @@ export async function POST(req: NextRequest) {
 
   // Ensure both members belong to this clan
   const [parent, child] = await Promise.all([
-    prisma.member.findFirst({ where: { id: parentId, clanId: clanId ?? undefined } }),
-    prisma.member.findFirst({ where: { id: childId, clanId: clanId ?? undefined } }),
+    prisma.member.findFirst({ where: { id: parentId, clanId } }),
+    prisma.member.findFirst({ where: { id: childId, clanId } }),
   ]);
   if (!parent || !child) return err("Members not found in clan", 404);
 
@@ -43,11 +45,18 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  const { session, response } = await requireAuth();
-  if (response) return response;
-  if (!canEdit((session?.user as any)?.role)) return err("Forbidden", 403);
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
+  const { clanId, role } = tc;
+  if (!canEdit(role)) return err("Forbidden", 403);
 
   const { parentId, childId } = await req.json();
+  if (!parentId || !childId) return err("parentId + childId required", 422);
+
+  // Verify the relationship belongs to this clan before deleting
+  const parent = await prisma.member.findFirst({ where: { id: parentId, clanId } });
+  if (!parent) return err("Not in your clan", 403);
+
   await prisma.relationship.deleteMany({ where: { parentId, childId } });
   return ok({ message: "Removed" });
 }

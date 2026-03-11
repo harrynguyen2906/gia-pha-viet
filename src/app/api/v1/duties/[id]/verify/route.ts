@@ -1,14 +1,14 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { ok, err, requireAuth, getClanId, getUserId, canCertify } from "@/lib/api";
+import { ok, err, canCertify } from "@/lib/api";
+import { getTenantContext } from "@/lib/tenant";
+import { handleApiError } from "@/lib/api-helpers";
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const { session, response } = await requireAuth();
-  if (response) return response;
-  const clanId = getClanId(session);
-  const userId = getUserId(session);
-  if (!clanId) return err("No clan", 403);
-  if (!canCertify((session?.user as any)?.role)) return err("Forbidden — Elder or Admin required", 403);
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
+  const { clanId, userId, role } = tc;
+  if (!canCertify(role)) return err("Forbidden — Elder or Admin required", 403);
 
   const { id } = await params;
   const existing = await prisma.duty.findFirst({ where: { id, clanId, deletedAt: null } });

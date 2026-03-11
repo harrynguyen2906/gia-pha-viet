@@ -1,13 +1,14 @@
 import { NextRequest } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { ok, err, requireAuth, getUserId } from "@/lib/api";
+import { ok, err } from "@/lib/api";
+import { getTenantContext } from "@/lib/tenant";
+import { handleApiError } from "@/lib/api-helpers";
 
 export async function GET(req: NextRequest) {
-  const { session, response } = await requireAuth();
-  if (response) return response;
-  const userId = getUserId(session);
-  if (!userId) return err("No user", 403);
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
+  const { userId } = tc;
 
   const url = req.nextUrl;
   const unreadOnly = url.searchParams.get("unread") === "true";
@@ -42,10 +43,9 @@ const markReadSchema = z.object({
 });
 
 export async function PATCH(req: NextRequest) {
-  const { session, response } = await requireAuth();
-  if (response) return response;
-  const userId = getUserId(session);
-  if (!userId) return err("No user", 403);
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
+  const { userId } = tc;
 
   const body = await req.json();
   const parsed = markReadSchema.safeParse(body);

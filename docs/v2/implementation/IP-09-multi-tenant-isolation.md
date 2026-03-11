@@ -100,10 +100,10 @@ Implement defense-in-depth multi-tenant isolation across 3 layers:
    ```
 
 ### DoD
-- [ ] `getTenantContext()` returns `{ userId, clanId, role }`
-- [ ] Throws 401 for unauthenticated, 403 for no clan
-- [ ] `assertTenantOwnership()` throws 404 for cross-tenant access
-- [ ] Error handler returns Vietnamese messages
+- [x] `getTenantContext()` returns `{ userId, clanId, role }`
+- [x] Throws 401 for unauthenticated, 403 for no clan
+- [x] `assertTenantOwnership()` throws 404 for cross-tenant access
+- [x] Error handler returns Vietnamese messages
 
 ---
 
@@ -191,11 +191,11 @@ export async function POST(req: Request) {
 ```
 
 ### DoD
-- [ ] Every API route uses `getTenantContext()`
-- [ ] Every query includes `clanId` filter
-- [ ] Every mutation injects `clanId` from session (never from request body)
-- [ ] Single-resource access verified with `assertTenantOwnership()`
-- [ ] Relationship creation verifies both sides same clan
+- [x] Every API route uses `getTenantContext()`
+- [x] Every query includes `clanId` filter
+- [x] Every mutation injects `clanId` from session (never from request body)
+- [x] Single-resource access verified with `assertTenantOwnership()`
+- [x] Relationship creation verifies both sides same clan
 
 ---
 
@@ -288,10 +288,10 @@ export async function POST(req: Request) {
    ```
 
 ### DoD
-- [ ] RLS enabled on all 14 tenant-scoped tables
-- [ ] Policies use `current_clan_id()` function
-- [ ] Migration runs without errors
-- [ ] `FORCE ROW LEVEL SECURITY` on all tables
+- [x] RLS enabled on all 14 tenant-scoped tables
+- [x] Policies use `current_clan_id()` function
+- [x] Migration runs without errors
+- [x] `FORCE ROW LEVEL SECURITY` on all tables
 
 ---
 
@@ -334,9 +334,9 @@ export async function POST(req: Request) {
    ```
 
 ### DoD
-- [ ] RLS session variable can be set per-request
-- [ ] Application-level filtering remains the primary defense
-- [ ] RLS catches any missed filters as safety net
+- [x] RLS session variable can be set per-request
+- [x] Application-level filtering remains the primary defense
+- [x] RLS catches any missed filters as safety net
 
 ---
 
@@ -380,8 +380,8 @@ await prisma.member.create({
 | `audit_logs` | `clan_id` | `session.user.clanId` |
 
 ### DoD
-- [ ] All create endpoints inject `clanId` from session
-- [ ] No create endpoint accepts `clanId` from request body
+- [x] All create endpoints inject `clanId` from session
+- [x] No create endpoint accepts `clanId` from request body
 - [ ] Tests verify auto-assignment
 
 ---
@@ -421,8 +421,8 @@ await prisma.member.create({
    ```
 
 ### DoD
-- [ ] Relationship creation validates both sides same clan
-- [ ] Spouse pairing validates both sides same clan
+- [x] Relationship creation validates both sides same clan
+- [x] Spouse pairing validates both sides same clan
 - [ ] Duty assignment validates assignee same clan
 
 ---

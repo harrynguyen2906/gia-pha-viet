@@ -1,13 +1,15 @@
 import { NextRequest } from "next/server";
-import { ok, err, requireAuth } from "@/lib/api";
+import { ok, err } from "@/lib/api";
+import { getTenantContext } from "@/lib/tenant";
+import { handleApiError } from "@/lib/api-helpers";
 
 // Uses lunar-javascript package — lightweight, no network calls
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const Lunar = require("lunar-javascript");
 
 export async function GET(req: NextRequest) {
-  const { session, response } = await requireAuth();
-  if (response) return response;
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
 
   const url = req.nextUrl;
   const dateStr = url.searchParams.get("date");

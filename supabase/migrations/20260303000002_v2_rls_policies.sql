@@ -277,3 +277,22 @@ CREATE INDEX IF NOT EXISTS "idx_notifications_user_clan"
 
 CREATE INDEX IF NOT EXISTS "idx_audit_logs_user_clan"
     ON audit_logs(user_id) WHERE user_id IS NOT NULL;
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- Force RLS for all table owners (prevents accidental superuser bypass in app)
+-- This ensures RLS applies even when the connection role is elevated.
+-- ─────────────────────────────────────────────────────────────────────────────
+ALTER TABLE members              FORCE ROW LEVEL SECURITY;
+ALTER TABLE relationships        FORCE ROW LEVEL SECURITY;
+ALTER TABLE member_spouses       FORCE ROW LEVEL SECURITY;
+ALTER TABLE member_media         FORCE ROW LEVEL SECURITY;
+ALTER TABLE grave_sites          FORCE ROW LEVEL SECURITY;
+ALTER TABLE site_media           FORCE ROW LEVEL SECURITY;
+ALTER TABLE ritual_events        FORCE ROW LEVEL SECURITY;
+ALTER TABLE ritual_instructions  FORCE ROW LEVEL SECURITY;
+ALTER TABLE ritual_duties        FORCE ROW LEVEL SECURITY;
+ALTER TABLE duties               FORCE ROW LEVEL SECURITY;
+ALTER TABLE duty_logs            FORCE ROW LEVEL SECURITY;
+ALTER TABLE virtual_offerings    FORCE ROW LEVEL SECURITY;
+ALTER TABLE notifications        FORCE ROW LEVEL SECURITY;
+ALTER TABLE audit_logs           FORCE ROW LEVEL SECURITY;

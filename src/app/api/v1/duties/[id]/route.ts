@@ -1,13 +1,14 @@
 import { NextRequest } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { ok, err, requireAuth, getClanId, getUserId, canEdit, canDelete } from "@/lib/api";
+import { ok, err, canEdit, canDelete } from "@/lib/api";
+import { getTenantContext } from "@/lib/tenant";
+import { handleApiError } from "@/lib/api-helpers";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const { session, response } = await requireAuth();
-  if (response) return response;
-  const clanId = getClanId(session);
-  if (!clanId) return err("No clan", 403);
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
+  const { clanId } = tc;
 
   const { id } = await params;
   const duty = await prisma.duty.findFirst({
@@ -37,12 +38,10 @@ const patchSchema = z.object({
 });
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const { session, response } = await requireAuth();
-  if (response) return response;
-  const clanId = getClanId(session);
-  const userId = getUserId(session);
-  if (!clanId) return err("No clan", 403);
-  if (!canEdit((session?.user as any)?.role)) return err("Forbidden", 403);
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
+  const { clanId, userId, role } = tc;
+  if (!canEdit(role)) return err("Forbidden", 403);
 
   const { id } = await params;
   const existing = await prisma.duty.findFirst({ where: { id, clanId, deletedAt: null } });
@@ -83,11 +82,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
 }
 
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const { session, response } = await requireAuth();
-  if (response) return response;
-  const clanId = getClanId(session);
-  if (!clanId) return err("No clan", 403);
-  if (!canDelete((session?.user as any)?.role)) return err("Forbidden", 403);
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
+  const { clanId, role } = tc;
+  if (!canDelete(role)) return err("Forbidden", 403);
 
   const { id } = await params;
   const existing = await prisma.duty.findFirst({ where: { id, clanId, deletedAt: null } });

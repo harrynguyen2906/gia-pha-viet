@@ -1,7 +1,9 @@
 import { NextRequest } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { ok, err, requireAuth, getClanId, canEdit } from "@/lib/api";
+import { ok, err, canEdit } from "@/lib/api";
+import { getTenantContext } from "@/lib/tenant";
+import { handleApiError } from "@/lib/api-helpers";
 
 const schema = z.object({
   memberAId: z.string().uuid(),
@@ -12,10 +14,10 @@ const schema = z.object({
 });
 
 export async function POST(req: NextRequest) {
-  const { session, response } = await requireAuth();
-  if (response) return response;
-  const clanId = getClanId(session);
-  if (!canEdit((session?.user as any)?.role)) return err("Forbidden", 403);
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
+  const { clanId, role } = tc;
+  if (!canEdit(role)) return err("Forbidden", 403);
 
   const body = await req.json();
   const parsed = schema.safeParse(body);
@@ -23,6 +25,13 @@ export async function POST(req: NextRequest) {
 
   const data = parsed.data;
   if (data.memberAId === data.memberBId) return err("Cannot link member to itself", 422);
+
+  // MT-006: Verify both members belong to the session clan
+  const [memberA, memberB] = await Promise.all([
+    prisma.member.findFirst({ where: { id: data.memberAId, clanId, deletedAt: null } }),
+    prisma.member.findFirst({ where: { id: data.memberBId, clanId, deletedAt: null } }),
+  ]);
+  if (!memberA || !memberB) return err("Members not found in your clan", 404);
 
   // Ensure ordered pair (a < b) for deduplication
   const [memberAId, memberBId] =

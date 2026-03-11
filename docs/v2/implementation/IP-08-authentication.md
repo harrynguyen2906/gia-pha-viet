@@ -53,9 +53,9 @@ Implement proper authentication flows: public registration (creating user + clan
    ```
 
 ### DoD
-- [ ] Migration runs successfully
-- [ ] `password_reset_tokens` table exists with correct columns
-- [ ] Foreign key to `users` table works
+- [x] Migration runs successfully
+- [x] `password_reset_tokens` table exists with correct columns
+- [x] Foreign key to `users` table works
 
 ---
 
@@ -108,9 +108,9 @@ Implement proper authentication flows: public registration (creating user + clan
    ```
 
 ### DoD
-- [ ] All schemas validate correctly
-- [ ] Error messages are in Vietnamese
-- [ ] Schemas are importable from both client and server
+- [x] All schemas validate correctly
+- [x] Error messages are in Vietnamese
+- [x] Schemas are importable from both client and server
 
 ---
 
@@ -160,11 +160,11 @@ Implement proper authentication flows: public registration (creating user + clan
    ```
 
 ### DoD
-- [ ] `POST /api/auth/register` creates user + clan + profile atomically
-- [ ] Returns 409 if email exists
-- [ ] Returns 400 with field-specific errors
-- [ ] Rate limited to 5 req / 15 min per IP
-- [ ] Password is hashed, never returned in response
+- [x] `POST /api/auth/register` creates user + clan + profile atomically
+- [x] Returns 409 if email exists
+- [x] Returns 400 with field-specific errors
+- [x] Rate limited to 5 req / 15 min per IP
+- [x] Password is hashed, never returned in response
 
 ---
 
@@ -217,11 +217,11 @@ Implement proper authentication flows: public registration (creating user + clan
    ```
 
 ### DoD
-- [ ] Sign in works with email + password
-- [ ] JWT contains `role` and `clanId`
-- [ ] Session object has `user.role` and `user.clanId`
-- [ ] Inactive users cannot sign in
-- [ ] `lastLoginAt` updated on each sign in
+- [x] Sign in works with email + password
+- [x] JWT contains `role` and `clanId`
+- [x] Session object has `user.role` and `user.clanId`
+- [x] Inactive users cannot sign in
+- [x] `lastLoginAt` updated on each sign in
 
 ---
 
@@ -259,10 +259,10 @@ Implement proper authentication flows: public registration (creating user + clan
    - Integrates with `react-hook-form` via `register` prop
 
 ### DoD
-- [ ] `AuthPageLayout` renders split-screen on desktop, stacked on mobile
-- [ ] `ImperialScrollForm` matches the HTML mockup styling
-- [ ] `PasswordStrengthIndicator` updates in real-time
-- [ ] All components use design tokens from PRD-00
+- [x] `AuthPageLayout` renders split-screen on desktop, stacked on mobile
+- [x] `ImperialScrollForm` matches the HTML mockup styling
+- [x] `PasswordStrengthIndicator` updates in real-time
+- [x] All components use design tokens from PRD-00
 
 ---
 
@@ -292,12 +292,12 @@ Implement proper authentication flows: public registration (creating user + clan
 3. Wrap with `AuthPageLayout` + `ImperialScrollForm`
 
 ### DoD
-- [ ] Form validates client-side before submit
-- [ ] Successful login redirects to dashboard
-- [ ] Wrong credentials show generic error
-- [ ] "Remember Me" extends session duration
-- [ ] Links to register and forgot password work
-- [ ] Authenticated users are redirected away
+- [x] Form validates client-side before submit
+- [x] Successful login redirects to dashboard
+- [x] Wrong credentials show generic error
+- [x] "Remember Me" extends session duration
+- [x] Links to register and forgot password work
+- [x] Authenticated users are redirected away
 
 ---
 
@@ -326,12 +326,12 @@ Implement proper authentication flows: public registration (creating user + clan
 4. Registration subtitle: "Khởi Tạo Di Sản Gia Tộc" (Initialize Clan Heritage)
 
 ### DoD
-- [ ] All 5 fields validate client + server side
-- [ ] Successful registration creates user + clan + profile
-- [ ] Auto-signs in after registration
-- [ ] Duplicate email shows specific error
-- [ ] Password strength indicator works in real-time
-- [ ] Authenticated users are redirected away
+- [x] All 5 fields validate client + server side
+- [x] Successful registration creates user + clan + profile
+- [x] Auto-signs in after registration
+- [x] Duplicate email shows specific error
+- [x] Password strength indicator works in real-time
+- [x] Authenticated users are redirected away
 
 ---
 
@@ -367,11 +367,11 @@ Implement proper authentication flows: public registration (creating user + clan
    - Return success
 
 ### DoD
-- [ ] Forgot password always returns success (timing-safe)
-- [ ] Reset token expires after 1 hour
-- [ ] Used tokens cannot be reused
-- [ ] Password update works correctly
-- [ ] Invalid/expired tokens show error
+- [x] Forgot password always returns success (timing-safe)
+- [x] Reset token expires after 1 hour
+- [x] Used tokens cannot be reused
+- [x] Password update works correctly
+- [x] Invalid/expired tokens show error
 
 ---
 
@@ -415,10 +415,10 @@ Implement proper authentication flows: public registration (creating user + clan
    ```
 
 ### DoD
-- [ ] Public routes accessible without auth
-- [ ] Protected routes redirect to `/auth/signin`
-- [ ] Callback URL preserved for post-login redirect
-- [ ] Static assets not affected by middleware
+- [x] Public routes accessible without auth
+- [x] Protected routes redirect to `/auth/signin`
+- [x] Callback URL preserved for post-login redirect
+- [x] Static assets not affected by middleware
 
 ---
 

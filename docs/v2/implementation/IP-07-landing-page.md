@@ -47,9 +47,9 @@ Convert the current root page (`/`) from an authenticated homepage into a **publ
 - Root `layout.tsx` remains for shared `<html>`, fonts, providers
 
 ### DoD
-- [ ] `/` shows landing page (public, no login required)
-- [ ] `/lineage`, `/map`, `/rituals`, `/duties` redirect to login if unauthenticated
-- [ ] Previously authenticated users visiting `/` see "Go to Dashboard" in nav
+- [x] `/` shows landing page (public, no login required)
+- [x] `/lineage`, `/map`, `/rituals`, `/duties` redirect to login if unauthenticated
+- [x] Previously authenticated users visiting `/` see "Go to Dashboard" in nav
 
 ---
 
@@ -92,11 +92,11 @@ Convert the current root page (`/`) from an authenticated homepage into a **publ
    ```
 
 ### DoD
-- [ ] Header is transparent on hero, solid on scroll
-- [ ] Mobile hamburger menu opens/closes
-- [ ] "Sign In" → navigates to `/auth/signin`
-- [ ] "Start Free" → navigates to `/auth/register`
-- [ ] Footer renders 4 columns on desktop, stacked on mobile
+- [x] Header is transparent on hero, solid on scroll
+- [x] Mobile hamburger menu opens/closes
+- [x] "Sign In" → navigates to `/auth/signin`
+- [x] "Start Free" → navigates to `/auth/register`
+- [x] Footer renders 4 columns on desktop, stacked on mobile
 
 ---
 
@@ -123,10 +123,10 @@ CTA Secondary: "Tìm Hiểu Thêm"
 ```
 
 ### DoD
-- [ ] Hero fills viewport height
-- [ ] Background image loads with priority
-- [ ] CTAs route correctly
-- [ ] Responsive: stacked on mobile, side-by-side on desktop
+- [x] Hero fills viewport height
+- [x] Background image loads with priority
+- [x] CTAs route correctly
+- [x] Responsive: stacked on mobile, side-by-side on desktop
 
 ---
 
@@ -158,10 +158,10 @@ const features = [
 ```
 
 ### DoD
-- [ ] 6 cards render in correct grid layout
-- [ ] Stagger animation works on scroll
-- [ ] All icons render from lucide-react
-- [ ] Responsive grid adjusts per breakpoint
+- [x] 6 cards render in correct grid layout
+- [x] Stagger animation works on scroll
+- [x] All icons render from lucide-react
+- [x] Responsive grid adjusts per breakpoint
 
 ---
 
@@ -179,9 +179,9 @@ const features = [
 5. Each step: icon + title + description
 
 ### DoD
-- [ ] 3 steps display with connecting timeline
-- [ ] Responsive: horizontal → vertical on mobile
-- [ ] Gold accent styling matches design system
+- [x] 3 steps display with connecting timeline
+- [x] Responsive: horizontal → vertical on mobile
+- [x] Gold accent styling matches design system
 
 ---
 
@@ -198,9 +198,9 @@ const features = [
 4. Counter values can be hardcoded for now, later pulled from API
 
 ### DoD
-- [ ] Counter animation triggers on scroll-into-view
-- [ ] Testimonial cards render with quote + author
-- [ ] Respects reduced-motion preference
+- [x] Counter animation triggers on scroll-into-view
+- [x] Testimonial cards render with quote + author
+- [x] Respects reduced-motion preference
 
 ---
 
@@ -236,11 +236,11 @@ const features = [
    ```
 
 ### DoD
-- [ ] All sections render in correct order
-- [ ] Meta tags present in page source
-- [ ] Smooth scroll anchors work (#features, #how-it-works)
-- [ ] Page is fully server-rendered (minimal client JS)
-- [ ] Lighthouse performance score > 90
+- [x] All sections render in correct order
+- [x] Meta tags present in page source
+- [x] Smooth scroll anchors work (#features, #how-it-works)
+- [x] Page is fully server-rendered (minimal client JS)
+- [x] Lighthouse performance score > 90
 
 ---
 
@@ -276,9 +276,9 @@ export default async function MarketingHeader() {
 ```
 
 ### DoD
-- [ ] Unauthenticated: shows Sign In + Register buttons
-- [ ] Authenticated: shows Dashboard button
-- [ ] No flash of wrong state (server-rendered)
+- [x] Unauthenticated: shows Sign In + Register buttons
+- [x] Authenticated: shows Dashboard button
+- [x] No flash of wrong state (server-rendered)
 
 ---
 

@@ -1,19 +1,21 @@
 import { NextRequest } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { ok, err, requireAuth, getClanId, getUserId, canEdit, canDelete } from "@/lib/api";
+import { ok, err, canEdit, canDelete } from "@/lib/api";
+import { getTenantContext } from "@/lib/tenant";
+import { handleApiError } from "@/lib/api-helpers";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const { session, response } = await requireAuth();
-  if (response) return response;
-  const clanId = getClanId(session);
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
+  const { clanId } = tc;
 
   const member = await prisma.member.findFirst({
-    where: { id, clanId: clanId ?? undefined, deletedAt: null },
+    where: { id, clanId, deletedAt: null },
     include: {
       parentRelations: {
         include: { parent: { select: { id: true, fullName: true, isDeceased: true, avatarUrl: true } } },
@@ -80,10 +82,10 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const { session, response } = await requireAuth();
-  if (response) return response;
-  const clanId = getClanId(session);
-  if (!canEdit((session?.user as any)?.role)) return err("Forbidden", 403);
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
+  const { clanId, role } = tc;
+  if (!canEdit(role)) return err("Forbidden", 403);
 
   const body = await req.json();
   const parsed = updateMemberSchema.safeParse(body);
@@ -91,7 +93,7 @@ export async function PATCH(
 
   const data = parsed.data;
   const member = await prisma.member.updateMany({
-    where: { id, clanId: clanId ?? undefined, deletedAt: null },
+    where: { id, clanId, deletedAt: null },
     data: {
       ...(data.fullName !== undefined ? { fullName: data.fullName } : {}),
       ...(data.gender !== undefined ? { gender: data.gender } : {}),
@@ -116,13 +118,13 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const { session, response } = await requireAuth();
-  if (response) return response;
-  const clanId = getClanId(session);
-  if (!canDelete((session?.user as any)?.role)) return err("Forbidden", 403);
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
+  const { clanId, role } = tc;
+  if (!canDelete(role)) return err("Forbidden", 403);
 
   await prisma.member.updateMany({
-    where: { id, clanId: clanId ?? undefined, deletedAt: null },
+    where: { id, clanId, deletedAt: null },
     data: { deletedAt: new Date() },
   });
 

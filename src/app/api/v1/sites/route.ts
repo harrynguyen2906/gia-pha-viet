@@ -1,13 +1,14 @@
 import { NextRequest } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { ok, err, requireAuth, getClanId, getUserId, canEdit } from "@/lib/api";
+import { ok, err, canEdit } from "@/lib/api";
+import { getTenantContext } from "@/lib/tenant";
+import { handleApiError } from "@/lib/api-helpers";
 
 export async function GET(req: NextRequest) {
-  const { session, response } = await requireAuth();
-  if (response) return response;
-  const clanId = getClanId(session);
-  if (!clanId) return err("No clan", 403);
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
+  const { clanId } = tc;
 
   const condition = req.nextUrl.searchParams.get("condition");
   const siteType = req.nextUrl.searchParams.get("siteType");
@@ -58,12 +59,10 @@ const createSiteSchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
-  const { session, response } = await requireAuth();
-  if (response) return response;
-  const clanId = getClanId(session);
-  const userId = getUserId(session);
-  if (!clanId) return err("No clan", 403);
-  if (!canEdit((session?.user as any)?.role)) return err("Forbidden", 403);
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
+  const { clanId, userId, role } = tc;
+  if (!canEdit(role)) return err("Forbidden", 403);
 
   const body = await req.json();
   const parsed = createSiteSchema.safeParse(body);

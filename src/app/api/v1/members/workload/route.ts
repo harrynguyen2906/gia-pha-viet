@@ -1,12 +1,13 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { ok, err, requireAuth, getClanId } from "@/lib/api";
+import { ok, err } from "@/lib/api";
+import { getTenantContext } from "@/lib/tenant";
+import { handleApiError } from "@/lib/api-helpers";
 
 export async function GET(req: NextRequest) {
-  const { session, response } = await requireAuth();
-  if (response) return response;
-  const clanId = getClanId(session);
-  if (!clanId) return err("No clan", 403);
+  const tc = await getTenantContext().catch((e) => handleApiError(e));
+  if (tc instanceof Response) return tc;
+  const { clanId } = tc;
 
   // Count active and completed duties per member
   const [active, completed, total] = await Promise.all([
