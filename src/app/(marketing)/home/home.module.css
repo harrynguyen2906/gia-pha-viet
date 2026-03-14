@@ -30,17 +30,17 @@
 /* Vị trí các layer */
 .layer1 {
   position: absolute;
-  top: 25%;
-  right: 15%;
-  width: 400px;
+  bottom: 15%;
+  left: 8%;
+  width: 350px;
   z-index: 3;
 }
 
 .layer2 {
   position: absolute;
-  bottom: 10%;
-  left: 10%;
-  width: 500px;
+  top: 20%;
+  right: 10%;
+  width: 380px;
   z-index: 4;
 }
 
