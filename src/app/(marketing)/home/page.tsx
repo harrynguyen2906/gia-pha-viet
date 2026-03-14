@@ -7,7 +7,7 @@ export default function HomePage() {
       <div className={styles.backgroundContainer}>
         {/* Background Image */}
         <img 
-          src="/homepage/4.png" 
+          src="/homepage/2.png" 
           alt="Background landscape" 
           className={styles.backgroundImage} 
         />
@@ -17,15 +17,15 @@ export default function HomePage() {
           className={`${styles.targetObject} ${styles.layer1}`}
           style={{ '--mask-img': `url('/homepage/3.png')` } as React.CSSProperties}
         >
-          <img src="/homepage/3.png" alt="Temple structure" className={styles.objectImg} />
+          <img src="/homepage/3.png" alt="Interactive object 1" className={styles.objectImg} />
         </div>
 
-        {/* Layer 2 - House with tree */}
+        {/* Layer 2 - Additional object */}
         <div 
           className={`${styles.targetObject} ${styles.layer2}`}
-          style={{ '--mask-img': `url('/homepage/2.png')` } as React.CSSProperties}
+          style={{ '--mask-img': `url('/homepage/4.png')` } as React.CSSProperties}
         >
-          <img src="/homepage/2.png" alt="Traditional house with tree" className={styles.objectImg} />
+          <img src="/homepage/4.png" alt="Interactive object 2" className={styles.objectImg} />
         </div>
       </div>
     </div>
