@@ -1,31 +1,40 @@
-import type { Metadata } from "next";
-import HeroSection from "@/components/marketing/HeroSection";
-import FeaturesSection from "@/components/marketing/FeaturesSection";
-import HowItWorksSection from "@/components/marketing/HowItWorksSection";
-import SocialProofSection from "@/components/marketing/SocialProofSection";
-import CTABannerSection from "@/components/marketing/CTABannerSection";
+import React from 'react';
+import Link from 'next/link';
+import styles from './home/home.module.css';
 
-export const metadata: Metadata = {
-  title: "Heritage Cloud — Lưu Giữ Di Sản Gia Phả Việt Nam",
-  description:
-    "Nền tảng gia phả số cho gia đình Việt Nam. Quản lý cây phả hệ, lịch giỗ chạp, bản đồ tổ tiên và bổn phận gia tộc.",
-  keywords: ["gia phả", "family tree", "Vietnamese genealogy", "phả hệ", "lịch giỗ", "tổ tiên"],
-  openGraph: {
-    title: "Heritage Cloud — Vietnamese Family Lineage Platform",
-    description:
-      "Preserve your family heritage digitally. Interactive lineage trees, ritual calendars, and ancestral maps.",
-    type: "website",
-  },
-};
-
-export default function LandingPage() {
+export default function HomePage() {
   return (
-    <>
-      <HeroSection />
-      <FeaturesSection />
-      <HowItWorksSection />
-      <SocialProofSection />
-      <CTABannerSection />
-    </>
+    <div className={styles.container}>
+      <div className={styles.backgroundContainer}>
+        {/* Background Image */}
+        <img
+          src="/homepage/2.png"
+          alt="Background landscape"
+          className={styles.backgroundImage}
+        />
+
+        {/* Layer 1 - Nha */}
+        <Link
+          href="/giapha"
+          className={`${styles.targetObject} ${styles.layer1}`}
+          data-tooltip="Gia pha ho toc - Landing page"
+          aria-label="Go to gia pha ho toc landing page"
+          style={{ '--mask-img': `url('/homepage/3.png')` } as React.CSSProperties}
+        >
+          <img src="/homepage/3.png" alt="Nha - Gia pha ho toc" className={styles.objectImg} />
+        </Link>
+
+        {/* Layer 2 - Chua */}
+        <a
+          href="https://viengchua.io.vn"
+          className={`${styles.targetObject} ${styles.layer2}`}
+          data-tooltip="Pagoda Online - viengchua.io.vn"
+          aria-label="Open Pagoda Online at viengchua.io.vn"
+          style={{ '--mask-img': `url('/homepage/4.png')` } as React.CSSProperties}
+        >
+          <img src="/homepage/4.png" alt="Chua - Pagoda Online" className={styles.objectImg} />
+        </a>
+      </div>
+    </div>
   );
 }
