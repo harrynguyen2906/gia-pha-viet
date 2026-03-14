@@ -30,16 +30,16 @@
 /* Vị trí các layer */
 .layer1 {
   position: absolute;
-  left: 50px;
+  left: 350px;
   top: 380px;
-  width: 750px;
+  width: 1500px;
   z-index: 3;
 }
 
 .layer2 {
   position: absolute;
-  left: 450px;
-  top: 120px;
+  left: 550px;
+  top: 220px;
   width: 800px;
   z-index: 4;
 }
