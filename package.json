@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Heritage Cloud (Gia Phả Việt) — Monorepo root",
+  "packageManager": "npm@11.8.0",
   "scripts": {
     "db:generate": "npm run --workspace=@gia-pha/db db:generate",
     "db:migrate:dev": "npm run --workspace=@gia-pha/db db:migrate:dev",
