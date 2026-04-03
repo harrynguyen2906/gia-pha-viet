@@ -1,4 +1,4 @@
-import { PrismaClient, GenderType, UserRole, LineageRole, SiteCondition, SiteType, DutyCategory, DutyPriority, DutyStatus } from "../src/generated/prisma/client";
+import { PrismaClient, GenderType, UserRole, LineageRole, SiteCondition, SiteType, DutyCategory, DutyPriority, DutyStatus } from "@gia-pha/db";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 import bcrypt from "bcrypt";
