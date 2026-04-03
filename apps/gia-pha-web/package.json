@@ -71,5 +71,11 @@
     "tsx": "^4.21.0",
     "typescript": "^5",
     "vercel": "^50.25.6"
+  },
+  "optionalDependencies": {
+    "@next/swc-linux-x64-gnu": "*",
+    "@next/swc-linux-x64-musl": "*",
+    "lightningcss-linux-x64-gnu": "*",
+    "lightningcss-linux-x64-musl": "*"
   }
 }
