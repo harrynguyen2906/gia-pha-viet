@@ -4,21 +4,27 @@
   "private": true,
   "description": "Heritage Cloud (Gia Phả Việt) — Monorepo root",
   "scripts": {
-    "db:generate":       "npm run --workspace=@gia-pha/db db:generate",
-    "db:migrate:dev":    "npm run --workspace=@gia-pha/db db:migrate:dev",
+    "db:generate": "npm run --workspace=@gia-pha/db db:generate",
+    "db:migrate:dev": "npm run --workspace=@gia-pha/db db:migrate:dev",
     "db:migrate:deploy": "npm run --workspace=@gia-pha/db db:migrate:deploy",
     "db:migrate:status": "npm run --workspace=@gia-pha/db db:migrate:status",
-    "db:seed":           "npm run --workspace=@gia-pha/db db:seed",
-    "db:seed:public":    "npm run --workspace=@gia-pha/db db:seed:public",
-    "db:seed:admin":     "npm run --workspace=@gia-pha/db db:seed:admin",
-    "db:studio":         "npm run --workspace=@gia-pha/db db:studio",
-    "db:reset":          "npm run --workspace=@gia-pha/db db:reset",
-    "db:validate":       "npm run --workspace=@gia-pha/db db:validate",
-    "db:format":         "npm run --workspace=@gia-pha/db db:format",
-    "postinstall":       "npm run db:generate"
+    "db:seed": "npm run --workspace=@gia-pha/db db:seed",
+    "db:seed:public": "npm run --workspace=@gia-pha/db db:seed:public",
+    "db:seed:admin": "npm run --workspace=@gia-pha/db db:seed:admin",
+    "db:studio": "npm run --workspace=@gia-pha/db db:studio",
+    "db:reset": "npm run --workspace=@gia-pha/db db:reset",
+    "db:validate": "npm run --workspace=@gia-pha/db db:validate",
+    "db:format": "npm run --workspace=@gia-pha/db db:format",
+    "postinstall": "npm run db:generate",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint"
   },
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "devDependencies": {
+    "turbo": "^2.9.3"
+  }
 }
