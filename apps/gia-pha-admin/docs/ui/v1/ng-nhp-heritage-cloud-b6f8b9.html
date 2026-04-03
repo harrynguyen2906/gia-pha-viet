@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Heritage Cloud - Đăng Nhập</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Spectral+SC:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-container": "#dab36a",
+              "tertiary-container": "#563e04",
+              "primary": "#ffb4a8",
+              "on-tertiary-container": "#ccaa67",
+              "on-secondary-fixed-variant": "#5d4201",
+              "secondary": "#e9c176",
+              "background": "#210e0e",
+              "primary-fixed": "#ffdad4",
+              "inverse-on-surface": "#422a2a",
+              "surface-container-high": "#3b2423",
+              "on-primary-fixed-variant": "#920703",
+              "secondary-fixed": "#ffdea5",
+              "on-surface": "#ffdad8",
+              "on-error": "#690005",
+              "surface-container-highest": "#472e2e",
+              "surface-bright": "#4c3332",
+              "on-primary-fixed": "#410000",
+              "primary-container": "#8b0000",
+              "outline": "#aa8984",
+              "on-tertiary": "#402d00",
+              "secondary-fixed-dim": "#e9c176",
+              "surface-container-lowest": "#1b0909",
+              "inverse-primary": "#b52619",
+              "surface-dim": "#210e0e",
+              "on-error-container": "#ffdad6",
+              "inverse-surface": "#ffdad8",
+              "error": "#ffb4ab",
+              "on-tertiary-fixed": "#261900",
+              "on-secondary": "#412d00",
+              "on-primary": "#690000",
+              "secondary-container": "#604403",
+              "surface-variant": "#472e2e",
+              "on-tertiary-fixed-variant": "#5b4308",
+              "on-background": "#ffdad8",
+              "surface-tint": "#ffb4a8",
+              "surface": "#210e0e",
+              "on-surface-variant": "#e3beb8",
+              "error-container": "#93000a",
+              "surface-container-low": "#2b1616",
+              "on-primary-container": "#ff907f",
+              "tertiary-fixed": "#ffdea3",
+              "on-secondary-fixed": "#261900",
+              "outline-variant": "#5a403c",
+              "tertiary-fixed-dim": "#e6c27d",
+              "surface-container": "#2f1a19",
+              "tertiary": "#e6c27d",
+              "primary-fixed-dim": "#ffb4a8"
+            },
+            fontFamily: {
+              "headline": ["Spectral SC", "Noto Serif", "serif"],
+              "body": ["Noto Serif", "serif"],
+              "label": ["Noto Serif", "serif"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.imperial-gradient {
+    background: radial-gradient(circle at center, #2b1616 0%, #1b0909 100%)
+    }
+.parchment-texture {
+    background-color: #F4EBD0;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBvJuEMhBBJ3Jd1OFJ3jWkI5LZS7Mx4yJehVCGV-MMzO918286XBwQ0eLouuOaKTTR7iJ7cf3vjveWZsr2xB79o5CAqwJIEGf2Ly-qMcd0_ifHvOJSX7Nh0qL6eNQDWmKQLasMq36xmZztqtBDyrteKLrr5cJQFPEPT33qC3EMdMaTcB3uYKn9hnD_iGGDY_GNi8f3aI0V8ti7wLTaUAvxapzfDb92onV2m36lC-KfI6n-jux8KlROJYUDJ3wrftnJaMARgLPLw8R6_)
+    }
+.gold-leaf-hover:hover {
+    box-shadow: inset 0 0 10px rgba(255, 222, 165, 0.2)
+    }
+.lacquer-sheen {
+    background: linear-gradient(135deg, rgba(71, 46, 46, 0.4) 0%, rgba(33, 14, 14, 0.1) 100%)
+    }</style>
+</head>
+<body class="bg-background text-on-surface font-body min-h-screen flex items-center justify-center p-4 imperial-gradient overflow-hidden">
+<!-- Decorative Corner Ornaments -->
+<div class="fixed top-8 left-8 w-24 h-24 border-t-2 border-l-2 border-secondary opacity-30 pointer-events-none"></div>
+<div class="fixed top-8 right-8 w-24 h-24 border-t-2 border-r-2 border-secondary opacity-30 pointer-events-none"></div>
+<div class="fixed bottom-8 left-8 w-24 h-24 border-b-2 border-l-2 border-secondary opacity-30 pointer-events-none"></div>
+<div class="fixed bottom-8 right-8 w-24 h-24 border-b-2 border-r-2 border-secondary opacity-30 pointer-events-none"></div>
+<!-- Background Symbolism -->
+<div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-[40rem] text-secondary">account_balance</span>
+</div>
+<!-- Main Login Vessel -->
+<div class="relative z-10 w-full max-w-md">
+<!-- Brand Header -->
+<div class="text-center mb-10">
+<div class="inline-block p-4 mb-4 relative">
+<div class="absolute inset-0 border border-secondary opacity-40 rotate-45"></div>
+<span class="material-symbols-outlined text-5xl text-secondary" style="font-variation-settings: 'FILL' 1;">castle</span>
+</div>
+<h1 class="font-headline text-4xl text-secondary tracking-widest uppercase mb-2">Heritage Cloud</h1>
+<h2 class="font-body text-lg text-on-surface-variant italic opacity-80">Gia Phả Việt - Đăng Nhập</h2>
+</div>
+<!-- Login Card -->
+<div class="bg-surface-container-high shadow-[0_20px_50px_rgba(27,9,9,0.8)] border border-outline-variant/20 relative overflow-hidden">
+<!-- Top Gold Trim -->
+<div class="h-1 w-full bg-gradient-to-r from-transparent via-secondary to-transparent"></div>
+<form class="p-8 md:p-12 space-y-8">
+<!-- Email Field -->
+<div class="space-y-2 group">
+<label class="block text-sm font-label text-secondary tracking-wider uppercase opacity-70" for="email">Email Thành Viên</label>
+<div class="relative">
+<input class="w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 transition-all duration-300 py-3 text-on-surface placeholder:text-outline-variant/50" id="email" name="email" placeholder="quan_ly@giaphoviet.vn" type="email"/>
+<span class="absolute right-0 bottom-3 material-symbols-outlined text-outline group-focus-within:text-secondary transition-colors">mail</span>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2 group">
+<label class="block text-sm font-label text-secondary tracking-wider uppercase opacity-70" for="password">Mật Mã</label>
+<div class="relative">
+<input class="w-full bg-transparent border-0 border-b border-outline focus:border-secondary focus:ring-0 transition-all duration-300 py-3 text-on-surface placeholder:text-outline-variant/50" id="password" name="password" placeholder="••••••••" type="password"/>
+<span class="absolute right-0 bottom-3 material-symbols-outlined text-outline group-focus-within:text-secondary transition-colors">lock</span>
+</div>
+</div>
+<!-- Action Section -->
+<div class="pt-4 space-y-6">
+<button class="w-full bg-primary-container text-secondary font-headline py-4 px-6 shadow-lg hover:bg-on-primary-fixed-variant transition-all duration-300 flex items-center justify-center gap-3 gold-leaf-hover active:scale-95" type="submit">
+<span class="tracking-[0.2em] font-bold">ĐĂNG NHẬP</span>
+<span class="material-symbols-outlined text-xl">login</span>
+</button>
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-label uppercase tracking-widest text-on-surface-variant">
+<a class="hover:text-secondary transition-colors border-b border-transparent hover:border-secondary pb-1" href="#">Quên Mật Mã?</a>
+<div class="hidden sm:block w-px h-4 bg-outline-variant opacity-30"></div>
+<a class="hover:text-secondary transition-colors border-b border-transparent hover:border-secondary pb-1" href="#">Đăng Ký Tộc Mới</a>
+</div>
+</div>
+</form>
+<!-- Bottom Texture Overlay (Subtle) -->
+<div class="absolute bottom-0 left-0 w-full h-24 lacquer-sheen pointer-events-none opacity-20"></div>
+</div>
+<!-- Footer / Credentials -->
+<div class="mt-12 text-center">
+<p class="text-[10px] text-outline uppercase tracking-[0.3em] mb-4">Hoàng Thành Huế - Di Sản Số</p>
+<div class="flex justify-center gap-6">
+<img alt="Imperial Seal" class="h-12 w-auto grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500" data-alt="ancient bronze vietnamese imperial seal with intricate dragon carving and aged patina on a dark mahogany surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEYr1L_N4oFr3h8K_HuW8cQL01Dk7rf3NQ5I6HtSsXMaT6zhjoggjxKguAQPx1NjXVpHgoRw16X3fR6is__zEBdzxOIpwJuz_tHobkioOTHSOKR0C1vxieIO0iBUv5x4YmkOJCWAKV_37XEEa4KBovbaWnrblwJCksu7D_t7HjSFsOc11wt9gpz9ued4nhKPou5HBsnu-VySY99VEXOpYRW-oWGH3zqSdkE_HqSAqirYaYrOOSZxx5UpfnOGAHtve4o40j8-hyh6gK"/>
+<img alt="Heritage Cloud" class="h-12 w-auto grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500" data-alt="stylized logo of a traditional vietnamese cloud motif rendered in brushed antique gold leaf texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZ78SvLNyQrMNNpa0SXTqIlFvNnv7EDyA449kZCQr9l9Cya_Aepq1bXG2pN8TcXmT-IWf6sDdxMMiRm146-QA81-7EODSx_nLSq-mphyzHWCNnt4dyYd5SQJNrfmBDaoRFZEFd7v5Vj1PlVk0lOKBBaqrvYlGk7cwHjUzaMQjSr43MJ2GTh17i3WlXr10ytkYHdDU4IH3D02mV5QOiNLI1GcpVN3flUMlarIvtJrqaEbV3zsCPvIMo7-FCA-hVTlQmvIVMTeHnwvx6"/>
+</div>
+</div>
+</div>
+<!-- Ornamental Scroll Visuals (Asymmetric Layout) -->
+<div class="fixed top-1/4 -right-12 opacity-10 pointer-events-none rotate-90">
+<p class="font-headline text-6xl text-secondary whitespace-nowrap">PHỤC HỒI DI SẢN</p>
+</div>
+<div class="fixed bottom-1/4 -left-12 opacity-10 pointer-events-none -rotate-90">
+<p class="font-headline text-6xl text-secondary whitespace-nowrap">GIA PHẢ VIỆT</p>
+</div>
+</body></html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quản Lý Họ Tộc | Heritage Cloud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Spectral+SC:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#ffdad8",
+                        "on-secondary-container": "#dab36a",
+                        "tertiary-fixed": "#ffdea3",
+                        "surface-container-low": "#2b1616",
+                        "primary-fixed-dim": "#ffb4a8",
+                        "surface-dim": "#210e0e",
+                        "on-primary-fixed-variant": "#920703",
+                        "on-tertiary": "#402d00",
+                        "on-tertiary-fixed": "#261900",
+                        "on-surface-variant": "#e3beb8",
+                        "on-tertiary-fixed-variant": "#5b4308",
+                        "primary": "#ffb4a8",
+                        "surface-container-lowest": "#1b0909",
+                        "outline": "#aa8984",
+                        "tertiary-container": "#563e04",
+                        "on-secondary-fixed": "#261900",
+                        "on-primary-fixed": "#410000",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#5d4201",
+                        "surface": "#210e0e",
+                        "on-secondary": "#412d00",
+                        "surface-variant": "#472e2e",
+                        "secondary-container": "#604403",
+                        "outline-variant": "#5a403c",
+                        "background": "#210e0e",
+                        "secondary-fixed": "#ffdea5",
+                        "secondary": "#e9c176",
+                        "on-error": "#690005",
+                        "surface-container-high": "#3b2423",
+                        "on-tertiary-container": "#ccaa67",
+                        "tertiary-fixed-dim": "#e6c27d",
+                        "primary-container": "#8b0000",
+                        "on-background": "#ffdad8",
+                        "error-container": "#93000a",
+                        "secondary-fixed-dim": "#e9c176",
+                        "inverse-primary": "#b52619",
+                        "surface-bright": "#4c3332",
+                        "on-primary-container": "#ff907f",
+                        "surface-container": "#2f1a19",
+                        "inverse-on-surface": "#422a2a",
+                        "surface-tint": "#ffb4a8",
+                        "tertiary": "#e6c27d",
+                        "on-primary": "#690000",
+                        "inverse-surface": "#ffdad8",
+                        "surface-container-highest": "#472e2e",
+                        "error": "#ffb4ab",
+                        "primary-fixed": "#ffdad4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Noto Serif"],
+                        "label": ["Noto Serif"],
+                        "imperial": ["Spectral SC"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .lacquer-gradient {
+            background: radial-gradient(circle at center, #920703 0%, #8b0000 100%);
+        }
+        .gold-leaf-text {
+            color: #e9c176;
+            text-shadow: 0 0 1px rgba(233, 193, 118, 0.3);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1b0909; }
+        ::-webkit-scrollbar-thumb { background: #5a403c; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-secondary/30 selection:text-secondary">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-screen flex flex-col h-full w-64 border-r border-[#5a403c]/15 bg-[#210e0e] dark:bg-[#210e0e] font-noto-serif text-sm antialiased shadow-[0_20px_50px_rgba(27,9,9,0.8)] z-50">
+<div class="p-8 space-y-2">
+<h1 class="text-xl font-bold text-[#e9c176] uppercase tracking-widest">Heritage Cloud</h1>
+<p class="text-[#aa8984] italic">Gia Phả Việt</p>
+</div>
+<nav class="flex-1 px-4 space-y-1 mt-4">
+<a class="flex items-center gap-4 px-4 py-3 text-[#aa8984] hover:text-[#e9c176] transition-colors hover:bg-[#3b2423]" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#e9c176] border-r-4 border-[#e9c176] bg-[#2b1616] font-bold" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span>Clans (Họ Tộc)</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#aa8984] hover:text-[#e9c176] transition-colors hover:bg-[#3b2423]" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span>Subscriptions</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#aa8984] hover:text-[#e9c176] transition-colors hover:bg-[#3b2423]" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span>Admin Team</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-[#aa8984] hover:text-[#e9c176] transition-colors hover:bg-[#3b2423]" href="#">
+<span class="material-symbols-outlined">military_tech</span>
+<span>Tiers</span>
+</a>
+</nav>
+<div class="p-4">
+<button class="w-full py-3 lacquer-gradient text-secondary font-bold tracking-widest flex items-center justify-center gap-2 border border-secondary/20 hover:scale-[1.02] transition-transform">
+<span class="material-symbols-outlined text-sm">add_circle</span>
+                New Decree
+            </button>
+</div>
+<div class="p-4 border-t border-[#5a403c]/15 space-y-1">
+<a class="flex items-center gap-4 px-4 py-2 text-[#aa8984] hover:text-[#e9c176] transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-2 text-[#aa8984] hover:text-[#e9c176] transition-colors" href="#">
+<span class="material-symbols-outlined">help_center</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="pl-64 min-h-screen">
+<!-- Top App Bar -->
+<header class="fixed top-0 right-0 left-64 h-16 flex items-center justify-between px-8 z-40 bg-[#210e0e]/60 backdrop-blur-md border-b border-[#5a403c]/15 font-noto-serif tracking-tight">
+<div class="flex items-center gap-4">
+<h2 class="text-[#e9c176] font-serif italic text-lg">Gia Phả Việt</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden lg:block">
+<input class="bg-surface-container-low border-none text-on-surface-variant text-sm py-1.5 pl-10 pr-4 focus:ring-1 focus:ring-secondary w-64 transition-all" placeholder="Search archives..." type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-outline hover:text-secondary transition-transform active:scale-90">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-outline hover:text-secondary transition-transform active:scale-90">
+<span class="material-symbols-outlined">history_edu</span>
+</button>
+<div class="h-8 w-8 bg-surface-container-highest border border-secondary/30 flex items-center justify-center overflow-hidden">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="Stylized portrait of a Vietnamese imperial administrator in traditional headwear with a professional and dignified look" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYm6IqkEmVm32mY2Mry9PviwrArXua8fIEyVfrg8fBYxN_26tQlqgdVWZ1aMiK5zGMTbjWBpB0XhejpZc86O1Qw3DrgySCFfEBkMvNQ2vMFNC0nJR4oIMmgChs8aXJlONMGtmMwGfY-VOzefKw-iBKwYiOOzgAKzcwtRThyppZucJj1S1k2aDcmETCUHanbSTIRWOD6lkax1kdsxs1Ihsc6kFlq-N6jPCc8qKpvUJV-5mCeehA7-IaKWCwC7RdmF2l4ajSJVKLMLaR"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Screen Content -->
+<div class="mt-16 p-8 space-y-10">
+<!-- Header Section -->
+<div class="space-y-2">
+<h1 class="text-4xl font-imperial font-bold text-secondary tracking-tight">Quản Lý Các Họ Tộc (Clan Management)</h1>
+<p class="text-outline italic max-w-2xl text-lg leading-relaxed">Giám sát và điều phối hoạt động của các dòng họ trong hệ thống Heritage Cloud.</p>
+</div>
+<!-- Stats Bar -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-low p-6 border-l-4 border-primary-container shadow-xl">
+<p class="text-outline text-xs uppercase tracking-widest mb-2 font-bold">Tổng Số Họ Tộc</p>
+<div class="flex items-baseline gap-3">
+<span class="text-3xl font-imperial font-bold text-secondary">1,248</span>
+<span class="text-green-500 text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +12%
+                        </span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 border-l-4 border-secondary shadow-xl">
+<p class="text-outline text-xs uppercase tracking-widest mb-2 font-bold">Họ Tộc Mới (30 ngày)</p>
+<div class="flex items-baseline gap-3">
+<span class="text-3xl font-imperial font-bold text-secondary">42</span>
+<span class="text-secondary-fixed-dim text-xs">Phát triển ổn định</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 border-l-4 border-outline-variant shadow-xl">
+<p class="text-outline text-xs uppercase tracking-widest mb-2 font-bold">Họ Tộc Đang Hoạt Động</p>
+<div class="flex items-baseline gap-3">
+<span class="text-3xl font-imperial font-bold text-secondary">1,105</span>
+<span class="text-outline text-xs italic">88.5% Tỉ lệ hoạt động</span>
+</div>
+</div>
+</div>
+<!-- Content Area: Filter & Table -->
+<div class="bg-surface-container-low shadow-2xl relative overflow-hidden border border-outline-variant/10">
+<!-- Subtle Texture Layer -->
+<div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC1c1GzJbVgX20sgk8RRLKjy2TY1hxEnI3XotLAkAQgcMRTiUii4Hkr6UkAoAOzjxuEg-yUDHfko3t5BEp7M32HoL-zFPo4GnzNKp1MuG1laZGdWDS7-yUrhIEbEwaNgXNBMqhydZX2d4IqFZ8COKXplQiMIJdN0DHGjIsBPSSF0Lz_BepP6aSYixzQyUTupe6gJ1i0qwDbUotlciIUyiMg7XR7GFrmy4p7y1o2jIyEdIk87NvuO2v-_c0x9iDSTS2QU43UL7LdlWEt');"></div>
+<!-- Toolbar -->
+<div class="p-6 border-b border-outline-variant/15 flex flex-wrap items-center justify-between gap-4 relative z-10">
+<div class="flex items-center gap-4">
+<div class="relative">
+<input class="bg-surface border-b border-outline focus:border-secondary transition-colors text-on-surface py-2 pl-2 pr-10 focus:ring-0 w-80 text-sm" placeholder="Tìm kiếm họ tộc..." type="text"/>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-outline">search</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 bg-surface text-outline text-sm cursor-pointer hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+<span>Bộ lọc nâng cao</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<select class="bg-surface border-none text-outline text-sm py-2 px-4 focus:ring-1 focus:ring-secondary cursor-pointer">
+<option>Gói Dịch Vụ: Tất Cả</option>
+<option>Ancestral Basic</option>
+<option>Imperial Pro</option>
+<option>Dynasty Enterprise</option>
+</select>
+<select class="bg-surface border-none text-outline text-sm py-2 px-4 focus:ring-1 focus:ring-secondary cursor-pointer">
+<option>Trạng Thái: Tất Cả</option>
+<option>Đang Hoạt Động</option>
+<option>Đang Chờ Duyệt</option>
+<option>Tạm Khóa</option>
+</select>
+</div>
+</div>
+<!-- Clan Table -->
+<div class="overflow-x-auto relative z-10">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-highest/50">
+<th class="px-8 py-4 text-secondary text-xs font-imperial tracking-widest uppercase border-b border-outline-variant/20">Tên Họ Tộc</th>
+<th class="px-6 py-4 text-secondary text-xs font-imperial tracking-widest uppercase border-b border-outline-variant/20">Trưởng Tộc</th>
+<th class="px-6 py-4 text-secondary text-xs font-imperial tracking-widest uppercase border-b border-outline-variant/20">Gói Dịch Vụ</th>
+<th class="px-6 py-4 text-secondary text-xs font-imperial tracking-widest uppercase border-b border-outline-variant/20 text-center">Thành Viên</th>
+<th class="px-6 py-4 text-secondary text-xs font-imperial tracking-widest uppercase border-b border-outline-variant/20">Ngày Khởi Tạo</th>
+<th class="px-6 py-4 text-secondary text-xs font-imperial tracking-widest uppercase border-b border-outline-variant/20">Trạng Thái</th>
+<th class="px-8 py-4 text-secondary text-xs font-imperial tracking-widest uppercase border-b border-outline-variant/20 text-right">Thao Tác</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-high/50 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex flex-col">
+<span class="text-on-surface font-bold text-lg">Trần Gia Chi Bảo</span>
+<span class="text-outline text-xs italic">Hải Dương, Việt Nam</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<img alt="Representative" class="w-10 h-10 rounded-full border border-secondary/20 bg-surface-container" data-alt="Portrait of an elderly Vietnamese man with wisdom in his eyes, wearing a dark traditional tunic with gold embroidery" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPA00Vf-6ZDa0MTI-a_mIYAl66VNqPoF1Wba_H6E7mFB9t9H6xLHAIgvP_74wbBgI2LFBkm_VTAxnxBcEKr7o0hFXKSEQ75ziOlGxKu09WlgePTkoDDlcsv0OWTPQ27l_nxjI3vfR3TwzWPBxLHHz-u1yrMOwzCzDx4rYbOAEHy1hLB2L6paoKMSO_W-QDrHllz2L_1WXJGdY4N5aNQujMIFAc8kcJBT3NCA_ngqOg4x3t4UsDbERSEQdJKR00mAMPJdoZaKpo5bGL"/>
+<div class="flex flex-col">
+<span class="text-on-surface text-sm font-medium">Trần Thế Khang</span>
+<span class="text-outline-variant text-[11px] uppercase tracking-tighter">Trưởng Tộc</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-primary-container/20 text-primary-container border border-primary-container/30 text-[10px] uppercase font-bold tracking-widest">Dynasty Enterprise</span>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="text-on-surface font-imperial">1,402</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-outline text-xs">15 Th04, 2023</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+<span class="text-on-surface text-xs">Đang Hoạt Động</span>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex items-center justify-end gap-3">
+<button class="text-outline hover:text-secondary transition-colors"><span class="material-symbols-outlined text-xl">visibility</span></button>
+<button class="text-outline hover:text-secondary transition-colors"><span class="material-symbols-outlined text-xl">edit_document</span></button>
+<button class="text-outline hover:text-secondary transition-colors"><span class="material-symbols-outlined text-xl">admin_panel_settings</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-high/50 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex flex-col">
+<span class="text-on-surface font-bold text-lg">Lê Tộc Thừa Kế</span>
+<span class="text-outline text-xs italic">Thanh Hóa, Việt Nam</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<img alt="Representative" class="w-10 h-10 rounded-full border border-secondary/20 bg-surface-container" data-alt="Portrait of a middle-aged Vietnamese woman with elegant features, wearing a silk Ao Dai and traditional jewelry" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwXA1uOwGi-BSxB-t2J4dGyhW4Nb8J_MtLUFPkwNSdwglzg3txkF0aqB0eHTuwXu44CwfCGq8aBKHQmt-rxHoOTqv3uoXxXYd4whbtuz38bEl0xIpjSi2QNyx34hM9NTIZx6bRHpK0hyXeHGFxP9yt_XQOHP5hX8jCAf-pTMyDDdaVp4mlmnOueSDbJ17n_frmeKk0v5QWE9U5v3XcwTzgp1iUNKJ_TPEYmcEZJs6xybwLhXR68IzTOgXWWVDurOxhnMtk1fGolWNb"/>
+<div class="flex flex-col">
+<span class="text-on-surface text-sm font-medium">Lê Kim Liên</span>
+<span class="text-outline-variant text-[11px] uppercase tracking-tighter">Trưởng Tộc</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-secondary-container/20 text-secondary border border-secondary/30 text-[10px] uppercase font-bold tracking-widest">Imperial Pro</span>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="text-on-surface font-imperial">845</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-outline text-xs">02 Th09, 2023</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary shadow-[0_0_8px_rgba(233,193,118,0.5)]"></div>
+<span class="text-on-surface text-xs">Đang Chờ Duyệt</span>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex items-center justify-end gap-3">
+<button class="text-outline hover:text-secondary transition-colors"><span class="material-symbols-outlined text-xl">visibility</span></button>
+<button class="text-outline hover:text-secondary transition-colors"><span class="material-symbols-outlined text-xl">edit_document</span></button>
+<button class="text-outline hover:text-secondary transition-colors"><span class="material-symbols-outlined text-xl">admin_panel_settings</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-high/50 transition-colors group">
+<td class="px-8 py-5">
+<div class="flex flex-col">
+<span class="text-on-surface font-bold text-lg">Nguyễn Đình Đại Tộc</span>
+<span class="text-outline text-xs italic">Huế, Việt Nam</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<img alt="Representative" class="w-10 h-10 rounded-full border border-secondary/20 bg-surface-container" data-alt="Portrait of an older Vietnamese man with a focused expression, wearing dark traditional robes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3Ea1-hcZdnDYggOnQnvG0ZnaQqIZF1WQxxc5m3RvzCsXGl-k4r7ZsrA3sykHs4aewEQ3H4U6SsatOOh_he3QuhwReILqQGkdFljwyPtBL3eSoHfUOIsv-kQWrBm8g_BVtVhNi89SYhB5w0NShQKaN-LY8KsGjJBLq1cA2GclAf0iIq9kVzMjiQumtDBBnWmEqc1M3nCayzAPvO5aAWRIIz6GcX5kbbUK0QzcAL6TWOT7rhpuMlzxTZJuXEyhRyzSaGNi8QmMzPqqE"/>
+<div class="flex flex-col">
+<span class="text-on-surface text-sm font-medium">Nguyễn Đình Trọng</span>
+<span class="text-outline-variant text-[11px] uppercase tracking-tighter">Trưởng Tộc</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-surface-container-highest text-outline border border-outline-variant/30 text-[10px] uppercase font-bold tracking-widest">Ancestral Basic</span>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="text-on-surface font-imperial">312</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-outline text-xs">22 Th11, 2022</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-error shadow-[0_0_8px_rgba(255,180,171,0.5)]"></div>
+<span class="text-on-surface text-xs">Tạm Khóa</span>
+</div>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex items-center justify-end gap-3">
+<button class="text-outline hover:text-secondary transition-colors"><span class="material-symbols-outlined text-xl">visibility</span></button>
+<button class="text-outline hover:text-secondary transition-colors"><span class="material-symbols-outlined text-xl">edit_document</span></button>
+<button class="text-outline hover:text-secondary transition-colors"><span class="material-symbols-outlined text-xl">admin_panel_settings</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Area -->
+<div class="p-6 border-t border-outline-variant/15 flex items-center justify-between relative z-10">
+<p class="text-outline text-sm italic">Hiển thị 1 - 3 trong tổng số 1,248 họ tộc</p>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant/30 text-outline hover:text-secondary hover:border-secondary transition-all">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center bg-secondary text-surface font-bold text-xs">1</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant/30 text-outline hover:text-secondary hover:border-secondary transition-all">2</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant/30 text-outline hover:text-secondary hover:border-secondary transition-all">3</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant/30 text-outline hover:text-secondary hover:border-secondary transition-all">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Quote / Decoration -->
+<div class="flex flex-col items-center justify-center pt-10 pb-20 opacity-40">
+<div class="w-24 h-[1px] bg-gradient-to-r from-transparent via-secondary to-transparent mb-6"></div>
+<p class="text-secondary font-imperial text-xs tracking-[0.3em] uppercase">Uống Nước Nhớ Nguồn • Ancestral Wisdom Digitized</p>
+<div class="w-24 h-[1px] bg-gradient-to-r from-transparent via-secondary to-transparent mt-6"></div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Imperial Seal) -->
+<button class="fixed bottom-10 right-10 w-16 h-16 rounded-full lacquer-gradient border-2 border-secondary/40 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center justify-center group hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined text-secondary text-3xl font-bold" data-weight="fill">history_edu</span>
+<div class="absolute inset-0 rounded-full border-2 border-secondary/20 scale-125 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+</body></html>

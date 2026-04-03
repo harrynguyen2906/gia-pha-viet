@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2d1515"/>
+      <stop offset="100%" stop-color="#1a0808"/>
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="100" fill="url(#bg)"/>
+  <circle cx="100" cy="100" r="98" fill="none" stroke="rgba(197,160,89,0.4)" stroke-width="2"/>
+  <!-- Body -->
+  <ellipse cx="100" cy="160" rx="40" ry="30" fill="rgba(197,160,89,0.15)" stroke="rgba(197,160,89,0.3)" stroke-width="1.5"/>
+  <!-- Robe collar -->
+  <path d="M75 145 Q100 135 125 145 L128 175 Q100 168 72 175 Z" fill="rgba(197,160,89,0.2)" stroke="rgba(197,160,89,0.35)" stroke-width="1"/>
+  <!-- Head -->
+  <circle cx="100" cy="85" r="28" fill="rgba(244,235,208,0.85)" stroke="rgba(197,160,89,0.4)" stroke-width="1.5"/>
+  <!-- Grey hair -->
+  <path d="M73 78 Q75 58 100 56 Q125 58 127 78" fill="rgba(180,170,160,0.7)" stroke="none"/>
+  <!-- Eyes -->
+  <ellipse cx="90" cy="83" rx="4" ry="3" fill="rgba(50,30,20,0.9)"/>
+  <ellipse cx="110" cy="83" rx="4" ry="3" fill="rgba(50,30,20,0.9)"/>
+  <!-- Eyebrows (thick, elderly) -->
+  <path d="M85 76 Q90 73 95 75" stroke="rgba(130,110,90,0.8)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M105 75 Q110 73 115 76" stroke="rgba(130,110,90,0.8)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Nose -->
+  <path d="M98 88 Q100 94 102 88" stroke="rgba(180,140,110,0.6)" stroke-width="1.5" fill="none"/>
+  <!-- Mouth -->
+  <path d="M91 96 Q100 100 109 96" stroke="rgba(180,140,110,0.7)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Beard -->
+  <path d="M78 97 Q82 118 100 122 Q118 118 122 97 Q112 108 100 110 Q88 108 78 97Z" fill="rgba(180,170,160,0.5)" stroke="rgba(197,160,89,0.2)" stroke-width="1"/>
+  <!-- Wrinkle lines -->
+  <path d="M84 80 Q86 78 88 80" stroke="rgba(150,120,90,0.3)" stroke-width="1" fill="none"/>
+  <path d="M112 80 Q114 78 116 80" stroke="rgba(150,120,90,0.3)" stroke-width="1" fill="none"/>
+</svg>

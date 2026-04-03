@@ -1,0 +1,24 @@
+{
+  "name": "gia-pha-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Heritage Cloud (Gia Phả Việt) — Monorepo root",
+  "scripts": {
+    "db:generate":       "npm run --prefix packages/db db:generate",
+    "db:migrate:dev":    "npm run --prefix packages/db db:migrate:dev",
+    "db:migrate:deploy": "npm run --prefix packages/db db:migrate:deploy",
+    "db:migrate:status": "npm run --prefix packages/db db:migrate:status",
+    "db:seed":           "npm run --prefix packages/db db:seed",
+    "db:seed:public":    "npm run --prefix packages/db db:seed:public",
+    "db:seed:admin":     "npm run --prefix packages/db db:seed:admin",
+    "db:studio":         "npm run --prefix packages/db db:studio",
+    "db:reset":          "npm run --prefix packages/db db:reset",
+    "db:validate":       "npm run --prefix packages/db db:validate",
+    "db:format":         "npm run --prefix packages/db db:format",
+    "postinstall":       "npm run db:generate"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}

@@ -1,0 +1,255 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Core Colors ─────────────────────────────────────── */
+  --color-primary: #8a0000;
+  --color-imperial-crimson: #8b0000;
+  --color-bg-dark: #230f0f;
+  --color-bg-light: #f8f5f5;
+  --color-lacquer-dark: #1a0808;
+  --color-royal-lacquer: #1a0000;
+
+  /* ── Gold ────────────────────────────────────────────── */
+  --color-antique-gold: #c5a059;
+  --color-gold-leaf: #e5c17c;
+  --color-accent-gold: #d4af37;
+
+  /* ── Surface ─────────────────────────────────────────── */
+  --color-parchment: #f4ebd0;
+  --color-aged-silk: #fff8dc;
+  --color-temple-stone: #2d241e;
+  --color-panel-dark: #361818;
+  --color-dark-paper: #2d1b1b;
+  --color-charcoal: #1a1a1a;
+
+  /* ── Border ──────────────────────────────────────────── */
+  --color-border-muted: #4b2020;
+
+  /* ── Typography ──────────────────────────────────────── */
+  /* NOTE: font variables are injected by next/font/google onto <html>.
+     Decorative roles prioritize Vietnamese support + ceremonial tone. */
+  --font-display: "Noto Serif", serif;
+  --font-header: "Spectral SC", "Cormorant SC", "Noto Serif", serif;
+  --font-ornate: "EB Garamond", "Playfair Display", "Noto Serif", serif;
+  --font-calligraphy: "WindSong", "Great Vibes", "Noto Serif", cursive;
+  --font-serif: "Playfair Display", "Noto Serif", serif;
+  --font-sans: "Noto Sans", sans-serif;
+
+  /* ── Shadows ─────────────────────────────────────────── */
+  --shadow-parchment: 15px 15px 35px rgba(0, 0, 0, 0.4);
+  --shadow-lacquer: 0 4px 10px rgba(0, 0, 0, 0.3);
+  --shadow-soft-glow: 0 0 15px rgba(138, 0, 0, 0.1);
+  --shadow-gold-frame: 0 0 20px rgba(197, 160, 89, 0.2);
+
+  /* ── Animations ──────────────────────────────────────── */
+  --animate-fade-in: fade-in 200ms ease-in-out;
+  --animate-slide-in-right: slide-in-right 300ms ease-out;
+  --animate-scale-in: scale-in 300ms ease-out;
+  --animate-shimmer: shimmer 1.5s ease-in-out infinite;
+}
+
+/* ── Keyframes ───────────────────────────────────────────── */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes scale-in {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ── Base Layer ──────────────────────────────────────────── */
+@layer base {
+  body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-parchment);
+    font-family: var(--font-sans, "Noto Sans", sans-serif);
+  }
+
+  .font-header {
+    font-family: "Spectral SC", "Cormorant SC", "Noto Serif", serif;
+  }
+  .font-ornate {
+    font-family: "EB Garamond", "Playfair Display", "Noto Serif", serif;
+  }
+  .font-calligraphy {
+    font-family: "WindSong", "Great Vibes", "Noto Serif", cursive;
+  }
+  .font-serif {
+    font-family: "Playfair Display", "Noto Serif", serif;
+  }
+  .font-display {
+    font-family: "Noto Serif", serif;
+  }
+  .font-sans {
+    font-family: "Noto Sans", sans-serif;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ── Component Layer ─────────────────────────────────────── */
+@layer components {
+  .card-parchment {
+    background: radial-gradient(ellipse at center, #f4ebd0, #e6d5b8);
+    border: 1px solid #c5a059;
+    box-shadow: var(--shadow-parchment);
+    position: relative;
+    transition: transform 300ms ease;
+  }
+  .card-parchment:hover {
+    transform: scale(1.01);
+  }
+  .card-parchment::after {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(138, 0, 0, 0.2);
+    pointer-events: none;
+  }
+
+  .btn-lacquer {
+    background: linear-gradient(145deg, #3a0000, #8b0000);
+    border: 1px solid #c5a059;
+    box-shadow: var(--shadow-lacquer);
+    color: #e5c17c;
+    font-family: "Spectral SC", "Cormorant SC", "Noto Serif", serif;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    transition:
+      filter 200ms ease,
+      color 200ms ease;
+    cursor: pointer;
+  }
+  .btn-lacquer:hover {
+    filter: brightness(1.1);
+    color: #ffffff;
+  }
+
+  .btn-gold-shimmer {
+    background: linear-gradient(135deg, #c5a059 0%, #f1e0b0 50%, #c5a059 100%);
+    color: #230f0f;
+    font-weight: 900;
+    text-transform: uppercase;
+    transition: filter 200ms ease;
+    cursor: pointer;
+  }
+  .btn-gold-shimmer:hover {
+    filter: brightness(1.1);
+  }
+
+  .frame-gold-leaf {
+    border: 1px solid #d4af37;
+    position: relative;
+  }
+  .frame-gold-leaf::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    pointer-events: none;
+  }
+
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--color-panel-dark) 25%,
+      var(--color-border-muted) 50%,
+      var(--color-panel-dark) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    border-radius: 0.375rem;
+  }
+}
+
+/* ── Utility Layer ───────────────────────────────────────── */
+@layer utilities {
+  .deceased-filter {
+    filter: grayscale(0.6);
+    transition: filter 700ms ease;
+  }
+  .deceased-filter:hover {
+    filter: grayscale(0);
+  }
+
+  .bg-lacquer-gradient {
+    background: linear-gradient(145deg, #3a0000, #8b0000);
+  }
+  .bg-gold-shimmer {
+    background: linear-gradient(135deg, #c5a059 0%, #f1e0b0 50%, #c5a059 100%);
+  }
+  .bg-parchment-gradient {
+    background: radial-gradient(ellipse at center, #f4ebd0, #e6d5b8);
+  }
+
+  .text-shadow-gold {
+    text-shadow: 0 0 20px rgba(197, 160, 89, 0.6);
+  }
+
+  .border-gold {
+    border-color: var(--color-antique-gold);
+  }
+}
+
+/* ── Heritage Cloud Scrollbar ────────────────────────────── */
+.heritage-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.heritage-scroll::-webkit-scrollbar-track {
+  background: rgba(26, 8, 8, 0.4);
+  border-radius: 3px;
+}
+.heritage-scroll::-webkit-scrollbar-thumb {
+  background: rgba(197, 160, 89, 0.3);
+  border-radius: 3px;
+  border: 1px solid rgba(197, 160, 89, 0.1);
+}
+.heritage-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(197, 160, 89, 0.5);
+}
+/* Firefox */
+.heritage-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(197, 160, 89, 0.3) rgba(26, 8, 8, 0.4);
+}

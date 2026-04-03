@@ -1,0 +1,596 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["public", "admin"]
+}
+
+// ──────────────── Enums ────────────────
+
+enum GenderType {
+  MALE
+  FEMALE
+  OTHER
+
+  @@schema("public")
+}
+
+enum LineageRole {
+  HEAD_OF_HOUSE
+  ELDER
+  HEIR
+  YOUTH
+  MEMBER
+
+  @@schema("public")
+}
+
+enum UserRole {
+  ADMIN
+  HEAD_OF_HOUSE
+  ELDER
+  MEMBER
+  GUEST
+
+  @@schema("public")
+}
+
+enum RelationshipType {
+  BIOLOGICAL
+  ADOPTED
+  STEP
+
+  @@schema("public")
+}
+
+enum SiteCondition {
+  MAINTAINED
+  NEEDS_VISIT
+  WEATHERED
+  RESTORATION
+
+  @@schema("public")
+}
+
+enum SiteType {
+  TEMPLE
+  CHURCH
+  CEMETERY
+  PRIVATE
+  OTHER
+
+  @@schema("public")
+}
+
+enum DutyCategory {
+  RELIGIOUS
+  MAINTENANCE
+  ARCHIVAL
+  SOCIAL
+
+  @@schema("public")
+}
+
+enum DutyStatus {
+  QUEUE
+  ACTIVE
+  COMPLETED
+
+  @@schema("public")
+}
+
+enum DutyPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+
+  @@schema("public")
+}
+
+enum AssignedGroup {
+  ELDERS
+  HEIRS
+  YOUTH
+  ALL
+
+  @@schema("public")
+}
+
+enum MediaType {
+  AVATAR
+  PHOTO
+  PANORAMA
+  DOCUMENT
+  MODEL_3D
+
+  @@schema("public")
+}
+
+enum OfferingType {
+  INCENSE
+  FLOWERS
+  FOOD
+  PRAYER
+
+  @@schema("public")
+}
+
+enum NotificationType {
+  RITUAL_REMINDER
+  DUTY_ASSIGNED
+  DUTY_DUE
+  DUTY_COMPLETED
+  MEMBER_ADDED
+  SITE_REGISTERED
+  SYSTEM
+
+  @@schema("public")
+}
+
+// ──────────────── Models ────────────────
+
+model User {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email        String    @unique @db.VarChar(255)
+  passwordHash String?   @map("password_hash") @db.VarChar(255)
+  provider     String?   @db.VarChar(50)
+  providerId   String?   @map("provider_id") @db.VarChar(255)
+  role         UserRole  @default(GUEST)
+  clanId       String?   @map("clan_id") @db.Uuid
+  memberId     String?   @map("member_id") @db.Uuid
+  isActive     Boolean   @default(true) @map("is_active")
+  lastLoginAt  DateTime? @map("last_login_at") @db.Timestamptz()
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+
+  clan                Clan?                @relation(fields: [clanId], references: [id])
+  member              Member?              @relation(fields: [memberId], references: [id])
+  profile             UserProfile?
+  notifications       Notification[]
+  passwordResetTokens PasswordResetToken[]
+  subscriptions       UserSubscription[]
+
+  @@index([email])
+  @@index([clanId])
+  @@map("users")
+  @@schema("public")
+}
+
+model UserProfile {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String   @unique @map("user_id") @db.Uuid
+  displayName String   @map("display_name") @db.VarChar(100)
+  avatarUrl   String?  @map("avatar_url")
+  phone       String?  @db.VarChar(20)
+  locale      String   @default("vi") @db.VarChar(10)
+  timezone    String   @default("Asia/Ho_Chi_Minh") @db.VarChar(50)
+  settings    Json     @default("{}")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_profiles")
+  @@schema("public")
+}
+
+model Clan {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String    @db.VarChar(200)
+  displayName   String?   @map("display_name") @db.VarChar(200)
+  motto         String?
+  foundingYear  Int?      @map("founding_year")
+  description   String?
+  bannerUrl     String?   @map("banner_url")
+  isPublic      Boolean   @default(false) @map("is_public")
+  headOfHouseId String?   @map("head_of_house_id") @db.Uuid
+  createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt     DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt     DateTime? @map("deleted_at") @db.Timestamptz()
+
+  headOfHouse   Member?            @relation("ClanHead", fields: [headOfHouseId], references: [id])
+  members       Member[]           @relation("ClanMembers")
+  users         User[]
+  ritualEvents  RitualEvent[]
+  duties        Duty[]
+  graveSites    GraveSite[]
+  subscriptions UserSubscription[]
+
+  @@index([name])
+  @@map("clans")
+  @@schema("public")
+}
+
+model Member {
+  id             String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  clanId         String      @map("clan_id") @db.Uuid
+  fullName       String      @map("full_name") @db.VarChar(200)
+  gender         GenderType  @default(MALE)
+  isDeceased     Boolean     @default(false) @map("is_deceased")
+  birthDateSolar DateTime?   @map("birth_date_solar") @db.Date
+  birthDateLunar String?     @map("birth_date_lunar") @db.VarChar(50)
+  deathDateSolar DateTime?   @map("death_date_solar") @db.Date
+  deathDateLunar String?     @map("death_date_lunar") @db.VarChar(50)
+  departureRite  String?     @map("departure_rite")
+  avatarUrl      String?     @map("avatar_url")
+  biography      String?
+  generation     Int         @default(1)
+  lineageRole    LineageRole @default(MEMBER) @map("lineage_role")
+  branchName     String?     @map("branch_name") @db.VarChar(100)
+  createdBy      String?     @map("created_by") @db.Uuid
+  createdAt      DateTime    @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt      DateTime    @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt      DateTime?   @map("deleted_at") @db.Timestamptz()
+
+  clan            Clan              @relation("ClanMembers", fields: [clanId], references: [id])
+  clanAsHead      Clan[]            @relation("ClanHead")
+  parentRelations Relationship[]    @relation("ChildRelation")
+  childRelations  Relationship[]    @relation("ParentRelation")
+  spousesA        MemberSpouse[]    @relation("SpouseA")
+  spousesB        MemberSpouse[]    @relation("SpouseB")
+  media           MemberMedia[]
+  graveSite       GraveSite?
+  assignedDuties  Duty[]            @relation("DutyAssignee")
+  ritualDuties    RitualDuty[]
+  ritualEvents    RitualEvent[]
+  offerings       VirtualOffering[]
+  users           User[]
+
+  @@index([clanId])
+  @@index([clanId, generation])
+  @@index([clanId, isDeceased])
+  @@index([clanId, fullName])
+  @@map("members")
+  @@schema("public")
+}
+
+model Relationship {
+  id               String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  parentId         String           @map("parent_id") @db.Uuid
+  childId          String           @map("child_id") @db.Uuid
+  relationshipType RelationshipType @default(BIOLOGICAL) @map("relationship_type")
+  createdAt        DateTime         @default(now()) @map("created_at") @db.Timestamptz()
+
+  parent Member @relation("ParentRelation", fields: [parentId], references: [id], onDelete: Cascade)
+  child  Member @relation("ChildRelation", fields: [childId], references: [id], onDelete: Cascade)
+
+  @@unique([parentId, childId])
+  @@index([parentId])
+  @@index([childId])
+  @@map("relationships")
+  @@schema("public")
+}
+
+model MemberSpouse {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  memberAId    String    @map("member_a_id") @db.Uuid
+  memberBId    String    @map("member_b_id") @db.Uuid
+  marriageDate DateTime? @map("marriage_date") @db.Date
+  divorceDate  DateTime? @map("divorce_date") @db.Date
+  isCurrent    Boolean   @default(true) @map("is_current")
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+
+  memberA Member @relation("SpouseA", fields: [memberAId], references: [id], onDelete: Cascade)
+  memberB Member @relation("SpouseB", fields: [memberBId], references: [id], onDelete: Cascade)
+
+  @@unique([memberAId, memberBId])
+  @@index([memberAId])
+  @@index([memberBId])
+  @@map("member_spouses")
+  @@schema("public")
+}
+
+model MemberMedia {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  memberId     String    @map("member_id") @db.Uuid
+  mediaType    MediaType @map("media_type")
+  url          String
+  thumbnailUrl String?   @map("thumbnail_url")
+  caption      String?   @db.VarChar(500)
+  sortOrder    Int       @default(0) @map("sort_order")
+  fileSize     Int?      @map("file_size")
+  mimeType     String?   @map("mime_type") @db.VarChar(100)
+  width        Int?
+  height       Int?
+  uploadedBy   String?   @map("uploaded_by") @db.Uuid
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+
+  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@index([memberId, mediaType])
+  @@map("member_media")
+  @@schema("public")
+}
+
+model GraveSite {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  memberId     String        @unique @map("member_id") @db.Uuid
+  clanId       String        @map("clan_id") @db.Uuid
+  sectionPlot  String?       @map("section_plot") @db.VarChar(200)
+  latitude     Decimal       @db.Decimal(10, 8)
+  longitude    Decimal       @db.Decimal(11, 8)
+  epitaph      String?
+  condition    SiteCondition @default(MAINTAINED)
+  siteType     SiteType      @default(CEMETERY) @map("site_type")
+  lastVisited  DateTime?     @map("last_visited") @db.Date
+  registeredBy String?       @map("registered_by") @db.Uuid
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt    DateTime      @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt    DateTime?     @map("deleted_at") @db.Timestamptz()
+
+  member Member      @relation(fields: [memberId], references: [id])
+  clan   Clan        @relation(fields: [clanId], references: [id])
+  media  SiteMedia[]
+
+  @@index([clanId])
+  @@index([memberId])
+  @@index([clanId, condition])
+  @@map("grave_sites")
+  @@schema("public")
+}
+
+model SiteMedia {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  siteId       String    @map("site_id") @db.Uuid
+  mediaType    MediaType @map("media_type")
+  url          String
+  thumbnailUrl String?   @map("thumbnail_url")
+  caption      String?   @db.VarChar(500)
+  sortOrder    Int       @default(0) @map("sort_order")
+  fileSize     Int?      @map("file_size")
+  uploadedBy   String?   @map("uploaded_by") @db.Uuid
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+
+  site GraveSite @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, mediaType])
+  @@map("site_media")
+  @@schema("public")
+}
+
+model RitualEvent {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  clanId          String    @map("clan_id") @db.Uuid
+  ancestorId      String?   @map("ancestor_id") @db.Uuid
+  title           String    @db.VarChar(300)
+  description     String?
+  dateSolar       DateTime  @map("date_solar") @db.Date
+  dateLunar       String?   @map("date_lunar") @db.VarChar(50)
+  isRecurring     Boolean   @default(true) @map("is_recurring")
+  lunarRecurrence String?   @map("lunar_recurrence") @db.VarChar(50)
+  isCertified     Boolean   @default(false) @map("is_certified")
+  certifiedBy     String?   @map("certified_by") @db.Uuid
+  certifiedAt     DateTime? @map("certified_at") @db.Timestamptz()
+  createdBy       String?   @map("created_by") @db.Uuid
+  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt       DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt       DateTime? @map("deleted_at") @db.Timestamptz()
+
+  clan         Clan                @relation(fields: [clanId], references: [id])
+  ancestor     Member?             @relation(fields: [ancestorId], references: [id])
+  instructions RitualInstruction[]
+  ritualDuties RitualDuty[]
+  duties       Duty[]
+
+  @@index([clanId])
+  @@index([clanId, dateSolar])
+  @@index([ancestorId])
+  @@map("ritual_events")
+  @@schema("public")
+}
+
+model RitualInstruction {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  ritualEventId String   @map("ritual_event_id") @db.Uuid
+  icon          String   @db.VarChar(50)
+  title         String   @db.VarChar(200)
+  description   String
+  sortOrder     Int      @default(0) @map("sort_order")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  ritualEvent RitualEvent @relation(fields: [ritualEventId], references: [id], onDelete: Cascade)
+
+  @@index([ritualEventId, sortOrder])
+  @@map("ritual_instructions")
+  @@schema("public")
+}
+
+model RitualDuty {
+  id            String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  ritualEventId String        @map("ritual_event_id") @db.Uuid
+  description   String
+  assignedGroup AssignedGroup @default(ALL) @map("assigned_group")
+  assignedTo    String?       @map("assigned_to") @db.Uuid
+  isCompleted   Boolean       @default(false) @map("is_completed")
+  completedAt   DateTime?     @map("completed_at") @db.Timestamptz()
+  sortOrder     Int           @default(0) @map("sort_order")
+  createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt     DateTime      @updatedAt @map("updated_at") @db.Timestamptz()
+
+  ritualEvent RitualEvent @relation(fields: [ritualEventId], references: [id], onDelete: Cascade)
+  assignee    Member?     @relation(fields: [assignedTo], references: [id])
+
+  @@index([ritualEventId])
+  @@map("ritual_duties")
+  @@schema("public")
+}
+
+model Duty {
+  id            String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  clanId        String       @map("clan_id") @db.Uuid
+  title         String       @db.VarChar(300)
+  description   String?
+  category      DutyCategory
+  status        DutyStatus   @default(QUEUE)
+  priority      DutyPriority @default(MEDIUM)
+  progress      Int          @default(0)
+  assignedTo    String?      @map("assigned_to") @db.Uuid
+  assignedBy    String?      @map("assigned_by") @db.Uuid
+  ritualEventId String?      @map("ritual_event_id") @db.Uuid
+  dueDate       DateTime?    @map("due_date") @db.Date
+  verifiedBy    String?      @map("verified_by") @db.Uuid
+  verifiedAt    DateTime?    @map("verified_at") @db.Timestamptz()
+  createdBy     String?      @map("created_by") @db.Uuid
+  createdAt     DateTime     @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt     DateTime     @updatedAt @map("updated_at") @db.Timestamptz()
+  deletedAt     DateTime?    @map("deleted_at") @db.Timestamptz()
+
+  clan        Clan         @relation(fields: [clanId], references: [id])
+  assignee    Member?      @relation("DutyAssignee", fields: [assignedTo], references: [id])
+  ritualEvent RitualEvent? @relation(fields: [ritualEventId], references: [id])
+  logs        DutyLog[]
+
+  @@index([clanId])
+  @@index([clanId, status])
+  @@index([assignedTo])
+  @@index([ritualEventId])
+  @@map("duties")
+  @@schema("public")
+}
+
+model DutyLog {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  dutyId      String   @map("duty_id") @db.Uuid
+  action      String   @db.VarChar(50)
+  oldValue    String?  @map("old_value") @db.VarChar(100)
+  newValue    String?  @map("new_value") @db.VarChar(100)
+  performedBy String?  @map("performed_by") @db.Uuid
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  duty Duty @relation(fields: [dutyId], references: [id], onDelete: Cascade)
+
+  @@index([dutyId, createdAt(sort: Desc)])
+  @@map("duty_logs")
+  @@schema("public")
+}
+
+model VirtualOffering {
+  id           String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  memberId     String       @map("member_id") @db.Uuid
+  offeredBy    String       @map("offered_by") @db.Uuid
+  offeringType OfferingType @map("offering_type")
+  message      String?
+  createdAt    DateTime     @default(now()) @map("created_at") @db.Timestamptz()
+
+  member Member @relation(fields: [memberId], references: [id])
+
+  @@index([memberId])
+  @@index([offeredBy])
+  @@map("virtual_offerings")
+  @@schema("public")
+}
+
+model Notification {
+  id            String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String           @map("user_id") @db.Uuid
+  type          NotificationType
+  title         String           @db.VarChar(300)
+  body          String?
+  referenceType String?          @map("reference_type") @db.VarChar(50)
+  referenceId   String?          @map("reference_id") @db.Uuid
+  isRead        Boolean          @default(false) @map("is_read")
+  readAt        DateTime?        @map("read_at") @db.Timestamptz()
+  createdAt     DateTime         @default(now()) @map("created_at") @db.Timestamptz()
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead, createdAt(sort: Desc)])
+  @@map("notifications")
+  @@schema("public")
+}
+
+model AuditLog {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String?  @map("user_id") @db.Uuid
+  clanId     String?  @map("clan_id") @db.Uuid
+  action     String   @db.VarChar(50)
+  entityType String   @map("entity_type") @db.VarChar(50)
+  entityId   String   @map("entity_id") @db.Uuid
+  oldData    Json?    @map("old_data")
+  newData    Json?    @map("new_data")
+  ipAddress  String?  @map("ip_address")
+  userAgent  String?  @map("user_agent")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  @@index([entityType, entityId])
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([clanId, createdAt(sort: Desc)])
+  @@map("audit_logs")
+  @@schema("public")
+}
+
+model PasswordResetToken {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  token     String    @unique @db.VarChar(255)
+  expiresAt DateTime  @map("expires_at") @db.Timestamptz()
+  usedAt    DateTime? @map("used_at") @db.Timestamptz()
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([userId])
+  @@map("password_reset_tokens")
+  @@schema("public")
+}
+
+model SubscriptionTier {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug          String   @unique @db.VarChar(50)
+  nameVi        String   @map("name_vi") @db.VarChar(200)
+  nameEn        String   @map("name_en") @db.VarChar(200)
+  descriptionVi String?  @map("description_vi")
+  descriptionEn String?  @map("description_en")
+  priceMonthly  Decimal  @default(0) @map("price_monthly") @db.Decimal(15, 2)
+  priceYearly   Decimal  @default(0) @map("price_yearly") @db.Decimal(15, 2)
+  currency      String   @default("VND") @db.VarChar(10)
+  features      Json     @default("[]")
+  limits        Json     @default("{}")
+  badgeColor    String?  @map("badge_color") @db.VarChar(20)
+  badgeIcon     String?  @map("badge_icon") @db.VarChar(50)
+  isPopular     Boolean  @default(false) @map("is_popular")
+  isActive      Boolean  @default(true) @map("is_active")
+  displayOrder  Int      @default(0) @map("display_order")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  subscriptions UserSubscription[]
+
+  @@index([isActive, displayOrder])
+  @@map("subscription_tiers")
+  @@schema("admin")
+}
+
+model UserSubscription {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId             String    @map("user_id") @db.Uuid
+  clanId             String    @map("clan_id") @db.Uuid
+  tierId             String    @map("tier_id") @db.Uuid
+  status             String    @default("ACTIVE") @db.VarChar(50)
+  startedAt          DateTime  @map("started_at") @db.Timestamptz()
+  expiresAt          DateTime  @map("expires_at") @db.Timestamptz()
+  cancelledAt        DateTime? @map("cancelled_at") @db.Timestamptz()
+  cancellationReason String?   @map("cancellation_reason") @db.Text
+  autoRenew          Boolean   @default(true) @map("auto_renew")
+  trialEndsAt        DateTime? @map("trial_ends_at") @db.Timestamptz()
+  createdAt          DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt          DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+
+  user User             @relation(fields: [userId], references: [id])
+  clan Clan             @relation(fields: [clanId], references: [id])
+  tier SubscriptionTier @relation(fields: [tierId], references: [id])
+
+  @@index([userId])
+  @@index([clanId])
+  @@index([tierId])
+  @@index([status])
+  @@index([expiresAt])
+  @@map("user_subscriptions")
+  @@schema("admin")
+}

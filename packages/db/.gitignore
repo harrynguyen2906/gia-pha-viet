@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Generated Prisma client (rebuild with: npm run db:generate)
+src/generated/
+
+# Build output
+dist/
+
+# Environment files — NEVER commit these
+.env
+.env.local
+.env.*.local
+
+# macOS
+.DS_Store

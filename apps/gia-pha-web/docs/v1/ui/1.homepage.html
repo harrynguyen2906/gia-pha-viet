@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Imperial Decree Legacy Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&amp;family=Cinzel:wght@400;700&amp;family=Noto+Serif+Vithkuqi:wght@400;700&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "imperial-crimson": "#8B0000",
+                        "antique-gold": "#C5A059",
+                        "gold-leaf": "#E5C17C",
+                        "royal-lacquer": "#1a0000",
+                        "temple-stone": "#2D241E",
+                        "parchment-base": "#F4EBD0",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif Vithkuqi", "serif"],
+                        "header": ["Cinzel", "serif"],
+                        "ornate": ["Cinzel Decorative", "serif"],
+                        "calligraphy": ["Pinyon Script", "cursive"]
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-black overflow-x-hidden min-h-screen text-parchment-base/90;
+                background-image: url('https://images.unsplash.com/photo-1599708153386-62bf3f033230?q=80&w=2070&auto=format&fit=crop');
+                background-attachment: fixed;
+                background-size: cover;
+                background-position: center;
+                position: relative;
+            }
+            body::before {
+                content: "";
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.4);
+                backdrop-filter: blur(12px);
+                z-index: 0;
+            }
+        }
+        .imperial-decree-banner {
+            background: linear-gradient(to bottom, #f4ebd0 0%, #e6d5b8 50%, #d4c3a3 100%);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 0 60px rgba(138, 0, 0, 0.15);
+            border-top: 5px solid #8B0000;
+            border-bottom: 5px solid #8B0000;
+            position: relative;
+            z-index: 20;
+        }
+        .scroll-ends {
+            position: absolute;
+            top: -15px;
+            width: 40px;
+            height: calc(100% + 30px);
+            background: linear-gradient(to right, #600000, #8B0000, #600000);
+            border: 2px solid #C5A059;
+            border-radius: 6px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+        }
+        .lacquer-pillar {
+            background: linear-gradient(90deg, #4a0000 0%, #8B0000 50%, #4a0000 100%);
+            border-left: 3px solid #C5A059;
+            border-right: 3px solid #C5A059;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0,0,0,0.7);
+            overflow: hidden;
+        }
+        .dragon-motif {
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDAQOAFMaBcza_olEa58alV_SqV3_bmqerD7_75U5yczoQ3rLwW10O1Itv2ZqANvOTYj4nb7kqB7EiW8wwTLOyi5JB3XjXZ9jsY4NB3GPzWGoWlEhsyn-ayCH4jA68ITaeHXTPDdPVPr4XdwmQomL0U2FUU-nrSYwOLsisi3x8qjnQiROlgOc2HODmwZk4-7VsYWtyAb4xNk0jfZyBp9fJ1Oi3gzoMqV4hGkKU-fD_QIjFOCI9B7x-n6XMPVjkOC8IJPGDhZasDWLDj');
+            background-size: contain;
+            background-repeat: repeat-y;
+            opacity: 0.15;
+            position: absolute;
+            inset: 0;
+            mix-blend-mode: overlay;
+        }
+        .parallel-scroll {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            background: #8B0000;
+            border: 2px solid #C5A059;
+            padding: 30px 10px;
+            color: #E5C17C;
+            font-family: "Cinzel", serif;
+            letter-spacing: 0.8em;
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+            margin: 40px 0;
+            position: relative;
+            z-index: 10;
+        }
+        .parchment-card {
+            background: url('https://www.transparenttextures.com/patterns/natural-paper.png'), radial-gradient(circle at center, #F4EBD0 0%, #E6D5B8 100%);
+            border: 1px solid #C5A059;
+            color: #2D241E;
+            box-shadow: 15px 15px 35px rgba(0, 0, 0, 0.4);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .parchment-card::after {
+            content: "";
+            position: absolute;
+            inset: 6px;
+            border: 1px solid rgba(138, 0, 0, 0.2);
+            pointer-events: none;
+        }
+        .gold-leaf-title {
+            background: linear-gradient(to bottom, #fceabb 0%, #fccd4d 50%, #f8b500 51%, #fbdf93 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.6));
+        }
+        .lacquer-action {
+            background: linear-gradient(145deg, #3a0000, #8B0000);
+            border: 1px solid #C5A059;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .pillar-cap {
+            height: 20px;
+            width: 110%;
+            background: #C5A059;
+            margin-left: -5%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body class="font-display">
+<div class="flex min-h-screen relative z-10">
+<aside class="hidden lg:flex flex-col items-center justify-start w-28 lacquer-pillar sticky top-0 h-screen">
+<div class="pillar-cap mt-0"></div>
+<div class="dragon-motif"></div>
+<div class="parallel-scroll text-lg font-bold">
+            PHÚC MÃN ĐƯỜNG NIÊN
+        </div>
+<div class="mt-auto mb-0 pillar-cap"></div>
+</aside>
+<div class="flex-1 flex flex-col relative">
+<div class="pt-10 px-4 flex justify-center mb-16">
+<header class="imperial-decree-banner max-w-4xl w-full px-16 py-10 flex flex-col items-center text-center">
+<div class="scroll-ends -left-5"></div>
+<div class="scroll-ends -right-5"></div>
+<div class="flex items-center gap-6 mb-4">
+<span class="material-symbols-outlined text-imperial-crimson text-4xl">token</span>
+<span class="text-imperial-crimson font-header font-bold tracking-[0.5em] text-sm uppercase">Chiếu Chỉ Hoàng Gia</span>
+<span class="material-symbols-outlined text-imperial-crimson text-4xl">token</span>
+</div>
+<h1 class="font-ornate text-5xl md:text-7xl font-black text-imperial-crimson tracking-tight mb-2">HERITAGE CLOUD</h1>
+<div class="h-1 w-64 bg-imperial-crimson/20 my-4"></div>
+<p class="font-header text-imperial-crimson/90 text-xs uppercase tracking-[0.7em]">Imperial Ancestral Management System</p>
+<div class="absolute -bottom-6 left-1/2 -translate-x-1/2 w-max">
+<nav class="flex items-center gap-8 bg-imperial-crimson px-10 py-3 border-2 border-antique-gold shadow-2xl">
+<a class="text-gold-leaf text-xs font-header tracking-widest uppercase hover:text-white transition-colors" href="#">Sanctum</a>
+<div class="w-px h-4 bg-antique-gold/40"></div>
+<a class="text-gold-leaf/70 text-xs font-header tracking-widest uppercase hover:text-white transition-colors" href="#">Scrolls</a>
+<div class="w-px h-4 bg-antique-gold/40"></div>
+<a class="text-gold-leaf/70 text-xs font-header tracking-widest uppercase hover:text-white transition-colors" href="#">Altar</a>
+<div class="w-px h-4 bg-antique-gold/40"></div>
+<a class="text-gold-leaf/70 text-xs font-header tracking-widest uppercase hover:text-white transition-colors" href="#">Rites</a>
+</nav>
+</div>
+</header>
+</div>
+<main class="flex-1 p-6 lg:p-16 max-w-[1400px] mx-auto w-full">
+<div class="text-center mb-20">
+<h2 class="font-ornate text-7xl md:text-9xl gold-leaf-title mb-6">House of Nguyen</h2>
+<p class="font-calligraphy text-4xl text-antique-gold max-w-3xl mx-auto leading-relaxed">
+                    "Preserving the celestial mandate through the legacy of our ancestors."
+                </p>
+<div class="flex justify-center items-center gap-10 mt-12">
+<button class="lacquer-action px-10 py-4 flex items-center gap-4 group">
+<span class="material-symbols-outlined text-gold-leaf text-2xl group-hover:scale-110 transition-transform">edit_note</span>
+<span class="text-gold-leaf font-header text-sm tracking-widest uppercase">Inscribe Ritual</span>
+</button>
+<div class="flex items-center gap-5">
+<div class="size-16 rounded-full border-2 border-antique-gold p-1 shadow-2xl bg-royal-lacquer ring-4 ring-imperial-crimson/20">
+<div class="w-full h-full bg-cover bg-center rounded-full" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAprvhY1bKMa6zrWzUHU72rT9DfMF3RjMoKenj6xXyVngTQ-zxZUGzIfokQ6IWmSzcyqRmLXBeCeM9JUHAWOqi4vMMVKxY0c4dJ65nJILd2rqV5RScEcBUEjpnmvBO30BOy00CdtY1wBzQeM_0oIJSh_0-sFR-3--WgUAXtG3NggJ39mnAwn-Lh4qok4NNrB4aB9BjeEg9Zk0G34tKNGSXwc8sWDFGnAlHdyJ1vdrTU4sRIoqET1edVb4ERejjSsJbD4Z8z7cv5UdMH");'></div>
+</div>
+<div class="text-left">
+<p class="text-[11px] font-header text-antique-gold tracking-widest uppercase mb-1">Head of House</p>
+<p class="text-lg font-bold text-white uppercase tracking-wider">Lord Nguyen</p>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+<div class="lg:col-span-5 space-y-10">
+<div class="flex items-center gap-5 border-b-2 border-antique-gold/40 pb-6">
+<span class="material-symbols-outlined text-antique-gold text-5xl">history_edu</span>
+<h3 class="font-header text-3xl text-gold-leaf tracking-[0.2em] uppercase">Eternal Timeline</h3>
+</div>
+<div class="space-y-8 relative pl-8 border-l-2 border-antique-gold/30">
+<div class="parchment-card p-8">
+<div class="absolute -left-[45px] top-8 size-8 bg-imperial-crimson border-2 border-antique-gold rounded-full flex items-center justify-center shadow-lg">
+<div class="size-3 bg-gold-leaf rounded-full shadow-inner"></div>
+</div>
+<div class="flex justify-between items-start mb-4">
+<span class="text-xs font-header font-bold text-imperial-crimson uppercase tracking-[0.2em]">Sept 12 • Lunar Cycle</span>
+<span class="material-symbols-outlined text-imperial-crimson/40">auto_awesome</span>
+</div>
+<h4 class="font-header text-2xl font-bold text-royal-lacquer mb-3 uppercase tracking-wide">Patriarch's Anniversary</h4>
+<p class="text-base italic text-temple-stone/90 leading-relaxed font-serif">Grand Temple Ceremony at the Imperial Altar. Descendants shall don the traditional crimson silk robes for the morning incense offering.</p>
+</div>
+<div class="parchment-card p-8 opacity-95">
+<div class="absolute -left-[45px] top-8 size-8 bg-royal-lacquer border-2 border-antique-gold/40 rounded-full flex items-center justify-center">
+<div class="size-3 bg-antique-gold/40 rounded-full"></div>
+</div>
+<span class="text-xs font-header font-bold text-temple-stone/60 uppercase tracking-[0.2em] block mb-4">Oct 05 • Family Gathering</span>
+<h4 class="font-header text-2xl font-bold text-royal-lacquer mb-3 uppercase tracking-wide">Great Aunt's Memorial</h4>
+<p class="text-base italic text-temple-stone/90 leading-relaxed font-serif">A quiet tea ritual and reading of the southern lineage scrolls in the inner court with all house elders.</p>
+</div>
+</div>
+</div>
+<div class="lg:col-span-7 space-y-10">
+<div class="flex items-center justify-between border-b-2 border-antique-gold/40 pb-6">
+<div class="flex items-center gap-5">
+<span class="material-symbols-outlined text-antique-gold text-5xl">verified_user</span>
+<h3 class="font-header text-3xl text-gold-leaf tracking-[0.2em] uppercase">Sacred Duties</h3>
+</div>
+<span class="text-xs font-header text-gold-leaf bg-imperial-crimson px-4 py-1.5 border border-antique-gold/50 uppercase tracking-tighter shadow-lg">3 Decrees Awaiting</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="parchment-card p-8 flex flex-col gap-5">
+<div class="flex justify-between items-start">
+<div class="size-14 bg-imperial-crimson/15 border border-imperial-crimson/30 flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-imperial-crimson text-4xl">sanitizer</span>
+</div>
+<span class="text-[10px] font-header text-imperial-crimson border-2 border-imperial-crimson px-3 py-1 uppercase font-black tracking-widest">High Priority</span>
+</div>
+<div>
+<h5 class="font-header text-xl font-bold text-royal-lacquer uppercase tracking-tight mb-1">Altar Polishing</h5>
+<p class="text-xs text-imperial-crimson/70 font-bold uppercase tracking-widest">Main Ancestral Hall</p>
+</div>
+<p class="text-sm italic text-temple-stone/90 font-serif leading-relaxed">Silver and jade elements must be cleansed with ritual jasmine essence before the full moon.</p>
+<div class="mt-auto pt-5 border-t border-imperial-crimson/20 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-cover bg-center border-2 border-antique-gold shadow-md" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDOQtUdflvZSdxZsy2Trm-4ZO4Wxru20V-WWeJmLIDHfP3_CmEv6wBDZUO9wPgA08LKylkiXNjgGDueeuZ-J4wstL4ST8ssoLiLuI_aLe5q2dG7cMTMKmVstahZSJv8e0H_i4NPT3lPUuwq0TI0rW354XXLHzdK9-dL00xsUO0Wfa3N-a_p0FG_sxYb3Bqer4dOQyfdeHrc2HCke7pJ_7QHevkuJWDnfYwkgBVNayLRTDvBXqzF_6gvQBZpExNaKIq4e1bic4tVzvhs");'></div>
+<span class="text-[10px] text-temple-stone font-bold uppercase tracking-wider">Nguyen Tuan</span>
+</div>
+<span class="text-[10px] font-header text-imperial-crimson animate-pulse font-black uppercase tracking-widest">Active</span>
+</div>
+</div>
+<div class="parchment-card p-8 flex flex-col gap-5">
+<div class="flex justify-between items-start">
+<div class="size-14 bg-imperial-crimson/15 border border-imperial-crimson/30 flex items-center justify-center shadow-inner">
+<span class="material-symbols-outlined text-imperial-crimson text-4xl">outdoor_grill</span>
+</div>
+</div>
+<div>
+<h5 class="font-header text-xl font-bold text-royal-lacquer uppercase tracking-tight mb-1">Ritual Food Prep</h5>
+<p class="text-xs text-imperial-crimson/70 font-bold uppercase tracking-widest">Imperial Kitchens</p>
+</div>
+<p class="text-sm italic text-temple-stone/90 font-serif leading-relaxed">Sourcing sacred sticky rice and ancient herbs for the Giỗ offerings in the coming week.</p>
+<div class="mt-auto pt-5 border-t border-imperial-crimson/20 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-cover bg-center border-2 border-antique-gold shadow-md" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAlYK5lXw_QFYxrqKle74bEJ8NEEDIR8kD9MdVTeqMy_pYPjH-KyNX-zGDkgcmnNT8s6sqXrtNq2aa90AQWpac4Dz7O5uM0XSpNPmrByeSJtmr_zbCMN-qKhIOSrBYlZVsWDG8iS6Ls1Wr6EelqJ854hT-fRGhKR0TEKvuD-eG_5KE4ujnko8AIM2iIHQyrRFlKI_WiwaLimiyOWyKTnFk63rYezHh2o0Bd5a-4xT6UIyNAR4qSobMSYOd-OJW_RyLpbT-r15r0aykt");'></div>
+<span class="text-[10px] text-temple-stone font-bold uppercase tracking-wider">Nguyen Linh</span>
+</div>
+<span class="text-[10px] font-header text-temple-stone/50 font-bold uppercase tracking-widest">Pending</span>
+</div>
+</div>
+</div>
+<div class="parchment-card p-10 mt-12 overflow-hidden border-2">
+<div class="absolute right-0 bottom-0 opacity-10 pointer-events-none translate-x-1/4 translate-y-1/4 scale-150">
+<span class="material-symbols-outlined text-[15rem] text-imperial-crimson">potted_plant</span>
+</div>
+<div class="relative z-10 flex flex-col md:flex-row items-center gap-10 justify-between">
+<div class="max-w-lg">
+<h5 class="font-header text-3xl text-imperial-crimson uppercase tracking-[0.2em] mb-4">Imperial Insight</h5>
+<p class="font-calligraphy text-3xl text-temple-stone leading-snug">"A dynasty is carved not in stone, but in the memory of those who honor it."</p>
+</div>
+<button class="lacquer-action px-12 py-5 whitespace-nowrap group">
+<span class="text-gold-leaf font-header text-sm tracking-[0.3em] uppercase group-hover:text-white transition-colors">Enter Life Tree</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="py-20 flex flex-col items-center gap-8 mt-20">
+<div class="flex items-center gap-12">
+<div class="h-px w-48 bg-gradient-to-r from-transparent via-antique-gold/50 to-transparent"></div>
+<span class="material-symbols-outlined text-gold-leaf text-5xl opacity-80">local_florist</span>
+<div class="h-px w-48 bg-gradient-to-r from-transparent via-antique-gold/50 to-transparent"></div>
+</div>
+<div class="text-center">
+<p class="font-header text-antique-gold/80 text-[11px] uppercase tracking-[1em] mb-2">Guardians of the Eternal Legacy</p>
+<p class="font-header text-antique-gold/40 text-[9px] uppercase tracking-[0.5em]">MMXXIV • Hue Imperial Tradition</p>
+</div>
+</footer>
+</div>
+<aside class="hidden lg:flex flex-col items-center justify-start w-28 lacquer-pillar sticky top-0 h-screen">
+<div class="pillar-cap mt-0"></div>
+<div class="dragon-motif"></div>
+<div class="parallel-scroll text-lg font-bold">
+            VẠN SỰ NHƯ Ý XUÂN
+        </div>
+<div class="mt-auto mb-0 pillar-cap"></div>
+</aside>
+</div>
+
+</body></html>

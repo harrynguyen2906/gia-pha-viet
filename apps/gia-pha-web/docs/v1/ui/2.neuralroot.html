@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Neural Root Network View - Heritage Cloud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Playfair+Display:wght@400;700&amp;family=Noto+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8a0000",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#230f0f",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif"],
+                        "serif": ["Playfair Display"],
+                        "sans": ["Noto Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .ink-wash-bg {
+            background-color: #230f0f;
+            background-image: radial-gradient(circle at 50% 50%, rgba(138, 0, 0, 0.05) 0%, transparent 70%),
+                              linear-gradient(45deg, rgba(0,0,0,0.2) 25%, transparent 25%, transparent 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2) 75%, transparent 75%, transparent);
+            background-size: 100% 100%, 400px 400px;
+        }
+        .neural-line {
+            stroke: rgba(138, 0, 0, 0.3);
+            stroke-width: 1.5;
+            fill: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-sans text-slate-900 dark:text-slate-100 overflow-hidden">
+<div class="relative flex h-screen w-full flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-primary/20 bg-background-dark/80 backdrop-blur-md px-8 py-3 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-3xl font-bold">account_tree</span>
+<h2 class="font-display text-xl font-bold leading-tight tracking-tight text-slate-100">Heritage Cloud</h2>
+</div>
+<label class="flex flex-col min-w-64 h-10">
+<div class="flex w-full flex-1 items-stretch rounded-lg bg-primary/10 border border-primary/20">
+<div class="text-primary/60 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="w-full border-none bg-transparent focus:ring-0 text-slate-100 placeholder:text-primary/40 px-3 text-sm" placeholder="Search lineage nodes..."/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-center">
+<nav class="flex items-center gap-8">
+<a class="text-primary font-medium border-b-2 border-primary pb-1 text-sm tracking-wide" href="#">Neural Root</a>
+<a class="text-slate-400 hover:text-slate-100 transition-colors text-sm tracking-wide" href="#">Ancestry</a>
+<a class="text-slate-400 hover:text-slate-100 transition-colors text-sm tracking-wide" href="#">Duty Logs</a>
+<a class="text-slate-400 hover:text-slate-100 transition-colors text-sm tracking-wide" href="#">Legacy Vault</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-10 w-10 rounded-full border-2 border-primary bg-cover bg-center" data-alt="User profile avatar portrait" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAatJuCl00LHzsgWnYlBTwk4TrjVU13MM3qSpDmT_hZP3AKjBfQt9GWfK7ClBqlmV1PCne3g2XrFcjTD3o07EowtbK0k8XjYg9mp9R8d1hMRxw4g88F0calogqqPTd4JclFYRBAoSzdV0iNMiAxLVguQS3bFLei8k0V9v6VL-rAo21cWlIWqyZBlqkEJykdZwMVKUfOdZ6OFQsJ31Bdb1TwkugbKhUOUBnqgy_eYIJFY5abh0QGE1rZTsUy01aaTKJNdk4GOKwLNMCY');"></div>
+</div>
+</header>
+<main class="flex-1 relative flex overflow-hidden">
+<!-- Sidebar Sidebar -->
+<aside class="w-72 bg-background-dark/60 border-r border-primary/10 flex flex-col p-6 gap-8 z-40">
+<div class="space-y-4">
+<h3 class="text-xs font-bold uppercase tracking-widest text-primary/70">View Modes</h3>
+<div class="bg-primary/5 p-1 rounded-xl flex border border-primary/10">
+<button class="flex-1 py-2 px-3 bg-primary text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-sm">hub</span> Neural
+                        </button>
+<button class="flex-1 py-2 px-3 text-slate-400 hover:text-slate-200 text-xs font-bold flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">account_tree</span> Tree
+                        </button>
+</div>
+</div>
+<div class="space-y-4">
+<h3 class="text-xs font-bold uppercase tracking-widest text-primary/70">Filters</h3>
+<ul class="space-y-2">
+<li class="flex items-center justify-between p-2 rounded-lg bg-primary/10 border border-primary/10">
+<span class="text-sm font-medium">Direct Lineage</span>
+<span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+</li>
+<li class="flex items-center justify-between p-2 rounded-lg hover:bg-primary/5 cursor-pointer group">
+<span class="text-sm font-medium text-slate-400 group-hover:text-slate-200 transition-colors">Collateral Kin</span>
+<span class="material-symbols-outlined text-slate-600 group-hover:text-primary transition-colors text-sm">radio_button_unchecked</span>
+</li>
+<li class="flex items-center justify-between p-2 rounded-lg hover:bg-primary/5 cursor-pointer group">
+<span class="text-sm font-medium text-slate-400 group-hover:text-slate-200 transition-colors">Duty Holders</span>
+<span class="material-symbols-outlined text-slate-600 group-hover:text-primary transition-colors text-sm">radio_button_unchecked</span>
+</li>
+</ul>
+</div>
+<div class="mt-auto pt-6 border-t border-primary/10">
+<div class="flex items-center gap-3 mb-4">
+<div class="h-2 w-2 rounded-full bg-primary animate-pulse"></div>
+<span class="text-xs font-sans text-primary/80">682 Total Ancestors Found</span>
+</div>
+<button class="w-full py-3 bg-primary/20 hover:bg-primary/30 text-primary border border-primary/30 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-all">
+<span class="material-symbols-outlined">add</span>
+                        New Node Entry
+                    </button>
+</div>
+</aside>
+<!-- Main Interactive Area -->
+<div class="flex-1 relative ink-wash-bg overflow-hidden">
+<!-- SVG Connections Layer -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none opacity-40">
+<!-- Lines connecting the nodes -->
+<path class="neural-line" d="M400,300 C450,300 450,150 500,150"></path>
+<path class="neural-line" d="M400,300 C450,300 450,450 500,450"></path>
+<path class="neural-line" d="M500,150 C550,150 550,80 600,80"></path>
+<path class="neural-line" d="M500,150 C550,150 550,220 600,220"></path>
+<path class="neural-line" d="M500,450 C550,450 550,400 600,400"></path>
+<path class="neural-line" d="M500,450 C550,450 550,550 650,580"></path>
+</svg>
+<!-- Floating Control Overlay -->
+<div class="absolute bottom-8 right-8 flex flex-col gap-3 z-30">
+<button class="p-3 bg-primary/10 border border-primary/30 rounded-full hover:bg-primary/20 text-slate-200 shadow-2xl backdrop-blur-sm transition-all">
+<span class="material-symbols-outlined">zoom_in</span>
+</button>
+<button class="p-3 bg-primary/10 border border-primary/30 rounded-full hover:bg-primary/20 text-slate-200 shadow-2xl backdrop-blur-sm transition-all">
+<span class="material-symbols-outlined">zoom_out</span>
+</button>
+<button class="p-3 bg-primary text-white rounded-full shadow-lg shadow-primary/30 hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+</div>
+<!-- Neural Nodes -->
+<!-- Root Central Node (User) -->
+<div class="absolute top-[300px] left-[320px] group cursor-pointer">
+<div class="relative flex flex-col items-center">
+<div class="w-20 h-20 rounded-full border-4 border-primary p-1 bg-background-dark shadow-xl group-hover:scale-110 transition-transform duration-500">
+<div class="w-full h-full rounded-full bg-cover bg-center" data-alt="Main ancestor central node portrait" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBw__Zna9HoUYaz9NFb-v7UqEg688nb1RWCglJ7DP97BMWedNMKQeXf3nVNlMuTC75O-2Ye-f6V_HD44QdcF3HLKAKzbQlBaLGF_omAmwrtQEvJ-uzzyhwaz5YH22MBftdBfnr54wXXOiGjN9NoKrgD_ke-Wp-6UyVIWde4cDj-z7kajFvJ_Cf5xvidJm9iVgnAsGu8qJ3waIMl9PUmbt2RZrdiTC4lRv_nb_VCvEfTVgU9U-LtaAdeXVe8Mps3eO7HtpW42pGbPtMZ');"></div>
+</div>
+<div class="mt-3 text-center">
+<p class="font-serif text-lg leading-tight text-white shadow-black drop-shadow-md">Alistair Thorne</p>
+<p class="font-sans text-[10px] uppercase tracking-tighter text-primary/80 font-bold">1982 — Present</p>
+</div>
+</div>
+</div>
+<!-- Parent 1 (Living) -->
+<div class="absolute top-[110px] left-[450px] group cursor-pointer">
+<div class="relative flex flex-col items-center">
+<div class="w-16 h-16 rounded-full border-2 border-primary/60 p-1 bg-background-dark shadow-lg group-hover:scale-110 transition-transform duration-500">
+<div class="w-full h-full rounded-full bg-cover bg-center" data-alt="Vibrant portrait of living family member" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBw7CrTAX3njCfCDvM_SVPa693eY1vHxgMGAe6EfcyUMYngi3C_qoNU5T0bwVp4w-q4AYeuu-bEn5Hnyn1fgrAT433_xyqGSf_ymyBbQD8DFkPiPagHNGSndkJxMH8qNTFJRCvnS20C0K78FcHe8PXAMHeKSzThKadw43SkQ2qnrxypqlhJWVTdMceIZX7O6Cc1fejb71vq9csKNt6DeekGJ7n12OKb0s2OcpS2nSOMg77qYasfKUf7mnCo64tdVdGV-M4Wo4Oi3hle');"></div>
+</div>
+<div class="mt-2 text-center">
+<p class="font-serif text-base leading-tight text-slate-200">Eleanor Thorne</p>
+<p class="font-sans text-[9px] uppercase tracking-tighter text-primary/60 font-bold">1955 — Present</p>
+</div>
+</div>
+</div>
+<!-- Parent 2 (Deceased - Grayscale) -->
+<div class="absolute top-[410px] left-[450px] group cursor-pointer">
+<div class="relative flex flex-col items-center">
+<div class="w-16 h-16 rounded-full border-2 border-slate-600 p-1 bg-background-dark grayscale shadow-lg group-hover:grayscale-0 transition-all duration-700">
+<div class="w-full h-full rounded-full bg-cover bg-center" data-alt="Grayscale portrait of deceased family member" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCUpZCIclWhoPqmm6I9QHONU7tIMwR7pg7nhojxWPvxa5rHKd32r8YekJ38B-TD7wAQzgAyp5ta690LEXjZCfemuOtHKBLz9nD0taQVCwOmwX-rovRpstzJbQeCZBYZQH3Yd0CR6VDpGd5jyjDaxOBrTqxuHyviLNMLh4tFQYvRFQqixg51An5gbiPYrxcTeR0Yv7DFvShUCsZyLbIvlW_7Z72IfLEn86xMZlZYQUnEkUsl41HrMTzRuE3G5oL9gh4YbpUipuaBtqeY');"></div>
+<!-- Golden Lotus Icon -->
+<div class="absolute -top-1 -right-1 bg-yellow-600/90 text-yellow-100 rounded-full p-0.5 border border-yellow-400">
+<span class="material-symbols-outlined text-[14px]">psychology_alt</span>
+</div>
+</div>
+<div class="mt-2 text-center">
+<p class="font-serif text-base leading-tight text-slate-400">Arthur Thorne</p>
+<p class="font-sans text-[9px] uppercase tracking-tighter text-slate-500 font-bold">1950 — 2012</p>
+</div>
+</div>
+</div>
+<!-- Ancestor (Deceased) -->
+<div class="absolute top-[40px] left-[560px] group cursor-pointer scale-90">
+<div class="relative flex flex-col items-center">
+<div class="w-14 h-14 rounded-full border border-slate-700 p-1 bg-background-dark grayscale opacity-80 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700">
+<div class="w-full h-full rounded-full bg-cover bg-center" data-alt="Distant ancestor grayscale portrait" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD05dsd2ABbOAYigLE7vtijfHcrR_5Bkq3rrqZatCI98zzvGNCwqGreEbWVieXacctp8Jt0E-i3D_ajcuTh5LjoXstnsYafopd5uyUe7-t3bmyzQ-IQK53QGNtPFYK5byzqgROuQWCtEUQRog4DqXUGhqnIBfNeJqmgJ8pxET8EN6BDCkmHXTKvyfSTKnDflBa-uinawiaVFRVMYuauLAftLNlYT5AvNGlJQQrgON5AoRdUQQ2rkfelD28hHiMG0_-48ZjD-vQLwNH2');"></div>
+<div class="absolute -top-1 -right-1 bg-yellow-600/90 text-yellow-100 rounded-full p-0.5 border border-yellow-400">
+<span class="material-symbols-outlined text-[12px]">psychology_alt</span>
+</div>
+</div>
+<div class="mt-2 text-center">
+<p class="font-serif text-sm leading-tight text-slate-500">Samuel Thorne</p>
+<p class="font-sans text-[8px] uppercase tracking-tighter text-slate-600 font-bold">1921 — 1988</p>
+</div>
+</div>
+</div>
+<!-- Node Legend (Static) -->
+<div class="absolute top-8 left-8 p-4 bg-background-dark/80 border border-primary/20 rounded-xl backdrop-blur-md z-30">
+<h4 class="text-[10px] font-bold uppercase tracking-widest text-primary mb-3">Lineage Legend</h4>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full border border-primary bg-primary/20"></div>
+<span class="text-[11px] font-sans text-slate-300">Direct Root Path</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full bg-yellow-600"></div>
+<span class="text-[11px] font-sans text-slate-300">Golden Lotus (Legacy Bearer)</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 rounded-full border border-slate-600 grayscale bg-slate-800"></div>
+<span class="text-[11px] font-sans text-slate-300">Ancestral Departed</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Detail Inspector Panel -->
+<aside class="w-80 bg-background-dark border-l border-primary/20 flex flex-col z-40">
+<div class="p-6 border-b border-primary/10">
+<div class="relative w-32 h-32 mx-auto mb-4">
+<div class="w-full h-full rounded-full border-4 border-primary p-1">
+<div class="w-full h-full rounded-full bg-cover bg-center" data-alt="Large detailed ancestor portrait" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAtGKHSshgoMnZlFqwIJ9xl-W0SfkZnw_W6adS_RQ8ohy_3ZfvjmeeTIk-mVsbX4SoUDVl6AyNpjNmWxrQ9rJp_QvMx5FbZUxFhs4K3X3MlcWSsL7qVhvZMOO9dmWygBZl5t3yZpgfNJFZXH3PHLHZYvfJdC3DoEoeRxaFEyIYURgweF9Drr_Z0cic0_k0C2Ikqhtt2XYuZt4khQrufV6sXTlFW8_iBs1ndQyWd8oQQK8UiZpk81-f0WgkqSANxzo8WyNPDRQpmsJr-');"></div>
+</div>
+<div class="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full border-2 border-background-dark">
+<span class="material-symbols-outlined text-sm">edit</span>
+</div>
+</div>
+<div class="text-center">
+<h2 class="font-serif text-2xl text-slate-100">Alistair Thorne</h2>
+<p class="font-sans text-sm text-primary font-medium tracking-wide">Primary Lineage Root</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<section>
+<h3 class="text-xs font-bold uppercase tracking-widest text-primary/70 mb-3">Current Duty</h3>
+<div class="p-4 rounded-lg bg-primary/5 border border-primary/10">
+<p class="text-sm italic font-serif text-slate-300 leading-relaxed">"Guardian of the 14th Century Ledger and Keeper of the Manor Archives."</p>
+</div>
+</section>
+<section>
+<h3 class="text-xs font-bold uppercase tracking-widest text-primary/70 mb-3">Vital Data</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-end border-b border-primary/5 pb-2">
+<span class="text-xs text-slate-500 uppercase font-sans">Birth Date</span>
+<span class="text-sm font-medium">14 May 1982</span>
+</div>
+<div class="flex justify-between items-end border-b border-primary/5 pb-2">
+<span class="text-xs text-slate-500 uppercase font-sans">Origin</span>
+<span class="text-sm font-medium">Cornwall, UK</span>
+</div>
+<div class="flex justify-between items-end border-b border-primary/5 pb-2">
+<span class="text-xs text-slate-500 uppercase font-sans">Lineage Index</span>
+<span class="text-sm font-medium">A1-944-TR</span>
+</div>
+</div>
+</section>
+<section>
+<h3 class="text-xs font-bold uppercase tracking-widest text-primary/70 mb-3">Neural Connections</h3>
+<div class="flex -space-x-3 overflow-hidden">
+<div class="inline-block h-10 w-10 rounded-full border-2 border-background-dark bg-cover bg-center" data-alt="Connection avatar 1" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDvzamsykkMeikINLOlPIjRUS9a5rqDyeiuV2h-x-h2gldEu3L2fDI9vMJpujHeDHvaVj9pSm1fRlPZGq3Bqsp-rEmneuOibOi2iX9PjzZNmpoTlInlfXX3BOxQOJSzzKP0CeP1v8RaaRbD_JC9PAYI2447sOiqC9I0-TU_8oJ_QoOCdYpS9uw7FIyo0nfLUQPyd2-ZndjKCnzzjjqO2UXnCyGGdVXl4yz5GN6B5nedr4HsQ7LwpqSQVCDs_tDhYIZnUaKj0E2VUmfn');"></div>
+<div class="inline-block h-10 w-10 rounded-full border-2 border-background-dark bg-cover bg-center" data-alt="Connection avatar 2" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCQurIMv4x0sUImwoXoQTB22K80DDRfkIR3z2EY7fnEj8DxIT45l14sM6GWvHKRKgNtb2NBo44ngEwVT9FeBqZGGMDj8J4_u78uEDaufft1wloLkZK03OiBU0GOW9aiKUa3HwqgRaqy7AdET7RYSGJzJg8vlqvtnu5GlIpuMB6-JKekVQDWIt5hlmQLB-IvZ-n5p261ln8sUOKlmkxzMRksSc0SGmXPUnv7Gjjp8YZaXBQzQ_5-ZNRmerUe-W3SpAIdxUoDZYMnGzBL');"></div>
+<div class="inline-block h-10 w-10 rounded-full border-2 border-background-dark bg-cover bg-center" data-alt="Connection avatar 3" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDwluEFpsSJPWZo_yAKEN0L7cdaugSH0N6ta5dpxq5A5gLDP2g6IHEK0OaoZNegDrtwMlIbgAZ-OQpZuO5sIusTSfH2n5ypQRu8jbaNZR6rrCnhrtDOlGSUMa-edQHZCAelq4gkO0FE9z4DjbDmN6Vtp2WCGXN0FUPMLPQpyS9rzVeEq4NXsvrOtq8a-C7RBJ8OfGrWohDdVrZp5CVy6KpAWxsTYKEE2DGIUSYkhyh-PUf76a1BW9xddrTr1JRAxDEgpgX-2SM2yfnO');"></div>
+<div class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-background-dark bg-primary/20 text-[10px] font-bold text-primary">
+                                +12
+                            </div>
+</div>
+</section>
+</div>
+<div class="p-6 bg-primary/5 border-t border-primary/10">
+<button class="w-full py-3 bg-primary text-white rounded-lg font-bold text-sm tracking-widest uppercase hover:bg-primary/90 transition-colors">
+                        Open Full Profile
+                    </button>
+</div>
+</aside>
+</main>
+<!-- Footer / Breadcrumbs -->
+<footer class="h-10 bg-background-dark/90 border-t border-primary/10 px-6 flex items-center justify-between z-50">
+<div class="flex items-center gap-2 text-[10px] font-sans text-slate-500 uppercase tracking-widest">
+<span>World</span>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span>United Kingdom</span>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span class="text-primary font-bold">Thorne Dynasty</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-[10px] text-slate-500">
+<span class="material-symbols-outlined text-sm">database</span>
+<span>Database Synchronized</span>
+</div>
+<div class="h-2 w-2 rounded-full bg-emerald-500"></div>
+</div>
+</footer>
+</div>
+</body></html>

@@ -1,0 +1,14 @@
+# ─── Root gitignore ───────────────────────────────────────────────────────────
+# This guards the monorepo root. Each sub-project has its own .gitignore.
+
+# Never let a stray "npm install" at the root pollute the repo
+node_modules/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Environment files — NEVER commit credentials
+.env
+.env.local
+.env.*.local

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Digital Memorial Profile | Heritage Cloud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8a0000",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#1a0a0a", // Darker lacquer feel
+                        "accent-gold": "#d4af37",
+                        "lacquer": "#120505",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif"],
+                        "sans": ["Noto Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .lacquer-finish {
+            background: linear-gradient(145deg, #1a0a0a 0%, #0a0404 100%);
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
+        }
+        .gold-leaf-border {
+            border: 1px solid #d4af37;
+            position: relative;
+        }
+        .gold-leaf-border::after {
+            content: '';
+            position: absolute;
+            top: 2px; left: 2px; right: 2px; bottom: 2px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-sans text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col lacquer-finish overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/30 px-10 py-4 bg-lacquer/80 backdrop-blur-md sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-accent-gold">
+<div class="size-6">
+<span class="material-symbols-outlined text-3xl">account_balance</span>
+</div>
+<h2 class="font-display text-xl font-bold leading-tight tracking-tight">Heritage Cloud</h2>
+</div>
+<label class="flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-primary flex border-none bg-primary/10 items-center justify-center pl-4 rounded-l-lg" data-icon="search">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-primary/10 text-slate-100 placeholder:text-slate-500 focus:ring-0 focus:outline-none rounded-r-lg text-sm" placeholder="Search lineage..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<nav class="flex items-center gap-9">
+<a class="text-slate-300 hover:text-accent-gold text-sm font-medium transition-colors" href="#">Deep Lineage</a>
+<a class="text-slate-300 hover:text-accent-gold text-sm font-medium transition-colors" href="#">Archives</a>
+<a class="text-slate-300 hover:text-accent-gold text-sm font-medium transition-colors" href="#">Legacy Tree</a>
+<a class="text-slate-300 hover:text-accent-gold text-sm font-medium transition-colors" href="#">Family Duty</a>
+</nav>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg size-10 bg-primary/20 text-accent-gold border border-primary/30 hover:bg-primary/40 transition-all">
+<span class="material-symbols-outlined text-xl">settings</span>
+</button>
+<button class="flex items-center justify-center rounded-lg size-10 bg-primary/20 text-accent-gold border border-primary/30 hover:bg-primary/40 transition-all">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full border-2 border-accent-gold size-10" data-alt="User profile avatar photo" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCJ4MUrHNh3sBVQLVYzp0vkdHBjNsQU3_ABomdx8St6sXV4xIPJ6fGmKVp8W2m2lZAGkPXEYek1JISFe54-CVFIMEqoon5BZdnjxaOhxBpj-q3GK9NBXVHriX6F6Vd4lh4xqn8_1AKYl9HwY3sTN7Z-1SMynfuLN1ERW9vK_EkiAq4uUbNEDTIX35TpJg2uy4HOaZwUrmIC2INxsaEEFavqZsaSVflhQw0krtpVxw4nNI-pSU88UaqLNar6PXiM_ju1J8EuLYGXtxPS");'></div>
+</div>
+</header>
+<main class="layout-container flex h-full grow flex-col px-4 lg:px-40 py-8">
+<div class="layout-content-container flex flex-col max-w-[1200px] mx-auto w-full">
+<!-- Hero Profile Section -->
+<div class="flex flex-col md:flex-row gap-8 items-start mb-12">
+<div class="relative group">
+<div class="w-64 h-80 gold-leaf-border overflow-hidden bg-slate-900 rounded-sm">
+<img alt="Ancestral portrait of Li Wei" class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 transition-opacity" data-alt="Grayscale vintage portrait of an elderly man in traditional attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-zVYf7rgU878cwxbaY8zbu0yQkiZhDI53T1aTvTT0iTbhAjnBI3n_v-CeVTKpQIuKjFselqfTdVzMZqg2uKNVgyrpvFzKV08LChuFcNKin1KXz3X4VZ55kl_VRNN28TT1NGrpeUbeyLap5ZcuFgW7pP9w-DCu7KCmmK2ZrsGAt1wfbSuzk57tCuwAhaG7E-1jo45WHOCpNWK_S-3iEfzQMfgZr0Qt7MPHoUyYKWPUawevO-jGStRa6x8xHxp4urjrB-fYxPuHoURJ"/>
+</div>
+<!-- Golden Lotus Icon -->
+<div class="absolute -bottom-4 -right-4 bg-lacquer border border-accent-gold rounded-full p-3 shadow-xl shadow-black">
+<span class="material-symbols-outlined text-accent-gold text-4xl leading-none">filter_vintage</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col justify-end h-80 py-4">
+<div class="inline-flex items-center gap-2 text-accent-gold mb-2">
+<span class="material-symbols-outlined text-sm">workspace_premium</span>
+<span class="text-xs font-bold uppercase tracking-widest">14th Generation Lineage Head</span>
+</div>
+<h1 class="font-display text-5xl font-bold text-slate-100 mb-2">Li Wei <span class="text-slate-500 font-normal text-3xl">(1892-1964)</span></h1>
+<p class="text-primary font-display text-xl italic mb-6">"The strength of the banyan is in its deepest roots."</p>
+<div class="flex flex-wrap gap-4 mt-auto">
+<button class="flex items-center justify-center rounded-lg px-6 py-3 bg-primary text-white font-bold transition-all hover:bg-primary/80 border border-primary/50 shadow-lg">
+<span class="material-symbols-outlined mr-2">edit_document</span>
+                            Edit Record
+                        </button>
+<button class="flex items-center justify-center rounded-lg px-6 py-3 bg-transparent text-accent-gold font-bold transition-all hover:bg-accent-gold/10 border border-accent-gold/50">
+<span class="material-symbols-outlined mr-2">download_2</span>
+                            Download Pedigree
+                        </button>
+</div>
+</div>
+<!-- Virtual Offering Section (Skeuomorphic touches) -->
+<div class="w-full md:w-72 bg-lacquer/50 p-6 rounded-xl border border-primary/30 shadow-inner">
+<h3 class="font-display text-lg text-accent-gold font-bold mb-4 text-center border-b border-primary/20 pb-2">Virtual Offering</h3>
+<div class="flex flex-col gap-4">
+<button class="group flex flex-col items-center justify-center p-4 rounded-lg bg-gradient-to-b from-stone-800 to-stone-900 border-t border-white/10 shadow-[0_4px_0_0_#000] active:translate-y-1 active:shadow-none transition-all">
+<span class="material-symbols-outlined text-orange-400 text-3xl group-hover:animate-pulse">mode_fan</span>
+<span class="text-xs font-bold mt-2 text-slate-300">Light Incense</span>
+</button>
+<button class="group flex flex-col items-center justify-center p-4 rounded-lg bg-gradient-to-b from-stone-800 to-stone-900 border-t border-white/10 shadow-[0_4px_0_0_#000] active:translate-y-1 active:shadow-none transition-all">
+<span class="material-symbols-outlined text-pink-400 text-3xl">local_florist</span>
+<span class="text-xs font-bold mt-2 text-slate-300">Offer Flowers</span>
+</button>
+</div>
+<p class="text-[10px] text-slate-500 mt-4 text-center uppercase tracking-tighter">1,428 tributes this month</p>
+</div>
+</div>
+<!-- Content Tabs/Navigation -->
+<div class="flex border-b border-primary/20 mb-8 overflow-x-auto">
+<button class="px-6 py-3 border-b-2 border-primary text-primary font-bold text-sm whitespace-nowrap">Ancestral Biography</button>
+<button class="px-6 py-3 text-slate-400 hover:text-slate-100 font-medium text-sm whitespace-nowrap transition-colors">Archival Gallery</button>
+<button class="px-6 py-3 text-slate-400 hover:text-slate-100 font-medium text-sm whitespace-nowrap transition-colors">Ancestral Duties</button>
+<button class="px-6 py-3 text-slate-400 hover:text-slate-100 font-medium text-sm whitespace-nowrap transition-colors">Descendants</button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+<!-- Timeline Section -->
+<div class="lg:col-span-2">
+<h2 class="font-display text-2xl font-bold text-slate-100 mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">timeline</span>
+                        Life Journey
+                    </h2>
+<div class="relative pl-8 border-l-2 border-primary/20 space-y-10">
+<!-- Timeline Item -->
+<div class="relative">
+<div class="absolute -left-[41px] top-0 bg-lacquer border-2 border-primary rounded-full p-1">
+<span class="material-symbols-outlined text-primary text-base">child_care</span>
+</div>
+<div class="flex flex-col">
+<span class="text-accent-gold font-bold text-sm">May 1892</span>
+<h4 class="text-slate-100 font-bold text-lg">Birth in Jiangsu Province</h4>
+<p class="text-slate-400 mt-2 leading-relaxed">Born to the Li household during the late Qing Dynasty. Named the first male heir of the 14th generation.</p>
+</div>
+</div>
+<!-- Timeline Item -->
+<div class="relative">
+<div class="absolute -left-[41px] top-0 bg-lacquer border-2 border-primary rounded-full p-1">
+<span class="material-symbols-outlined text-primary text-base">school</span>
+</div>
+<div class="flex flex-col">
+<span class="text-accent-gold font-bold text-sm">August 1910</span>
+<h4 class="text-slate-100 font-bold text-lg">Imperial Scholarship Award</h4>
+<p class="text-slate-400 mt-2 leading-relaxed">Recognized for excellence in classical studies and calligraphy. One of the last recipients of the regional honor.</p>
+</div>
+</div>
+<!-- Timeline Item -->
+<div class="relative">
+<div class="absolute -left-[41px] top-0 bg-lacquer border-2 border-primary rounded-full p-1">
+<span class="material-symbols-outlined text-primary text-base">domain</span>
+</div>
+<div class="flex flex-col">
+<span class="text-accent-gold font-bold text-sm">September 1932</span>
+<h4 class="text-slate-100 font-bold text-lg">Founding of the Heritage Estate</h4>
+<p class="text-slate-400 mt-2 leading-relaxed">Established the current family seat and formalized the tracking of the lineage archives.</p>
+</div>
+</div>
+<!-- Timeline Item -->
+<div class="relative">
+<div class="absolute -left-[41px] top-0 bg-lacquer border-2 border-primary rounded-full p-1">
+<span class="material-symbols-outlined text-primary text-base">elderly</span>
+</div>
+<div class="flex flex-col">
+<span class="text-accent-gold font-bold text-sm">November 1964</span>
+<h4 class="text-slate-100 font-bold text-lg">Passing and Enshrinement</h4>
+<p class="text-slate-400 mt-2 leading-relaxed">Passed peacefully at the age of 72. Enshrined in the Golden Lotus Hall with highest honors.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Media Gallery Sidebar -->
+<div class="space-y-8">
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-display text-xl font-bold text-slate-100">Archival Media</h2>
+<button class="text-accent-gold text-xs font-bold uppercase hover:underline">View All</button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="aspect-square gold-leaf-border group overflow-hidden bg-slate-800">
+<img alt="Old manuscript" class="w-full h-full object-cover grayscale group-hover:scale-110 transition-transform duration-500" data-alt="A macro shot of a vintage handwritten document or manuscript" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC447qjcJoMBulUTUi4PBjd9qptL9VUVgx9kDWVQ-q2Oms93XkUJcYyEFqTg8mAi51QiWhxMEmGvtq1ZiSfGivtalBjdSv9B1OO98ssyHPb531FCwWUoC0IbaJRphnd7RpZajJeH1j4HlDKv6a3Ac-lZZrO1x4cVOX4X9yD5ctd4Rj7E2RRyo4Qy5Iqjn1pJ_vmzv415Che6TY3yR6AiE62I2QTVbTG7q7NLAUsr2lnKrrfwgYuXLuPJLtQgCTkZgmdMhqUamft5qFv"/>
+</div>
+<div class="aspect-square gold-leaf-border group overflow-hidden bg-slate-800">
+<img alt="Family heirloom" class="w-full h-full object-cover grayscale group-hover:scale-110 transition-transform duration-500" data-alt="A vintage carved wooden object or family heirloom" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyicFWS66-8-9tckTPuQtXwYfX9iHT2JrykW524eqBTMUXxjUqTWcSOtpxn7WgST99B-qbgkt-bdwb_OeiYtohYW9L4ReqdJcOZpg5eOUB2GpvXDbLy3tQQ5MesBvuDcA6WpKbvKVUeLExsLXW8ZrPtjtMHwIpgBRV-yJzoLYBxDTRo66zxX_ZhPeVqXYzm7f_fVN46EbHd7NGMRnUO4gOTTGDAqle4fFi3gHNu2oimqtwVJsKpd3dYnI2Ui7n92RFF-0ZnNHmOiMj"/>
+</div>
+<div class="aspect-square gold-leaf-border group overflow-hidden bg-slate-800">
+<img alt="Historical garden" class="w-full h-full object-cover grayscale group-hover:scale-110 transition-transform duration-500" data-alt="A black and white photo of a traditional garden pavilion" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQlbZa3EMApeDSgT-AGmGia74HS4Hp38AACRsunlBhlkjDsqoVIVM1NWmiytSX3_bCuEAweSDKe3iaguzcTP8CbLEk7km5NEpZIWLxRqtQxeXBah73i8awWHJij4hQisAIQj8RC_qmR5KoiJ3rpAZWslVrCEN4jOjC1sLqX8UvbJOtx-KhY5deo5LL0XxhNPutgOZU6DqPX2tXvKv-REVMuKlcxiOptYhaqq2qeClXr3FBoOXhyMN3ueKWp2lbg7Ioqq-vwBOCa4w3"/>
+</div>
+<div class="aspect-square gold-leaf-border group overflow-hidden bg-slate-800 relative">
+<img alt="More media" class="w-full h-full object-cover grayscale brightness-50" data-alt="Abstract vintage texture with more items" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYCVXNL24835w4EOBWG-4ed6rC37PVPyiakbwwDjgGxS4XNVSR9eI981u617Q2Wj1eULNQR14rJlg972L-6-oVHyag0HnoWiEfOIUkaHhIkaTI0dCX1vjjfgWgiSE_WPIgs-EWROaC36pZV1QThUGo4TvsINXS284vwvi2sV38uQkaaRKyKRE3wXFQKcghctGeuKfnPaYwo2wBTo1lO3GHLioa2G2NxyyEAXfdxmt-dkQUusEvBxYG6tqQmxxF_UemAaAw2Y5ZggnP"/>
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<span class="text-white font-bold text-xl">+12</span>
+</div>
+</div>
+</div>
+<!-- Lineage Quick Stats -->
+<div class="p-6 bg-primary/10 border border-primary/20 rounded-xl">
+<h3 class="font-display text-sm font-bold text-accent-gold uppercase mb-4 tracking-widest">Legacy Snapshot</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-slate-400 text-xs">Direct Descendants</span>
+<span class="text-slate-100 font-bold">142</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-400 text-xs">Records Authenticated</span>
+<span class="text-slate-100 font-bold">89%</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-400 text-xs">Honorific Status</span>
+<span class="text-accent-gold font-bold">Gold Tier</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer Decoration -->
+<footer class="mt-auto py-10 flex flex-col items-center justify-center opacity-40">
+<div class="h-[1px] w-full max-w-4xl bg-gradient-to-r from-transparent via-accent-gold to-transparent mb-6"></div>
+<p class="font-display text-xs text-accent-gold tracking-[0.5em] uppercase">Honoring the Past, Preserving the Future</p>
+</footer>
+</div>
+</body></html>

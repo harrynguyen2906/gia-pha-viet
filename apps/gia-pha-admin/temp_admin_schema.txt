@@ -1,0 +1,224 @@
+// ──────────────── Subscription Enums (admin schema) ────────────────
+// Every enum MUST have @@schema() in multiSchema mode.
+// Without it, enums default to the first schema ("public"), which is wrong.
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+  EXPIRED
+  TRIAL
+
+  @@schema("admin")
+}
+
+enum BillingCycle {
+  MONTHLY
+  YEARLY
+
+  @@schema("admin")
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+  CANCELLED
+
+  @@schema("admin")
+}
+
+enum CancellationType {
+  END_OF_PERIOD
+  IMMEDIATE
+
+  @@schema("admin")
+}
+
+enum CancellationReason {
+  TOO_EXPENSIVE
+  NOT_USEFUL
+  SWITCHING_PRODUCT
+  TECHNICAL_ISSUES
+  OTHER
+
+  @@schema("admin")
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  SUPPORT
+
+  @@schema("admin")
+}
+
+// ──────────────── Subscription Models (admin schema) ────────────────
+
+model SubscriptionTier {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug          String   @unique @db.VarChar(50)
+  nameVi        String   @map("name_vi") @db.VarChar(200)
+  nameEn        String   @map("name_en") @db.VarChar(200)
+  descriptionVi String?  @map("description_vi")
+  descriptionEn String?  @map("description_en")
+  priceMonthly  Decimal  @default(0) @map("price_monthly") @db.Decimal(15, 2)
+  priceYearly   Decimal  @default(0) @map("price_yearly") @db.Decimal(15, 2)
+  currency      String   @default("VND") @db.VarChar(10)
+  features      Json     @default("[]")
+  limits        Json     @default("{}")
+  badgeColor    String?  @map("badge_color") @db.VarChar(20)
+  badgeIcon     String?  @map("badge_icon") @db.VarChar(50)
+  isPopular     Boolean  @default(false) @map("is_popular")
+  isActive      Boolean  @default(true) @map("is_active")
+  displayOrder  Int      @default(0) @map("display_order")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz()
+
+  subscriptions UserSubscription[]
+  orders        Order[]
+
+  @@index([isActive, displayOrder])
+  @@schema("admin")
+  @@map("subscription_tiers")
+}
+
+model UserSubscription {
+  id                String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId            String             @map("user_id") @db.Uuid
+  clanId            String             @map("clan_id") @db.Uuid
+  tierId            String             @map("tier_id") @db.Uuid
+  status            SubscriptionStatus @default(ACTIVE)
+  startedAt         DateTime           @map("started_at") @db.Timestamptz()
+  expiresAt         DateTime           @map("expires_at") @db.Timestamptz()
+  cancelledAt       DateTime?          @map("cancelled_at") @db.Timestamptz()
+  cancellationReason Text?             @map("cancellation_reason")
+  autoRenew         Boolean            @default(true) @map("auto_renew")
+  trialEndsAt       DateTime?          @map("trial_ends_at") @db.Timestamptz()
+  createdAt         DateTime           @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt         DateTime           @updatedAt @map("updated_at") @db.Timestamptz()
+
+  user              User               @relation(fields: [userId], references: [id])
+  clan              Clan               @relation(fields: [clanId], references: [id])
+  tier              SubscriptionTier   @relation(fields: [tierId], references: [id])
+  cancellationRequest CancellationRequest?
+
+  @@index([userId])
+  @@index([clanId])
+  @@index([tierId])
+  @@index([status])
+  @@index([expiresAt])
+  @@schema("admin")
+  @@map("user_subscriptions")
+}
+
+model Order {
+  id               String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orderNumber      String      @unique @map("order_number") @db.VarChar(50)
+  userId           String      @map("user_id") @db.Uuid
+  clanId           String      @map("clan_id") @db.Uuid
+  tierId           String      @map("tier_id") @db.Uuid
+  billingCycle     BillingCycle @map("billing_cycle")
+  amount           Decimal     @db.Decimal(15, 2)
+  currency         String      @default("VND") @db.VarChar(10)
+  status           OrderStatus @default(PENDING)
+  paymentMethod    String?     @map("payment_method") @db.VarChar(100)
+  paymentReference String?     @map("payment_reference") @db.VarChar(255)
+  paidAt           DateTime?   @map("paid_at") @db.Timestamptz()
+  refundedAt       DateTime?   @map("refunded_at") @db.Timestamptz()
+  refundAmount     Decimal?    @map("refund_amount") @db.Decimal(15, 2)
+  notes            String?
+  createdAt        DateTime    @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt        DateTime    @updatedAt @map("updated_at") @db.Timestamptz()
+
+  user             User             @relation(fields: [userId], references: [id])
+  clan             Clan             @relation(fields: [clanId], references: [id])
+  tier             SubscriptionTier @relation(fields: [tierId], references: [id])
+  billingInfo      OrderBillingInfo?
+
+  @@index([userId])
+  @@index([clanId])
+  @@index([status])
+  @@index([orderNumber])
+  @@index([createdAt(sort: Desc)])
+  @@schema("admin")
+  @@map("orders")
+}
+
+model OrderBillingInfo {
+  id           String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orderId      String  @unique @map("order_id") @db.Uuid
+  fullName     String  @map("full_name") @db.VarChar(200)
+  email        String  @db.VarChar(255)
+  phone        String? @db.VarChar(20)
+  addressLine1 String? @map("address_line_1") @db.VarChar(255)
+  addressLine2 String? @map("address_line_2") @db.VarChar(255)
+  city         String? @db.VarChar(100)
+  district     String? @db.VarChar(100)
+  ward         String? @db.VarChar(100)
+  taxId        String? @map("tax_id") @db.VarChar(50)
+  companyName  String? @map("company_name") @db.VarChar(200)
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@schema("admin")
+  @@map("order_billing_info")
+}
+
+model CancellationRequest {
+  id                  String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  subscriptionId      String             @unique @map("subscription_id") @db.Uuid
+  cancellationType    CancellationType   @map("cancellation_type")
+  cancellationReason  CancellationReason @map("cancellation_reason")
+  cancellationFeedback String?           @map("cancellation_feedback")
+  retentionOffered    Boolean            @default(false) @map("retention_offered")
+  retentionAccepted   Boolean?           @map("retention_accepted")
+  processedBy         String?            @map("processed_by") @db.Uuid
+  processedAt         DateTime?          @map("processed_at") @db.Timestamptz()
+  createdAt           DateTime           @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt           DateTime           @updatedAt @map("updated_at") @db.Timestamptz()
+
+  subscription UserSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@index([processedAt])
+  @@schema("admin")
+  @@map("cancellation_requests")
+}
+
+model AdminUser {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email        String    @unique @db.VarChar(255)
+  passwordHash String    @map("password_hash") @db.VarChar(255)
+  displayName  String    @map("display_name") @db.VarChar(100)
+  role         AdminRole @default(SUPPORT)
+  isActive     Boolean   @default(true) @map("is_active")
+  lastLoginAt  DateTime? @map("last_login_at") @db.Timestamptz()
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz()
+
+  auditLogs    AdminAuditLog[]
+
+  @@schema("admin")
+  @@map("admin_users")
+}
+
+model AdminAuditLog {
+model AdminAuditLog {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  adminUserId String   @map("admin_user_id") @db.Uuid
+  action      String   @db.VarChar(100)
+  entityType  String   @map("entity_type") @db.VarChar(50)
+  entityId    String   @map("entity_id") @db.Uuid
+  oldValue    Json?    @map("old_value")
+  newValue    Json?    @map("new_value")
+  ipAddress   String?  @map("ip_address") @db.VarChar(45)
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz()
+
+  adminUser   AdminUser @relation(fields: [adminUserId], references: [id])
+
+  @@index([adminUserId])
+  @@index([entityType, entityId])
+  @@index([createdAt(sort: Desc)])
+  @@schema("admin")
+  @@map("admin_audit_logs")
+}

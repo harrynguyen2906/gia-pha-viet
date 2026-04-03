@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;0,900;1,400&amp;family=Spectral+SC:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-fixed-dim": "#e9c176",
+              "surface": "#210e0e",
+              "outline-variant": "#5a403c",
+              "surface-bright": "#4c3332",
+              "on-primary": "#690000",
+              "on-surface-variant": "#e3beb8",
+              "secondary": "#e9c176",
+              "primary-fixed": "#ffdad4",
+              "error": "#ffb4ab",
+              "on-primary-fixed-variant": "#920703",
+              "on-secondary": "#412d00",
+              "tertiary-fixed-dim": "#e6c27d",
+              "primary-fixed-dim": "#ffb4a8",
+              "on-tertiary-fixed": "#261900",
+              "on-primary-fixed": "#410000",
+              "tertiary-container": "#563e04",
+              "primary-container": "#8b0000",
+              "outline": "#aa8984",
+              "on-primary-container": "#ff907f",
+              "on-tertiary": "#402d00",
+              "secondary-fixed": "#ffdea5",
+              "on-error": "#690005",
+              "surface-container-low": "#2b1616",
+              "secondary-container": "#604403",
+              "surface-tint": "#ffb4a8",
+              "on-secondary-fixed-variant": "#5d4201",
+              "on-secondary-container": "#dab36a",
+              "inverse-surface": "#ffdad8",
+              "primary": "#ffb4a8",
+              "surface-container-highest": "#472e2e",
+              "on-background": "#ffdad8",
+              "inverse-on-surface": "#422a2a",
+              "surface-dim": "#210e0e",
+              "surface-container-lowest": "#1b0909",
+              "surface-container-high": "#3b2423",
+              "tertiary-fixed": "#ffdea3",
+              "on-surface": "#ffdad8",
+              "inverse-primary": "#b52619",
+              "on-error-container": "#ffdad6",
+              "tertiary": "#e6c27d",
+              "error-container": "#93000a",
+              "surface-container": "#2f1a19",
+              "on-tertiary-container": "#ccaa67",
+              "on-tertiary-fixed-variant": "#5b4308",
+              "surface-variant": "#472e2e",
+              "background": "#210e0e",
+              "on-secondary-fixed": "#261900"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Noto Serif"],
+              "label": ["Noto Serif"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .parchment-texture {
+            background-image: radial-gradient(circle at 2px 2px, rgba(233, 193, 118, 0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .imperial-border {
+            border: 1px solid rgba(233, 193, 118, 0.15);
+            position: relative;
+        }
+        .imperial-border::before {
+            content: '';
+            position: absolute;
+            top: 4px; left: 4px; right: 4px; bottom: 4px;
+            border: 1px solid rgba(233, 193, 118, 0.08);
+            pointer-events: none;
+        }
+        .lacquer-plaque {
+            background: linear-gradient(145deg, #8B0000, #690000);
+            box-shadow: inset 0 1px 1px rgba(255, 218, 165, 0.2), 0 4px 6px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body antialiased">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full flex flex-col h-screen w-64 border-r border-[#5a403c]/15 bg-[#210e0e] shadow-[0_20px_50px_rgba(27,9,9,0.8)] font-['Noto_Serif'] antialiased text-[#e3beb8] z-50">
+<div class="p-6 flex flex-col gap-1">
+<h1 class="text-xl font-bold tracking-tight text-[#e9c176]">Gia Phả Việt</h1>
+<p class="text-[10px] uppercase tracking-[0.2em] opacity-60">Hệ Thống Quản Trị</p>
+</div>
+<nav class="flex-1 mt-4 px-3 space-y-1">
+<a class="flex items-center px-4 py-3 text-[#aa8984] hover:bg-[#472e2e] hover:text-[#ffdea5] transition-all duration-300" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="dashboard">dashboard</span>
+<span>Đại Sảnh Admin</span>
+</a>
+<a class="flex items-center px-4 py-3 text-[#aa8984] hover:bg-[#472e2e] hover:text-[#ffdea5] transition-all duration-300" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="groups">groups</span>
+<span>Thành Viên &amp; Tộc</span>
+</a>
+<a class="flex items-center px-4 py-3 text-[#e9c176] bg-[#8B0000] border-l-4 border-[#e9c176]" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="payments">payments</span>
+<span>Gói Dịch Vụ</span>
+</a>
+<a class="flex items-center px-4 py-3 text-[#aa8984] hover:bg-[#472e2e] hover:text-[#ffdea5] transition-all duration-300" href="#">
+<span class="material-symbols-outlined mr-3" data-icon="settings_applications">settings_applications</span>
+<span>Cấu Hình Triều Đại</span>
+</a>
+</nav>
+<div class="p-4 border-t border-outline-variant/10">
+<button class="w-full lacquer-plaque py-3 text-secondary text-sm font-bold tracking-widest uppercase">
+                Sắc Chỉ Mới
+            </button>
+<div class="mt-4 flex items-center px-4 py-2 text-[#aa8984] hover:text-[#ffdea5] cursor-pointer">
+<span class="material-symbols-outlined mr-3" data-icon="help">help</span>
+<span class="text-sm">Trợ Giúp</span>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-64 min-h-screen">
+<!-- Top App Bar -->
+<header class="sticky top-0 right-0 z-40 flex justify-between items-center px-8 w-full h-16 border-b border-[#5a403c]/15 bg-[#210e0e]/80 backdrop-blur-md font-['Noto_Serif'] text-sm">
+<div class="flex items-center gap-8">
+<span class="text-lg font-black text-[#e9c176] italic">Heritage Cloud</span>
+<div class="hidden md:flex items-center gap-6 text-[#aa8984]">
+<a class="hover:text-[#e9c176] transition-colors" href="#">Sổ Tào</a>
+<a class="hover:text-[#e9c176] transition-colors" href="#">Tấu Chương</a>
+<a class="hover:text-[#e9c176] transition-colors" href="#">Ngự Thư</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-[#aa8984]">
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary" data-icon="history_edu">history_edu</span>
+</div>
+<div class="h-8 w-px bg-outline-variant/20"></div>
+<div class="flex items-center gap-3">
+<img alt="Quản Trị Viên" class="w-8 h-8 rounded-full border border-secondary/30 object-cover" data-alt="Close up portrait of a distinguished Vietnamese elder man in traditional silk attire with warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBi8H31hzF3EVriaHn_LPBnWGWxVeUA_Et92T3Id3VF0TMso3iODHBjXYLfziQ3loPhkEBS7Y5pP5pALyYRdmsgtfe28EeUwTWPz7rEZokrX1JZo1VypIh9InyD__NrgsTfm0a4jpAu6uPSYtpU0_uZ7_jIHGWctcppuJ8T18hQnMIb69hq48Q9narzEexRHmSoC638DdtvzI56CaXAsNJrIiXO0MqiYkB2r168XpE5MFpVFITqI697357kBPhraDmnehRgejZtr5Bw"/>
+<span class="text-secondary font-medium">Đăng Xuất</span>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-12 max-w-7xl mx-auto">
+<!-- Header Section -->
+<div class="mb-12 flex justify-between items-end">
+<div>
+<h2 class="text-4xl font-black text-secondary mb-2 tracking-tight">Cấu Hình Gói Dịch Vụ</h2>
+<p class="text-on-surface-variant max-w-lg italic opacity-80">Quản lý và điều chỉnh các đặc quyền dành cho các dòng họ và vương triều trên hệ thống Heritage Cloud.</p>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-2 border border-secondary/30 text-secondary hover:bg-secondary/10 transition-colors text-sm font-bold">
+                        Xem Thống Kê
+                    </button>
+<button class="px-6 py-2 lacquer-plaque text-secondary text-sm font-bold">
+                        Lưu Thay Đổi
+                    </button>
+</div>
+</div>
+<!-- Tiers Comparison Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+<!-- Basic Tier -->
+<div class="surface-container-low imperial-border parchment-texture p-8 flex flex-col h-full relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-5">
+<span class="material-symbols-outlined text-8xl" data-icon="spa">spa</span>
+</div>
+<div class="mb-8">
+<span class="text-xs uppercase tracking-widest text-outline mb-2 block">Khởi Nguyên</span>
+<h3 class="text-2xl font-bold text-primary-container mb-4">Ancestral Basic (Cơ Bản)</h3>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-black text-secondary">0 VNĐ</span>
+<span class="text-on-surface-variant">/ vĩnh viễn</span>
+</div>
+</div>
+<ul class="space-y-4 mb-12 flex-1">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-sm">Lưu trữ tối đa 50 tiền nhân</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-sm">Gia phả dạng sơ đồ cơ bản</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-sm">1 Quản trị viên dòng họ</span>
+</li>
+</ul>
+<button class="w-full py-3 border border-outline/30 text-on-surface hover:bg-surface-container-high transition-colors text-sm font-bold uppercase tracking-widest">
+                        Chỉnh Sửa Gói
+                    </button>
+</div>
+<!-- Pro Tier (Highlighted) -->
+<div class="surface-container-high border-2 border-secondary/40 parchment-texture p-8 flex flex-col h-full relative scale-105 z-10 shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
+<!-- Imperial Recommended Seal -->
+<div class="absolute -top-4 -right-4 w-24 h-24 flex items-center justify-center">
+<div class="absolute inset-0 bg-secondary rounded-full opacity-20 animate-pulse"></div>
+<div class="relative w-16 h-16 bg-secondary text-primary-container rounded-full flex items-center justify-center border-4 border-primary-container">
+<span class="material-symbols-outlined text-2xl" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+</div>
+<div class="mb-8">
+<span class="text-xs uppercase tracking-widest text-secondary mb-2 block font-bold">Phổ Biến Nhất</span>
+<h3 class="text-2xl font-bold text-primary-container mb-4">Imperial Pro (Cung Đình)</h3>
+<div class="flex items-baseline gap-1">
+<span class="text-4xl font-black text-secondary">499.000 VNĐ</span>
+<span class="text-on-surface-variant">/ năm</span>
+</div>
+</div>
+<ul class="space-y-4 mb-12 flex-1">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-sm font-bold">Vô hạn số lượng tiền nhân</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-sm">Bản đồ di cư dòng họ (GIS)</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-sm">Lịch giỗ tự động &amp; Thông báo</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-sm">5 Quản trị viên đồng hành</span>
+</li>
+</ul>
+<button class="w-full py-4 lacquer-plaque text-secondary text-sm font-bold uppercase tracking-widest shadow-xl">
+                        Cấu Hình Ưu Tiên
+                    </button>
+</div>
+<!-- Enterprise Tier -->
+<div class="surface-container-low imperial-border parchment-texture p-8 flex flex-col h-full relative overflow-hidden">
+<!-- Dragon Motif Overlay -->
+<div class="absolute inset-0 pointer-events-none opacity-[0.03] flex items-center justify-center scale-150 rotate-12">
+<span class="material-symbols-outlined text-[300px]" data-icon="temp_preferences_custom">temp_preferences_custom</span>
+</div>
+<div class="mb-8 relative z-10">
+<span class="text-xs uppercase tracking-widest text-outline mb-2 block">Thượng Hạng</span>
+<h3 class="text-2xl font-bold text-primary-container mb-4">Dynasty Enterprise (Đại Tộc)</h3>
+<div class="flex items-baseline gap-1">
+<span class="text-3xl font-black text-secondary">Liên Hệ</span>
+<span class="text-on-surface-variant">/ tùy chỉnh</span>
+</div>
+</div>
+<ul class="space-y-4 mb-12 flex-1 relative z-10">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-sm">Quản lý đa chi tộc, đa nhánh</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-sm">Kho lưu trữ số hóa sắc phong</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-sm">Hỗ trợ phục dựng ảnh cũ (AI)</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-sm">Đường dây hỗ trợ 24/7 ưu tiên</span>
+</li>
+</ul>
+<button class="w-full py-3 border border-secondary/50 text-secondary hover:bg-secondary/10 transition-colors text-sm font-bold uppercase tracking-widest relative z-10">
+                        Soạn Thảo Hợp Đồng
+                    </button>
+</div>
+</div>
+<!-- Tier Editor Section -->
+<section class="bg-surface-container-high imperial-border parchment-texture p-10">
+<div class="flex items-center gap-4 mb-10 border-b border-outline-variant/20 pb-6">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="edit_note">edit_note</span>
+<div>
+<h3 class="text-xl font-bold text-secondary">Trình Biên Tập Gói: Imperial Pro</h3>
+<p class="text-xs text-on-surface-variant opacity-70">Thay đổi giá trị và tính năng hiển thị cho người dùng cuối.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<!-- Left Column: Basic Info -->
+<div class="space-y-8">
+<div>
+<label class="block text-xs uppercase tracking-widest text-outline mb-3 font-bold">Giá Niêm Yết (VNĐ)</label>
+<input class="w-full bg-transparent border-0 border-b border-outline focus:ring-0 focus:border-secondary text-2xl text-secondary font-bold py-2 px-0 transition-all" type="text" value="499.000"/>
+</div>
+<div>
+<label class="block text-xs uppercase tracking-widest text-outline mb-3 font-bold">Mô Tả Gói</label>
+<textarea class="w-full bg-transparent border-0 border-b border-outline focus:ring-0 focus:border-secondary text-on-surface-variant text-sm py-2 px-0 resize-none transition-all" rows="3">Gói dành cho các dòng họ đang phát triển, cần các công cụ chuyên sâu để kết nối thành viên và quản lý nghi lễ hàng năm.</textarea>
+</div>
+<div>
+<label class="block text-xs uppercase tracking-widest text-outline mb-3 font-bold">Thời Hạn Mặc Định</label>
+<div class="flex gap-4">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input checked="" class="text-primary-container focus:ring-secondary/20 bg-transparent border-outline" name="duration" type="radio"/>
+<span class="text-sm text-on-surface-variant group-hover:text-secondary">Theo Năm</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="text-primary-container focus:ring-secondary/20 bg-transparent border-outline" name="duration" type="radio"/>
+<span class="text-sm text-on-surface-variant group-hover:text-secondary">Vĩnh Viễn</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Right Column: Features List -->
+<div>
+<div class="flex justify-between items-center mb-6">
+<label class="text-xs uppercase tracking-widest text-outline font-bold">Danh Sách Tính Năng</label>
+<button class="text-secondary text-xs flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-sm" data-icon="add_circle">add_circle</span>
+                                Thêm mới
+                            </button>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-3 p-3 bg-surface-container-low border-l-2 border-secondary group">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<input class="flex-1 bg-transparent border-0 focus:ring-0 text-sm text-on-surface-variant p-0" type="text" value="Vô hạn số lượng tiền nhân"/>
+<span class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 cursor-pointer hover:text-error" data-icon="delete">delete</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-low border-l-2 border-secondary group">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<input class="flex-1 bg-transparent border-0 focus:ring-0 text-sm text-on-surface-variant p-0" type="text" value="Bản đồ di cư dòng họ (GIS)"/>
+<span class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 cursor-pointer hover:text-error" data-icon="delete">delete</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-low border-l-2 border-secondary group">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<input class="flex-1 bg-transparent border-0 focus:ring-0 text-sm text-on-surface-variant p-0" type="text" value="Lịch giỗ tự động &amp; Thông báo"/>
+<span class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 cursor-pointer hover:text-error" data-icon="delete">delete</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-container-low border-l-2 border-secondary group">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<input class="flex-1 bg-transparent border-0 focus:ring-0 text-sm text-on-surface-variant p-0" type="text" value="5 Quản trị viên đồng hành"/>
+<span class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 cursor-pointer hover:text-error" data-icon="delete">delete</span>
+</div>
+</div>
+<div class="mt-8 flex items-center justify-between p-4 bg-primary-container/10 border border-secondary/20">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" data-icon="auto_awesome">auto_awesome</span>
+<span class="text-sm font-bold text-secondary">Đánh dấu là "Gợi Ý"</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-secondary after:border-secondary after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Decorative Footer -->
+<div class="mt-20 flex justify-center opacity-30">
+<div class="flex items-center gap-4">
+<span class="w-16 h-px bg-gradient-to-r from-transparent to-secondary"></span>
+<span class="material-symbols-outlined text-secondary" data-icon="filter_vintage">filter_vintage</span>
+<span class="w-16 h-px bg-gradient-to-l from-transparent to-secondary"></span>
+</div>
+</div>
+</div>
+</main>
+<!-- Visual Accents -->
+<div class="fixed bottom-0 right-0 p-8 pointer-events-none opacity-10">
+<span class="material-symbols-outlined text-[200px] text-secondary" data-icon="scroll">scrollable_header</span>
+</div>
+</body></html>

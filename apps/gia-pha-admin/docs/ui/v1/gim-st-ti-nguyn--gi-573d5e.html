@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Heritage Cloud - Giám Sát Tài Nguyên &amp; Gói</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Spectral:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-container": "#dab36a",
+              "tertiary-container": "#563e04",
+              "primary": "#ffb4a8",
+              "on-tertiary-container": "#ccaa67",
+              "on-secondary-fixed-variant": "#5d4201",
+              "secondary": "#e9c176",
+              "background": "#210e0e",
+              "primary-fixed": "#ffdad4",
+              "inverse-on-surface": "#422a2a",
+              "surface-container-high": "#3b2423",
+              "on-primary-fixed-variant": "#920703",
+              "secondary-fixed": "#ffdea5",
+              "on-surface": "#ffdad8",
+              "on-error": "#690005",
+              "surface-container-highest": "#472e2e",
+              "surface-bright": "#4c3332",
+              "on-primary-fixed": "#410000",
+              "primary-container": "#8b0000",
+              "outline": "#aa8984",
+              "on-tertiary": "#402d00",
+              "secondary-fixed-dim": "#e9c176",
+              "surface-container-lowest": "#1b0909",
+              "inverse-primary": "#b52619",
+              "surface-dim": "#210e0e",
+              "on-error-container": "#ffdad6",
+              "inverse-surface": "#ffdad8",
+              "error": "#ffb4ab",
+              "on-tertiary-fixed": "#261900",
+              "on-secondary": "#412d00",
+              "on-primary": "#690000",
+              "secondary-container": "#604403",
+              "surface-variant": "#472e2e",
+              "on-tertiary-fixed-variant": "#5b4308",
+              "on-background": "#ffdad8",
+              "surface-tint": "#ffb4a8",
+              "surface": "#210e0e",
+              "on-surface-variant": "#e3beb8",
+              "error-container": "#93000a",
+              "surface-container-low": "#2b1616",
+              "on-primary-container": "#ff907f",
+              "tertiary-fixed": "#ffdea3",
+              "on-secondary-fixed": "#261900",
+              "outline-variant": "#5a403c",
+              "tertiary-fixed-dim": "#e6c27d",
+              "surface-container": "#2f1a19",
+              "tertiary": "#e6c27d",
+              "primary-fixed-dim": "#ffb4a8"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Noto Serif"],
+              "label": ["Noto Serif"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-panel {
+        background: rgba(71, 46, 46, 0.6);
+        backdrop-filter: blur(20px);
+      }
+      .scroll-mask {
+        mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary/30">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-8 h-16 bg-[#1a0808] shadow-[0_20px_50px_rgba(27,9,9,0.8)]">
+<div class="flex items-center gap-4">
+<span class="text-2xl font-bold text-[#C5A059] tracking-tight">Heritage Cloud</span>
+<nav class="hidden md:flex ml-10 space-x-8 h-full items-center">
+<a class="text-[#e3beb8] opacity-70 hover:bg-[#3b2423] hover:text-[#ffdea5] transition-colors h-full flex items-center px-2" href="#">Dashboard</a>
+<a class="text-[#C5A059] border-b-2 border-[#C5A059] h-full flex items-center px-2" href="#">Subscriptions</a>
+<a class="text-[#e3beb8] opacity-70 hover:bg-[#3b2423] hover:text-[#ffdea5] transition-colors h-full flex items-center px-2" href="#">Infrastructure</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative flex items-center bg-[#2b1616] px-4 py-1.5 rounded-sm">
+<span class="material-symbols-outlined text-[#C5A059] text-sm mr-2">search</span>
+<input class="bg-transparent border-none text-sm text-[#e3beb8] focus:ring-0 w-48 placeholder:text-[#e3beb8]/40" placeholder="Search lineages..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-[#C5A059] hover:bg-[#3b2423] p-2 transition-colors">notifications</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden">
+<img alt="Quan Quản Trị" class="w-full h-full object-cover" data-alt="portrait of a dignified vietnamese administrative official in a modern professional setting with soft warm interior lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmjVT7TM5y9BMKJvnGFUOOr8kz85AiAthdBgftqGI7g2BWsMJJWc36vap3AJcOf83-EH8dT19vrfDf3g3KsXghkjEX10ng2WjgHZoc9ajwJj9Crwmaqwi4UQ6zzdZii3-lxGSkNUgHKD7zUT5l6sOfKWpt6_Z5iSMbNTJsWpHEdqrxJ2v0CILobWAuhnpkjPTK5hsB5meFLo0Br8dru2iO3KHW9HVeSsfEwL6Zli8dZAsoEG7-uq3KiusUf-fLsbhMN-zbdtbfonmx"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-64 flex flex-col py-6 px-4 bg-[#210e0e] z-40 pt-20">
+<div class="mb-8 px-2">
+<h2 class="text-lg font-serif text-[#C5A059]">Heritage Admin</h2>
+<p class="text-xs uppercase tracking-widest text-[#e3beb8] opacity-50">Imperial Dynasty</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-[#e3beb8] hover:text-[#C5A059] hover:bg-[#472e2e] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#e3beb8] hover:text-[#C5A059] hover:bg-[#472e2e] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span>Clans</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-[#8B0000] text-[#C5A059] rounded-sm shadow-inner transition-all duration-300 translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span>Subscriptions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#e3beb8] hover:text-[#C5A059] hover:bg-[#472e2e] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span>Admin Team</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#e3beb8] hover:text-[#C5A059] hover:bg-[#472e2e] transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="layers">layers</span>
+<span>Tiers</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-outline-variant/20 space-y-2">
+<button class="w-full bg-[#8B0000] text-secondary py-3 mb-4 text-sm font-bold tracking-widest hover:brightness-110 transition-all shadow-[inset_0_0_10px_rgba(255,222,165,0.1)]">
+                NEW DECREE
+            </button>
+<a class="flex items-center gap-3 px-4 py-2 text-[#e3beb8] hover:text-[#C5A059] text-sm" href="#">
+<span class="material-symbols-outlined text-base" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-[#e3beb8] hover:text-[#C5A059] text-sm" href="#">
+<span class="material-symbols-outlined text-base" data-icon="help">help</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 pt-24 px-10 pb-16 min-h-screen">
+<!-- Hero Header -->
+<header class="mb-12 max-w-5xl">
+<h1 class="font-headline text-5xl font-bold text-secondary mb-2 tracking-tight">Giám Sát Tài Nguyên &amp; Gói</h1>
+<p class="text-on-surface-variant max-w-2xl leading-relaxed">
+                Quản lý và theo dõi việc phân bổ tài nguyên lưu trữ và giới hạn thành viên cho các Đại Gia Tộc thuộc hệ thống Heritage Cloud.
+            </p>
+</header>
+<!-- Key Metrics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+<!-- Metric 1 -->
+<div class="bg-surface-container-low p-8 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container/10 -mr-16 -mt-16 rounded-full blur-3xl group-hover:bg-primary-container/20 transition-all"></div>
+<div class="flex justify-between items-start mb-6">
+<span class="material-symbols-outlined text-secondary text-3xl">storage</span>
+<span class="text-xs font-bold text-primary tracking-widest">84% CAPACITY</span>
+</div>
+<h3 class="text-on-surface-variant text-sm uppercase tracking-widest mb-1">Total Storage Used</h3>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-headline font-bold text-secondary">14.2</span>
+<span class="text-lg text-on-surface-variant">TB</span>
+</div>
+<div class="mt-4 h-1 bg-surface-container-highest w-full overflow-hidden">
+<div class="h-full bg-secondary w-[84%]"></div>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface-container-low p-8 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 -mr-16 -mt-16 rounded-full blur-3xl group-hover:bg-secondary/10 transition-all"></div>
+<div class="flex justify-between items-start mb-6">
+<span class="material-symbols-outlined text-secondary text-3xl">group</span>
+<span class="text-xs font-bold text-on-surface-variant tracking-widest">GLOBAL COUNT</span>
+</div>
+<h3 class="text-on-surface-variant text-sm uppercase tracking-widest mb-1">Members Registered</h3>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-headline font-bold text-secondary">2,840</span>
+<span class="text-lg text-on-surface-variant">/ 5,000</span>
+</div>
+<div class="mt-4 h-1 bg-surface-container-highest w-full overflow-hidden">
+<div class="h-full bg-primary-container w-[56%]"></div>
+</div>
+</div>
+<!-- Metric 3: Active Tiers -->
+<div class="bg-surface-container-low p-8 flex flex-col">
+<h3 class="text-on-surface-variant text-sm uppercase tracking-widest mb-6">Active Tiers Distribution</h3>
+<div class="flex-1 flex flex-col justify-center space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 bg-[#8B0000]"></div>
+<span class="text-sm">Enterprise</span>
+</div>
+<span class="text-secondary font-bold">12 Clans</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 bg-secondary"></div>
+<span class="text-sm">Pro</span>
+</div>
+<span class="text-secondary font-bold">45 Clans</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-3 h-3 bg-surface-container-highest"></div>
+<span class="text-sm">Basic</span>
+</div>
+<span class="text-secondary font-bold">128 Clans</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Table Section -->
+<div class="bg-surface-container-low overflow-hidden">
+<div class="px-8 py-6 flex justify-between items-center border-b border-outline-variant/10">
+<h2 class="font-headline text-2xl text-secondary">Clan Resource Utilization</h2>
+<div class="flex gap-4">
+<button class="px-4 py-2 text-xs font-bold tracking-widest border border-outline-variant text-on-surface hover:bg-surface-container-highest transition-colors">EXPORT AUDIT</button>
+<button class="px-4 py-2 text-xs font-bold tracking-widest bg-primary-container text-secondary hover:brightness-110 transition-colors">FILTER BY TIER</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-xs uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/10">
+<th class="px-8 py-5 font-bold">Clan Name</th>
+<th class="px-8 py-5 font-bold">Tier</th>
+<th class="px-8 py-5 font-bold">Storage Usage</th>
+<th class="px-8 py-5 font-bold">Member Count</th>
+<th class="px-8 py-5 font-bold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<!-- Row 1: Over Limit -->
+<tr class="group hover:bg-surface-container/50 transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-[#2b1616] flex items-center justify-center border border-primary-container/30">
+<span class="material-symbols-outlined text-primary-container">fort</span>
+</div>
+<div>
+<div class="font-bold text-secondary">Trần Gia Chi Bảo</div>
+<div class="text-xs text-on-surface-variant">ID: HC-8821</div>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="px-3 py-1 bg-primary-container/20 text-primary text-[10px] font-bold tracking-widest border border-primary-container/40">ENTERPRISE</span>
+</td>
+<td class="px-8 py-6">
+<div class="w-48">
+<div class="flex justify-between text-xs mb-1">
+<span class="text-primary font-bold">52.4 / 50 GB</span>
+<span class="text-primary-container">OVER LIMIT</span>
+</div>
+<div class="h-1.5 bg-surface-container-highest w-full">
+<div class="h-full bg-primary-container w-full"></div>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-baseline gap-1">
+<span class="font-bold text-secondary">482</span>
+<span class="text-xs text-on-surface-variant">/ 500</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-secondary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- Row 2: High Usage -->
+<tr class="group hover:bg-surface-container/50 transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-[#2b1616] flex items-center justify-center border border-secondary/30">
+<span class="material-symbols-outlined text-secondary">shield</span>
+</div>
+<div>
+<div class="font-bold text-secondary">Lê Tộc Thừa Kế</div>
+<div class="text-xs text-on-surface-variant">ID: HC-4402</div>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="px-3 py-1 bg-secondary/10 text-secondary text-[10px] font-bold tracking-widest border border-secondary/30">PRO</span>
+</td>
+<td class="px-8 py-6">
+<div class="w-48">
+<div class="flex justify-between text-xs mb-1 text-secondary">
+<span class="font-bold">24.1 / 25 GB</span>
+<span>NEAR LIMIT</span>
+</div>
+<div class="h-1.5 bg-surface-container-highest w-full">
+<div class="h-full bg-secondary w-[96%]"></div>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-baseline gap-1">
+<span class="font-bold text-secondary">195</span>
+<span class="text-xs text-on-surface-variant">/ 200</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-secondary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- Row 3: Normal -->
+<tr class="group hover:bg-surface-container/50 transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-[#2b1616] flex items-center justify-center border border-outline-variant/30">
+<span class="material-symbols-outlined text-on-surface-variant">landscape</span>
+</div>
+<div>
+<div class="font-bold text-secondary">Nguyễn Hữu Đường</div>
+<div class="text-xs text-on-surface-variant">ID: HC-1193</div>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="px-3 py-1 bg-surface-container-highest text-on-surface-variant text-[10px] font-bold tracking-widest border border-outline-variant/30">BASIC</span>
+</td>
+<td class="px-8 py-6">
+<div class="w-48">
+<div class="flex justify-between text-xs mb-1 text-on-surface-variant">
+<span>1.2 / 5 GB</span>
+<span>OK</span>
+</div>
+<div class="h-1.5 bg-surface-container-highest w-full">
+<div class="h-full bg-on-surface-variant/30 w-[24%]"></div>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-baseline gap-1">
+<span class="font-bold text-secondary">12</span>
+<span class="text-xs text-on-surface-variant">/ 50</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-secondary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- Row 4: Enterprise Normal -->
+<tr class="group hover:bg-surface-container/50 transition-colors">
+<td class="px-8 py-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-[#2b1616] flex items-center justify-center border border-primary-container/30">
+<span class="material-symbols-outlined text-primary-container">temple_buddhist</span>
+</div>
+<div>
+<div class="font-bold text-secondary">Phạm Gia Đại Tộc</div>
+<div class="text-xs text-on-surface-variant">ID: HC-9910</div>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<span class="px-3 py-1 bg-primary-container/20 text-primary text-[10px] font-bold tracking-widest border border-primary-container/40">ENTERPRISE</span>
+</td>
+<td class="px-8 py-6">
+<div class="w-48">
+<div class="flex justify-between text-xs mb-1 text-on-surface-variant">
+<span>38.2 / 50 GB</span>
+<span>OK</span>
+</div>
+<div class="h-1.5 bg-surface-container-highest w-full">
+<div class="h-full bg-on-surface-variant/30 w-[76%]"></div>
+</div>
+</div>
+</td>
+<td class="px-8 py-6">
+<div class="flex items-baseline gap-1">
+<span class="font-bold text-secondary">412</span>
+<span class="text-xs text-on-surface-variant">/ 500</span>
+</div>
+</td>
+<td class="px-8 py-6 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-secondary transition-colors">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-8 py-6 border-t border-outline-variant/10 flex items-center justify-between text-xs text-on-surface-variant font-bold tracking-widest">
+<span>SHOWING 4 OF 185 CLANS</span>
+<div class="flex items-center gap-4">
+<button class="hover:text-secondary transition-colors">PREVIOUS</button>
+<div class="flex gap-2">
+<span class="text-secondary underline underline-offset-4">01</span>
+<span class="opacity-50 hover:opacity-100 cursor-pointer">02</span>
+<span class="opacity-50 hover:opacity-100 cursor-pointer">03</span>
+</div>
+<button class="hover:text-secondary transition-colors">NEXT</button>
+</div>
+</div>
+</div>
+<!-- System Alerts / Activity Asymmetric Section -->
+<section class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-12">
+<div>
+<h3 class="font-headline text-xl text-secondary mb-6 flex items-center gap-3">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+                    Resource Critical Alerts
+                </h3>
+<div class="space-y-4">
+<div class="glass-panel p-5 flex gap-4 items-start border-l-2 border-primary-container">
+<span class="material-symbols-outlined text-primary-container shrink-0 mt-1">report</span>
+<div>
+<div class="font-bold text-on-surface text-sm mb-1">Quota Exceeded: Trần Gia Chi Bảo</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">System has disabled new uploads for this clan until storage is increased or data is archived.</p>
+<button class="mt-3 text-[10px] font-bold tracking-widest text-secondary hover:underline">UPGRADE TIER</button>
+</div>
+</div>
+<div class="glass-panel p-5 flex gap-4 items-start border-l-2 border-secondary">
+<span class="material-symbols-outlined text-secondary shrink-0 mt-1">notifications_active</span>
+<div>
+<div class="font-bold text-on-surface text-sm mb-1">Approaching Member Limit: Lê Tộc Thừa Kế</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">98% of member slots occupied. Automated notice sent to clan patriarch.</p>
+<button class="mt-3 text-[10px] font-bold tracking-widest text-secondary hover:underline">VIEW NOTICE</button>
+</div>
+</div>
+</div>
+</div>
+<div class="relative bg-surface-container-high p-8">
+<div class="absolute top-0 right-0 p-4">
+<span class="material-symbols-outlined text-secondary/20 text-6xl">history_edu</span>
+</div>
+<h3 class="font-headline text-xl text-secondary mb-6">Recent Allocation Changes</h3>
+<div class="space-y-6 relative before:absolute before:left-2 before:top-2 before:bottom-2 before:w-[1px] before:bg-outline-variant/20">
+<div class="relative pl-8">
+<div class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-secondary border-4 border-surface-container-high"></div>
+<div class="text-xs text-secondary font-bold tracking-widest mb-1">2 HOURS AGO</div>
+<p class="text-sm text-on-surface">Admin <span class="text-secondary">Quan Quản Trị</span> increased storage for <span class="italic">Phan Tộc</span> to 100GB.</p>
+</div>
+<div class="relative pl-8">
+<div class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-primary-container border-4 border-surface-container-high"></div>
+<div class="text-xs text-on-surface-variant font-bold tracking-widest mb-1">YESTERDAY</div>
+<p class="text-sm text-on-surface">Auto-renewal failed for <span class="italic">Vũ Gia Đường</span>. Tier downgraded to Basic.</p>
+</div>
+<div class="relative pl-8">
+<div class="absolute left-0 top-1.5 w-4 h-4 rounded-full bg-secondary border-4 border-surface-container-high"></div>
+<div class="text-xs text-secondary font-bold tracking-widest mb-1">2 DAYS AGO</div>
+<p class="text-sm text-on-surface"><span class="italic">Ngô Tộc Huyết Thống</span> upgraded to Enterprise subscription.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Imperial Seal FAB -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-16 h-16 rounded-full bg-secondary text-primary-container flex items-center justify-center shadow-[0_10px_30px_rgba(233,193,118,0.3)] hover:scale-110 active:scale-95 transition-all group">
+<span class="material-symbols-outlined text-3xl group-hover:rotate-90 transition-transform">add_moderator</span>
+</button>
+</div>
+</body></html>

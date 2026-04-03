@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Heritage Cloud - Bản Đồ Gia Tộc</title>
+<!-- Google Fonts: EB Garamond, Playfair Display, Noto Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700&amp;family=Playfair+Display:wght@700&amp;family=Noto+Sans:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                'antique-gold': '#C5A059',
+                'gold-leaf': '#E5C17C',
+                'lacquer': '#1a0808', 
+                'heritage-red': '#8a0000',
+                'heritage-dark': '#0d0404',
+                'parchment': '#F4EBD0',
+              },
+              fontFamily: {
+                serif: ['"EB Garamond"', 'serif'],
+                display: ['"Playfair Display"', 'serif'],
+                sans: ['"Noto Sans"', 'sans-serif'],
+              },
+              borderRadius: {
+                'custom': '12px',
+              }
+            }
+          }
+        }
+    </script>
+<style data-purpose="custom-styling">
+        body {
+          background-color: #0d0404;
+          color: #F4EBD0;
+          font-family: 'Noto Sans', sans-serif;
+        }
+        .map-container {
+          background-color: #0d0404;
+          background-image: radial-gradient(circle at center, #1a0808 0%, #0d0404 100%);
+        }
+        .map-overlay {
+          background: radial-gradient(circle, rgba(13,4,4,0) 0%, rgba(13,4,4,0.9) 100%);
+        }
+        /* Ornate corner borders */
+        .shrine-card {
+            position: relative;
+            border: 1px solid #C5A059;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        .shrine-card::before, .shrine-card::after {
+            content: "";
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border: 1.5px solid #C5A059;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .shrine-card::before { top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
+        .shrine-card::after { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
+
+        .pulse-gold {
+          box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.7);
+          animation: pulse-gold 2s infinite;
+        }
+        @keyframes pulse-gold {
+          0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.7); }
+          70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(197, 160, 89, 0); }
+          100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(197, 160, 89, 0); }
+        }
+        .golden-lotus {
+            filter: drop-shadow(0 0 4px #C5A059);
+        }
+    </style>
+</head>
+<body class="h-screen overflow-hidden flex flex-col">
+<!-- BEGIN: Navigation Header (Imperial Style) -->
+<header class="sticky top-0 z-50 bg-lacquer/90 backdrop-blur-xl border-b border-heritage-red/50 px-4 py-3 shadow-2xl">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-gradient-to-br from-heritage-red to-lacquer flex items-center justify-center border-2 border-antique-gold shadow-inner">
+<span class="text-antique-gold font-bold text-sm tracking-tighter">GP</span>
+</div>
+<div>
+<h1 class="text-base font-serif font-bold text-white uppercase tracking-[0.2em] leading-tight">Heritage Cloud</h1>
+<p class="text-[9px] text-antique-gold font-sans font-medium uppercase tracking-[0.1em] opacity-80">Bản Đồ Gia Phả Việt</p>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="text-antique-gold">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<button class="text-antique-gold">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6h16M4 12h16m-7 6h7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+</header>
+<!-- END: Navigation Header -->
+<!-- BEGIN: Main Map View -->
+<main class="relative flex-grow map-container overflow-hidden" data-purpose="map-container">
+<!-- Dark Lacquer Map Texture -->
+<div class="absolute inset-0 opacity-20 contrast-150 brightness-50 mix-blend-luminosity">
+<img alt="Map Base" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-699WmSoI8-JL6fMsJwUJH7aaQm0DbCiyAfFxtxfkX5atudLyeb58wgzAoY2CA-kqrZiMC-ibBrZ5t1NJTmiAODM-ucM_iCfyyfLecZJ9IJ8ykTcv5V2o-zYnyXtIjXcRmmkGEh5Gm8JALFRIjQNONdnx4c4hI-XOAC2Z2846eZ7tZOhkwwJHB4KodC9e646rZ-ON4iOm9HA6pmQepriNwOzNmekWje_G1lNGWhca_sTBKyMdm-aMA0DguOeORS8uQrwRIW31wDCx"/>
+</div>
+<div class="absolute inset-0 map-overlay"></div>
+<!-- Map UI Controls -->
+<div class="absolute top-4 right-4 flex flex-col gap-3 z-10">
+<button class="w-10 h-10 bg-lacquer/80 rounded-full border border-antique-gold flex items-center justify-center text-antique-gold shadow-lg backdrop-blur-sm">
+<span class="text-xl">+</span>
+</button>
+<button class="w-10 h-10 bg-lacquer/80 rounded-full border border-antique-gold flex items-center justify-center text-antique-gold shadow-lg backdrop-blur-sm">
+<span class="text-xl">-</span>
+</button>
+<button class="w-10 h-10 bg-lacquer/80 rounded-full border border-antique-gold flex items-center justify-center text-antique-gold shadow-lg mt-4 backdrop-blur-sm">
+<svg class="h-5 w-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<!-- Map Pins -->
+<div class="absolute top-[35%] left-[45%] z-10 flex flex-col items-center">
+<div class="w-7 h-7 bg-antique-gold rounded-full border-2 border-lacquer pulse-gold flex items-center justify-center shadow-lg">
+<div class="w-2.5 h-2.5 bg-lacquer rounded-full"></div>
+</div>
+<div class="mt-2 px-3 py-1 bg-lacquer/90 border border-antique-gold/50 rounded-sm text-[10px] text-gold-leaf font-sans font-bold uppercase tracking-wider">
+            Cụ Tổ Nguyễn Văn A
+        </div>
+</div>
+<div class="absolute top-[60%] left-[25%] z-10 flex flex-col items-center opacity-80">
+<div class="w-5 h-5 bg-heritage-red rounded-full border border-antique-gold flex items-center justify-center shadow-lg">
+<div class="w-1.5 h-1.5 bg-white rounded-full"></div>
+</div>
+<div class="mt-1 px-2 py-0.5 bg-lacquer/80 border border-heritage-red/40 rounded-sm text-[9px] text-white/70">
+            Ông Nội Nguyễn Văn B
+        </div>
+</div>
+<!-- BEGIN: Grave Detail Info Card (Parchment Aesthetic) -->
+<section class="absolute bottom-6 left-4 right-4 z-30" data-purpose="grave-info-card">
+<div class="shrine-card bg-parchment p-5 rounded-sm shadow-2xl relative overflow-hidden">
+<!-- Parchment Texture Overlay -->
+<div class="absolute inset-0 opacity-40 pointer-events-none" style="background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBBYmEwniJ1R3JcCOK92d6WhSlVGnz-Rxirg5UroLBV5nKb8d94-1gjeL49rTgw7pdPpwA93vEcmnaJ5A72bFvaGa5Pl5tfSQ-y-3KOyfuFmfdHcg_s2Zvmcdrvs4vYFW4oQiRptFNe_lhs5BRsRENgGFyOLMijVDAVTOzNv_E7SRmJ6mxzzkXAyymn7thYnBMOJXoNRgqduMIAVlOJADOvlY8MCRRCmHutkb-ley8_9WnbhzBLECv160S7SEntKWPmyy1FNx0k_gtD)"></div>
+<div class="relative z-10 flex gap-4">
+<!-- 360 Preview with Decorative Frame -->
+<div class="relative w-28 h-28 shrink-0">
+<div class="absolute inset-0 border-2 border-antique-gold rotate-3 opacity-20"></div>
+<div class="absolute inset-0 border border-lacquer/20 -rotate-2"></div>
+<div class="relative w-full h-full border-2 border-antique-gold overflow-hidden">
+<img alt="Grave Site 360 View" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV5QmyS-Dw_7JwV1wNrmDOsfpWRuADF809Iq17OQY9S6UMbDiDq8LBGpHCpJBnDYIm5DjEIvsJBJLKK8m6hKGjaaU2skcv8Fbkb93hICFEvJUVXkm9U0LgzN-IMy_yDzHcjmKx3mhujOqRxHRr_CeaXHvecZfJAlV1jyiuvlu9r32qtPyvoIsl8icZP2sFPmL3bpNPw5bRaQukRVQOroglF6NLAR4r5MQfz-LeQDEW3adjI2yt4IskXqJpWxJ4XrSPVciTu8eV4I7I"/>
+<div class="absolute inset-0 bg-black/10 flex items-center justify-center">
+<svg class="h-10 w-10 text-white/80 drop-shadow-md" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"></path>
+</svg>
+</div>
+<div class="absolute bottom-1 right-1 px-1.5 bg-lacquer/80 rounded-sm text-[8px] text-white font-bold">360°</div>
+</div>
+</div>
+<!-- Text Details -->
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<div>
+<h2 class="text-xl font-display font-bold text-heritage-red leading-tight">Mộ Cụ Tổ Nguyễn Văn A</h2>
+<p class="text-xs font-serif italic text-lacquer/70">Đời thứ 3 — Chi họ phía Tây</p>
+</div>
+</div>
+<div class="mt-2 flex items-center gap-2">
+<span class="text-[9px] px-2 py-0.5 rounded-full bg-heritage-red/10 text-heritage-red border border-heritage-red/30 font-bold flex items-center gap-1">
+<span class="golden-lotus">🪷</span> Đã chăm sóc
+                        </span>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-x-2 gap-y-1 text-[9px] text-lacquer/60 font-sans font-bold uppercase tracking-tighter">
+<div class="flex items-center gap-1">
+<svg class="h-3 w-3 text-antique-gold" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>21.0285° N, 105.8542° E</span>
+</div>
+<div class="flex items-center gap-1">
+<svg class="h-3 w-3 text-antique-gold" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span>12/10/2023</span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="mt-4 flex gap-3">
+<button class="flex-1 bg-heritage-red text-white py-2 rounded-sm text-[10px] font-bold tracking-widest uppercase shadow-md active:scale-95 transition-all">
+                            Chỉ đường
+                        </button>
+<button class="flex-1 border-2 border-antique-gold text-lacquer py-2 rounded-sm text-[10px] font-bold tracking-widest uppercase active:scale-95 transition-all">
+                            Chi tiết
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Grave Detail Info Card -->
+</main>
+<!-- END: Main Map View -->
+<!-- BEGIN: Bottom Tab Navigation (Consistent with Dashboard) -->
+<footer class="fixed bottom-0 left-0 right-0 bg-lacquer/95 backdrop-blur-md border-t border-antique-gold/20 px-6 py-4 flex justify-between items-center z-50 shadow-2xl" data-purpose="mobile-nav">
+<div class="flex flex-col items-center gap-1 opacity-40 transition-opacity hover:opacity-100">
+<svg class="w-5 h-5 text-antique-gold" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-[9px] text-antique-gold font-bold uppercase tracking-widest">Trang chủ</span>
+</div>
+<div class="flex flex-col items-center gap-1 relative">
+<div class="absolute -top-1 w-1.5 h-1.5 bg-antique-gold rounded-full shadow-[0_0_8px_#C5A059]"></div>
+<svg class="w-5 h-5 text-antique-gold" fill="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71L12 2z"></path>
+</svg>
+<span class="text-[9px] text-antique-gold font-bold uppercase tracking-widest">Bản đồ</span>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-40 transition-opacity hover:opacity-100">
+<svg class="w-5 h-5 text-antique-gold" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-[9px] text-antique-gold font-bold uppercase tracking-widest">Gia hệ</span>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-40 transition-opacity hover:opacity-100">
+<svg class="w-5 h-5 text-antique-gold" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-[9px] text-antique-gold font-bold uppercase tracking-widest">Cá nhân</span>
+</div>
+</footer>
+<!-- END: Bottom Tab Navigation -->
+<script data-purpose="map-interactions">
+    // Entrance animation for the card
+    document.addEventListener('DOMContentLoaded', () => {
+        const card = document.querySelector('[data-purpose="grave-info-card"]');
+        if (card) {
+            card.style.transform = 'translateY(100%)';
+            card.style.opacity = '0';
+            card.style.transition = 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+            setTimeout(() => {
+                card.style.transform = 'translateY(0)';
+                card.style.opacity = '1';
+            }, 500);
+        }
+    });
+</script>
+</body></html>

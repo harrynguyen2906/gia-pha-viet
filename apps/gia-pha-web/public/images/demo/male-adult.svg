@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1c1008"/>
+      <stop offset="100%" stop-color="#0f0804"/>
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="100" fill="url(#bg)"/>
+  <circle cx="100" cy="100" r="98" fill="none" stroke="rgba(197,160,89,0.4)" stroke-width="2"/>
+  <!-- Shoulders / áo dài collar -->
+  <ellipse cx="100" cy="162" rx="42" ry="28" fill="rgba(197,160,89,0.12)" stroke="rgba(197,160,89,0.25)" stroke-width="1.5"/>
+  <path d="M68 145 Q100 132 132 145 L134 180 Q100 172 66 180 Z" fill="rgba(197,160,89,0.18)" stroke="rgba(197,160,89,0.3)" stroke-width="1"/>
+  <!-- Collar line / áo dài front buttons -->
+  <line x1="100" y1="140" x2="100" y2="178" stroke="rgba(197,160,89,0.25)" stroke-width="1" stroke-dasharray="3 4"/>
+  <!-- Head -->
+  <circle cx="100" cy="85" r="28" fill="rgba(244,235,208,0.85)" stroke="rgba(197,160,89,0.35)" stroke-width="1.5"/>
+  <!-- Dark hair short -->
+  <path d="M72 80 Q74 58 100 56 Q126 58 128 80 Q124 68 100 66 Q76 68 72 80Z" fill="rgba(35,22,12,0.9)" stroke="none"/>
+  <!-- Eyes -->
+  <ellipse cx="90" cy="83" rx="4.5" ry="3.5" fill="rgba(30,18,8,0.95)"/>
+  <ellipse cx="110" cy="83" rx="4.5" ry="3.5" fill="rgba(30,18,8,0.95)"/>
+  <!-- Eye shine -->
+  <circle cx="91.5" cy="81.5" r="1.2" fill="rgba(255,255,255,0.7)"/>
+  <circle cx="111.5" cy="81.5" r="1.2" fill="rgba(255,255,255,0.7)"/>
+  <!-- Eyebrows -->
+  <path d="M85 76 Q90 73 95 75.5" stroke="rgba(35,22,12,0.85)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M105 75.5 Q110 73 115 76" stroke="rgba(35,22,12,0.85)" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Nose -->
+  <path d="M97 89 L97 94 Q100 96 103 94 L103 89" stroke="rgba(180,140,110,0.5)" stroke-width="1.2" fill="none"/>
+  <!-- Mouth -->
+  <path d="M91 99 Q100 104 109 99" stroke="rgba(180,110,90,0.8)" stroke-width="2" fill="rgba(180,110,90,0.25)" stroke-linecap="round"/>
+</svg>

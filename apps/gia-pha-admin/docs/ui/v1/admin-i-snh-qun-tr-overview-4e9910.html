@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Heritage Cloud - Đại Sảnh Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&amp;family=Spectral+SC:wght@400;700;800&amp;family=EB+Garamond:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed-dim": "#e9c176",
+                        "surface": "#210e0e",
+                        "outline-variant": "#5a403c",
+                        "surface-bright": "#4c3332",
+                        "on-primary": "#690000",
+                        "on-surface-variant": "#e3beb8",
+                        "secondary": "#e9c176",
+                        "primary-fixed": "#ffdad4",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed-variant": "#920703",
+                        "on-secondary": "#412d00",
+                        "tertiary-fixed-dim": "#e6c27d",
+                        "primary-fixed-dim": "#ffb4a8",
+                        "on-tertiary-fixed": "#261900",
+                        "on-primary-fixed": "#410000",
+                        "tertiary-container": "#563e04",
+                        "primary-container": "#8b0000",
+                        "outline": "#aa8984",
+                        "on-primary-container": "#ff907f",
+                        "on-tertiary": "#402d00",
+                        "secondary-fixed": "#ffdea5",
+                        "on-error": "#690005",
+                        "surface-container-low": "#2b1616",
+                        "secondary-container": "#604403",
+                        "surface-tint": "#ffb4a8",
+                        "on-secondary-fixed-variant": "#5d4201",
+                        "on-secondary-container": "#dab36a",
+                        "inverse-surface": "#ffdad8",
+                        "primary": "#ffb4a8",
+                        "surface-container-highest": "#472e2e",
+                        "on-background": "#ffdad8",
+                        "inverse-on-surface": "#422a2a",
+                        "surface-dim": "#210e0e",
+                        "surface-container-lowest": "#1b0909",
+                        "surface-container-high": "#3b2423",
+                        "tertiary-fixed": "#ffdea3",
+                        "on-surface": "#ffdad8",
+                        "inverse-primary": "#b52619",
+                        "on-error-container": "#ffdad6",
+                        "tertiary": "#e6c27d",
+                        "error-container": "#93000a",
+                        "surface-container": "#2f1a19",
+                        "on-tertiary-container": "#ccaa67",
+                        "on-tertiary-fixed-variant": "#5b4308",
+                        "surface-variant": "#472e2e",
+                        "background": "#210e0e",
+                        "on-secondary-fixed": "#261900"
+                    },
+                    fontFamily: {
+                        "headline": ["EB Garamond", "serif"],
+                        "body": ["Noto Serif", "serif"],
+                        "label": ["Noto Serif", "serif"],
+                        "imperial": ["Spectral SC", "serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #210e0e;
+            color: #ffdad8;
+            font-family: 'Noto Serif', serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .imperial-scroll {
+            scrollbar-width: thin;
+            scrollbar-color: #8B0000 #2b1616;
+        }
+        .parchment-texture {
+            background-color: #e6c27d;
+            background-image: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.05) 100%);
+            position: relative;
+        }
+        .lacquer-gloss {
+            background: linear-gradient(145deg, #2f1a19 0%, #210e0e 100%);
+            box-shadow: inset 0 1px 1px rgba(233, 193, 118, 0.05);
+        }
+    </style>
+</head>
+<body class="antialiased overflow-hidden h-screen flex">
+<!-- SideNavBar (Rail) -->
+<nav class="fixed left-0 top-0 h-full flex flex-col bg-[#210e0e] text-[#e3beb8] font-['Noto_Serif'] antialiased h-screen w-64 border-r border-[#5a403c]/15 shadow-[0_20px_50px_rgba(27,9,9,0.8)] z-50">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 bg-primary-container flex items-center justify-center rounded-sm">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">castle</span>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tight text-[#e9c176]">Gia Phả Việt</h1>
+<p class="text-[10px] uppercase tracking-widest text-[#aa8984]">Hệ Thống Quản Trị</p>
+</div>
+</div>
+<div class="space-y-2">
+<!-- Active Tab: Đại Sảnh Admin -->
+<a class="flex items-center gap-3 px-4 py-3 text-[#e9c176] bg-[#8B0000] border-l-4 border-[#e9c176] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Đại Sảnh Admin</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#aa8984] hover:bg-[#472e2e] hover:text-[#ffdea5] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-sm font-medium">Thành Viên &amp; Tộc</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#aa8984] hover:bg-[#472e2e] hover:text-[#ffdea5] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-sm font-medium">Gói Dịch Vụ</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#aa8984] hover:bg-[#472e2e] hover:text-[#ffdea5] transition-all duration-300" href="#">
+<span class="material-symbols-outlined">settings_applications</span>
+<span class="text-sm font-medium">Cấu Hình Triều Đại</span>
+</a>
+</div>
+</div>
+<div class="mt-auto p-6 space-y-4">
+<button class="w-full bg-primary-container text-secondary py-3 px-4 flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-sm">history_edu</span>
+<span class="text-sm font-imperial font-bold tracking-widest">Sắc Chỉ Mới</span>
+</button>
+<a class="flex items-center gap-3 px-4 py-2 text-[#aa8984] hover:text-[#ffdea5] transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="text-sm">Trợ Giúp</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 ml-64 flex flex-col h-screen overflow-hidden relative">
+<!-- TopAppBar -->
+<header class="sticky top-0 right-0 z-40 flex justify-between items-center px-8 h-16 bg-[#210e0e]/80 backdrop-blur-md border-b border-[#5a403c]/15">
+<div class="flex items-center gap-8">
+<h2 class="text-lg font-black text-[#e9c176] italic font-headline">Heritage Cloud</h2>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-[#e9c176] border-b-2 border-[#e9c176] pb-1 text-sm font-body" href="#">Sổ Tào</a>
+<a class="text-[#aa8984] hover:text-[#e9c176] transition-colors text-sm font-body" href="#">Tấu Chương</a>
+<a class="text-[#aa8984] hover:text-[#e9c176] transition-colors text-sm font-body" href="#">Ngự Thư</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-[#aa8984]">
+<button class="hover:text-[#e9c176] transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-primary-container rounded-full"></span>
+</button>
+<button class="hover:text-[#e9c176] transition-colors">
+<span class="material-symbols-outlined">history_edu</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-[#5a403c]/30"></div>
+<div class="flex items-center gap-3">
+<img alt="Quản Trị Viên" class="w-8 h-8 rounded-sm object-cover grayscale brightness-75 border border-secondary/20" data-alt="portrait of an elderly distinguished asian man with traditional attire, high contrast cinematic lighting on dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBffx0WGLkaHGmuMT-5o6Kq9xa9eXpECNMlenFr8s9AQweCxQgVi1GyDYYxOhrZd5oXD6P1BgtTGcVeZH0xglOxjv9A4f9ed0X0w-Nz1yVonE2Ir6cayPRLrztdi3T5dxmjz6YjCS7Rw1MRxPpZpTo2JNc42CJlEUQP9uEs7brRD1A_qmmfYDbPtHh1on1hpyqtNnFf24MtA9hvvebcDNJpN_BNE3CmD5cacmQFkgo6d-rN-vfRApUsnExbYPR9SKe5SKCAsk_LhpaR"/>
+<span class="text-xs font-imperial text-on-surface-variant font-bold">Quan Quản Trị</span>
+</div>
+<button class="text-sm font-imperial text-secondary px-4 py-1.5 border border-secondary/30 hover:bg-secondary/10 transition-all">
+                    Đăng Xuất
+                </button>
+</div>
+</header>
+<!-- Scrollable Dashboard Content -->
+<div class="flex-1 overflow-y-auto p-8 imperial-scroll space-y-8 pb-16">
+<!-- Hero Title -->
+<div class="relative mb-12">
+<h3 class="font-headline text-4xl text-secondary tracking-tight">Tổng Quan Đại Sảnh</h3>
+<p class="text-on-surface-variant/60 font-body italic mt-1">Lược sử hưng thịnh của các đại tộc trong hệ thống.</p>
+<div class="absolute -left-8 top-1/2 -translate-y-1/2 w-1 h-12 bg-primary-container"></div>
+</div>
+<!-- Key Metrics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- Metric 1 -->
+<div class="lacquer-gloss p-6 border-l-2 border-secondary/30 flex flex-col justify-between h-32 group hover:border-secondary transition-all">
+<div class="flex justify-between items-start">
+<span class="text-[10px] font-imperial tracking-[0.2em] text-on-surface-variant">Tổng Đại Tộc</span>
+<span class="material-symbols-outlined text-secondary/40 group-hover:text-secondary transition-colors" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-headline text-secondary">1,284</span>
+<span class="text-[10px] text-emerald-500 font-bold">+12%</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="lacquer-gloss p-6 border-l-2 border-secondary/30 flex flex-col justify-between h-32 group hover:border-secondary transition-all">
+<div class="flex justify-between items-start">
+<span class="text-[10px] font-imperial tracking-[0.2em] text-on-surface-variant">Thành Viên</span>
+<span class="material-symbols-outlined text-secondary/40 group-hover:text-secondary transition-colors" style="font-variation-settings: 'FILL' 1;">groups</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-headline text-secondary">42,901</span>
+<span class="text-[10px] text-emerald-500 font-bold">+5%</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="lacquer-gloss p-6 border-l-2 border-secondary/30 flex flex-col justify-between h-32 group hover:border-secondary transition-all">
+<div class="flex justify-between items-start">
+<span class="text-[10px] font-imperial tracking-[0.2em] text-on-surface-variant">Doanh Thu (MRR)</span>
+<span class="material-symbols-outlined text-secondary/40 group-hover:text-secondary transition-colors" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-headline text-secondary">₫156.4M</span>
+<span class="text-[10px] text-secondary-fixed-dim font-bold">Ổn định</span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="lacquer-gloss p-6 border-l-2 border-secondary/30 flex flex-col justify-between h-32 group hover:border-secondary transition-all">
+<div class="flex justify-between items-start">
+<span class="text-[10px] font-imperial tracking-[0.2em] text-on-surface-variant">Sức Mạnh Hệ Thống</span>
+<span class="material-symbols-outlined text-secondary/40 group-hover:text-secondary transition-colors" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-headline text-secondary">99.9%</span>
+<span class="text-[10px] text-emerald-500 font-bold">Uptime</span>
+</div>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Registration Trends (Bar Chart Visualization) -->
+<div class="lg:col-span-2 lacquer-gloss p-8 relative overflow-hidden">
+<div class="flex justify-between items-center mb-10">
+<h4 class="font-imperial text-lg tracking-widest text-secondary">Xu Hướng Gia Nhập (30 Ngày)</h4>
+<div class="flex gap-2">
+<span class="w-3 h-3 bg-primary-container rounded-full"></span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-tighter">Đại Tộc Mới</span>
+</div>
+</div>
+<div class="h-64 flex items-end gap-3 px-2">
+<!-- Simulated Bar Chart -->
+<div class="flex-1 bg-surface-container-high relative group h-[40%] hover:bg-primary-container transition-all cursor-pointer">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity">12</div>
+</div>
+<div class="flex-1 bg-surface-container-high relative group h-[55%] hover:bg-primary-container transition-all cursor-pointer"></div>
+<div class="flex-1 bg-surface-container-high relative group h-[30%] hover:bg-primary-container transition-all cursor-pointer"></div>
+<div class="flex-1 bg-surface-container-high relative group h-[70%] hover:bg-primary-container transition-all cursor-pointer"></div>
+<div class="flex-1 bg-primary-container relative group h-[85%] cursor-pointer">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-secondary">28</div>
+</div>
+<div class="flex-1 bg-surface-container-high relative group h-[60%] hover:bg-primary-container transition-all cursor-pointer"></div>
+<div class="flex-1 bg-surface-container-high relative group h-[45%] hover:bg-primary-container transition-all cursor-pointer"></div>
+<div class="flex-1 bg-surface-container-high relative group h-[90%] hover:bg-primary-container transition-all cursor-pointer"></div>
+<div class="flex-1 bg-surface-container-high relative group h-[65%] hover:bg-primary-container transition-all cursor-pointer"></div>
+<div class="flex-1 bg-primary-container relative group h-[100%] cursor-pointer">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[10px] text-secondary">32</div>
+</div>
+<div class="flex-1 bg-surface-container-high relative group h-[50%] hover:bg-primary-container transition-all cursor-pointer"></div>
+<div class="flex-1 bg-surface-container-high relative group h-[75%] hover:bg-primary-container transition-all cursor-pointer"></div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] font-imperial text-on-surface-variant/40 border-t border-outline-variant/20 pt-4">
+<span>1 THÁNG 10</span>
+<span>15 THÁNG 10</span>
+<span>30 THÁNG 10</span>
+</div>
+<!-- Background Seal Flourish -->
+<div class="absolute -bottom-10 -right-10 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-[200px] text-secondary">token</span>
+</div>
+</div>
+<!-- Subscription Distribution -->
+<div class="lacquer-gloss p-8 flex flex-col justify-between">
+<h4 class="font-imperial text-lg tracking-widest text-secondary mb-8">Phân Bổ Dịch Vụ</h4>
+<div class="relative w-48 h-48 mx-auto mb-8">
+<!-- Custom CSS Donut Visualization -->
+<div class="absolute inset-0 rounded-full border-[16px] border-surface-container-high"></div>
+<div class="absolute inset-0 rounded-full border-[16px] border-primary-container" style="clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 70%);"></div>
+<div class="absolute inset-0 rounded-full border-[16px] border-secondary" style="clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 30%);"></div>
+<div class="absolute inset-4 rounded-full bg-surface flex flex-col items-center justify-center">
+<span class="text-2xl font-headline text-secondary">1.2k</span>
+<span class="text-[8px] font-imperial text-on-surface-variant">THUÊ BAO</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-surface-container-high"></span>
+<span class="text-on-surface-variant">Ancestral Basic</span>
+</div>
+<span class="text-secondary">45%</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-primary-container"></span>
+<span class="text-on-surface-variant">Imperial Pro</span>
+</div>
+<span class="text-secondary">35%</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-secondary"></span>
+<span class="text-on-surface-variant">Dynasty Enterprise</span>
+</div>
+<span class="text-secondary">20%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity Section -->
+<div class="parchment-texture rounded-sm overflow-hidden shadow-2xl">
+<!-- Top Decorative Edge -->
+<div class="h-2 w-full bg-[#210e0e] flex gap-1 opacity-20">
+<div class="flex-1 bg-gradient-to-b from-[#210e0e] to-transparent"></div>
+</div>
+<div class="p-8">
+<div class="flex items-center gap-4 mb-8">
+<span class="material-symbols-outlined text-[#412d00]" style="font-variation-settings: 'FILL' 1;">history_edu</span>
+<h4 class="font-headline text-2xl text-[#412d00] font-bold">Biên Niên Sử Hệ Thống</h4>
+<div class="flex-1 border-b-2 border-dashed border-[#5b4308]/20 h-0 ml-4"></div>
+</div>
+<div class="space-y-6">
+<!-- Activity Item 1 -->
+<div class="flex gap-6 items-start group">
+<div class="w-16 text-right pt-1">
+<span class="text-[10px] font-imperial text-[#5b4308] opacity-60">14:22</span>
+</div>
+<div class="relative flex-1 bg-white/10 p-4 border-l-4 border-primary-container">
+<p class="text-sm text-[#261900] leading-relaxed">
+<strong class="font-imperial tracking-tight">Trần Tộc (Hải Dương)</strong> vừa được sắc phong ấn tín <span class="text-primary-container font-bold italic">Imperial Pro</span>. Gia phả đã khởi tạo với 245 tiền nhân.
+                                </p>
+</div>
+</div>
+<!-- Activity Item 2 -->
+<div class="flex gap-6 items-start group">
+<div class="w-16 text-right pt-1">
+<span class="text-[10px] font-imperial text-[#5b4308] opacity-60">11:05</span>
+</div>
+<div class="relative flex-1 bg-white/10 p-4 border-l-4 border-secondary">
+<p class="text-sm text-[#261900] leading-relaxed">
+<strong class="font-imperial tracking-tight">Nguyễn Đình Tộc</strong> hoàn tất nghi thức quy tụ. Hệ thống đã đồng bộ 1,200 hồ sơ số hóa từ văn bản Hán Nôm cổ.
+                                </p>
+</div>
+</div>
+<!-- Activity Item 3 -->
+<div class="flex gap-6 items-start group">
+<div class="w-16 text-right pt-1">
+<span class="text-[10px] font-imperial text-[#5b4308] opacity-60">Hôm Qua</span>
+</div>
+<div class="relative flex-1 bg-white/10 p-4 border-l-4 border-primary-container">
+<p class="text-sm text-[#261900] leading-relaxed">
+                                    Gia hạn niên liễm cho <strong class="font-imperial tracking-tight">Lê Gia Đại Tộc</strong>. Trạng thái hệ thống: <span class="text-emerald-700 font-bold">Hưng Thịnh</span>.
+                                </p>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-[#5b4308]/10 flex justify-center">
+<button class="text-[10px] font-imperial text-[#412d00] border-b border-[#412d00] pb-0.5 hover:text-primary-container hover:border-primary-container transition-all">XEM TOÀN BỘ BIÊN NIÊN SỬ</button>
+</div>
+</div>
+<!-- Bottom Decorative Edge -->
+<div class="h-2 w-full bg-[#210e0e] flex gap-1 opacity-20">
+<div class="flex-1 bg-gradient-to-t from-[#210e0e] to-transparent"></div>
+</div>
+</div>
+</div>
+<!-- Imperial Seal FAB (Contextual for Admin Actions) -->
+<button class="fixed bottom-10 right-10 w-16 h-16 rounded-full bg-secondary shadow-[0_0_30px_rgba(233,193,118,0.4)] flex items-center justify-center group hover:scale-110 transition-transform z-50 overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-tr from-secondary to-[#ffdea5] opacity-50"></div>
+<div class="relative flex flex-col items-center justify-center text-on-secondary">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">token</span>
+</div>
+<!-- Decorative Inner Ring -->
+<div class="absolute inset-1 border border-on-secondary/10 rounded-full pointer-events-none"></div>
+</button>
+</main>
+<!-- Visual Flourish: Grain & Texture Overlay -->
+<div class="pointer-events-none fixed inset-0 z-[100] opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/dark-leather.png')]"></div>
+</body></html>

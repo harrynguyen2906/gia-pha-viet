@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ancestral Ritual Calendar - Heritage Cloud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#8a0000",
+                        "accent-gold": "#d4af37",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#230f0f",
+                        "aged-silk": "#FFF8DC",
+                        "charcoal": "#1a1a1a",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif"],
+                        "sans": ["Noto Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/20 px-10 py-3 bg-background-dark/95 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-slate-100">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined text-3xl">account_tree</span>
+</div>
+<h2 class="text-slate-100 text-lg font-bold leading-tight tracking-tight uppercase">Heritage Cloud</h2>
+</div>
+<label class="flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-primary/70 flex border-none bg-primary/10 items-center justify-center pl-4 rounded-l-lg">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-primary/10 focus:ring-0 h-full placeholder:text-primary/50 px-4 rounded-r-lg text-slate-100 text-sm font-normal" placeholder="Search lineage..."/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<nav class="flex items-center gap-9">
+<a class="text-slate-100/80 hover:text-primary text-sm font-medium transition-colors" href="#">Lineage</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary pb-1" href="#">Rituals</a>
+<a class="text-slate-100/80 hover:text-primary text-sm font-medium transition-colors" href="#">Archives</a>
+<a class="text-slate-100/80 hover:text-primary text-sm font-medium transition-colors" href="#">Legacy</a>
+</nav>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 bg-primary/20 text-slate-100 px-3 hover:bg-primary/30 transition-all">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 bg-primary/20 text-slate-100 px-3 hover:bg-primary/30 transition-all">
+<span class="material-symbols-outlined text-xl">settings</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-primary/30" data-alt="User profile portrait of an elderly patriarch" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBcvdNC4cYfqNd1ilbRd2Lr-sgGhFoVv2VVMKCDNrXVXhTM6lcakfgRX0wcq8KKt8jNgaWq2ffTk7TnQgM9LOvkv4ykiHB5tb3OftjXVszs7UyuqxrHYSgTThvsZXErsPjCLMBFVWXgU9LqGFFijuZaGTDSwmOANEwCsl4vXTxo0OJjFCrhTPwhUbGZdCDIIE8FLAKX-Rv3yRibeNaObwl5LPKbydNmGV86LZMtS108dIfJCrH5bw6MKxOxyV5BFyvvvYcGaUM_qvNV");'></div>
+</div>
+</div>
+</header>
+<main class="flex flex-1 overflow-hidden h-[calc(100vh-64px)]">
+<!-- Sidebar Navigation -->
+<aside class="w-64 border-r border-primary/20 bg-background-dark p-4 flex flex-col justify-between hidden lg:flex">
+<div class="flex flex-col gap-6">
+<div class="px-2">
+<h1 class="text-primary text-xs font-bold uppercase tracking-widest">Ancestral Management</h1>
+<p class="text-slate-400 text-sm italic">Current Era: Wood Dragon</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-primary/10 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-primary border border-primary/30 shadow-sm shadow-primary/10" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-sm font-bold">Ritual Calendar</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-primary/10 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">history_edu</span>
+<span class="text-sm font-medium">Family Duties</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-300 hover:bg-primary/10 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="text-sm font-medium">Offering Guides</span>
+</a>
+</nav>
+</div>
+<div class="p-4 bg-primary/5 rounded-xl border border-primary/10">
+<p class="text-xs text-slate-400 uppercase font-bold tracking-tighter mb-2">Next Observance</p>
+<p class="text-slate-100 text-sm font-bold">Grandfather's 20th Anniversary</p>
+<p class="text-primary text-xs mt-1">In 3 Days</p>
+</div>
+</aside>
+<!-- Main Content: Calendar -->
+<section class="flex-1 flex flex-col bg-background-dark/50 overflow-hidden">
+<div class="p-6 border-b border-primary/10 flex justify-between items-center bg-background-dark/80">
+<div>
+<h2 class="text-3xl font-black text-slate-100 tracking-tight">Ancestral Ritual Calendar</h2>
+<p class="text-slate-400 text-sm">Synchronized Solar &amp; Lunar observances for the Cycle of Honor.</p>
+</div>
+<div class="flex items-center gap-4 bg-primary/10 p-1 rounded-lg border border-primary/20">
+<button class="p-2 text-slate-100 hover:bg-primary/20 rounded-md transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<span class="text-slate-100 font-bold px-4">April 2024 / 3rd Lunar Month</span>
+<button class="p-2 text-slate-100 hover:bg-primary/20 rounded-md transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Calendar Grid -->
+<div class="flex-1 overflow-auto p-6">
+<div class="grid grid-cols-7 gap-px border border-charcoal/20 bg-charcoal/20 rounded-xl overflow-hidden shadow-2xl">
+<!-- Header Days -->
+<div class="bg-aged-silk py-4 text-center font-bold text-charcoal border-b border-charcoal/10 uppercase text-xs tracking-widest">Sunday</div>
+<div class="bg-aged-silk py-4 text-center font-bold text-charcoal border-b border-charcoal/10 uppercase text-xs tracking-widest">Monday</div>
+<div class="bg-aged-silk py-4 text-center font-bold text-charcoal border-b border-charcoal/10 uppercase text-xs tracking-widest">Tuesday</div>
+<div class="bg-aged-silk py-4 text-center font-bold text-charcoal border-b border-charcoal/10 uppercase text-xs tracking-widest">Wednesday</div>
+<div class="bg-aged-silk py-4 text-center font-bold text-charcoal border-b border-charcoal/10 uppercase text-xs tracking-widest">Thursday</div>
+<div class="bg-aged-silk py-4 text-center font-bold text-charcoal border-b border-charcoal/10 uppercase text-xs tracking-widest">Friday</div>
+<div class="bg-aged-silk py-4 text-center font-bold text-charcoal border-b border-charcoal/10 uppercase text-xs tracking-widest">Saturday</div>
+<!-- Calendar Days -->
+<!-- Row 1 -->
+<div class="bg-aged-silk/90 min-h-[140px] p-2 flex flex-col border-r border-charcoal/5 group hover:bg-aged-silk transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-charcoal/40 font-bold text-lg">31</span>
+<span class="text-[10px] text-charcoal/30">2.22</span>
+</div>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5 group hover:bg-aged-silk transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-charcoal font-bold text-lg">1</span>
+<span class="text-[10px] text-charcoal/60 italic font-medium">2.23</span>
+</div>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5 group hover:bg-aged-silk transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-charcoal font-bold text-lg">2</span>
+<span class="text-[10px] text-charcoal/60 italic font-medium">2.24</span>
+</div>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5 group hover:bg-aged-silk transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-charcoal font-bold text-lg">3</span>
+<span class="text-[10px] text-charcoal/60 italic font-medium">2.25</span>
+</div>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5 group hover:bg-aged-silk transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-charcoal font-bold text-lg">4</span>
+<span class="text-[10px] text-charcoal/60 italic font-medium">2.26</span>
+</div>
+</div>
+<!-- Highlighted Date with Gold Silk Texture -->
+<div class="relative bg-gradient-to-br from-[#E6BE8A] via-[#D4AF37] to-[#B8860B] min-h-[140px] p-2 flex flex-col border-r border-charcoal/5 shadow-inner cursor-pointer ring-2 ring-primary ring-inset overflow-hidden group">
+<div class="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/silk.png')]"></div>
+<div class="relative z-10 flex justify-between items-start">
+<span class="text-background-dark font-black text-xl">5</span>
+<span class="text-[10px] text-background-dark/70 font-bold uppercase tracking-tighter">Anniversary</span>
+</div>
+<div class="mt-4 flex flex-col gap-1 relative z-10">
+<p class="text-[11px] font-bold text-background-dark leading-tight uppercase">Great Grandfather Chen</p>
+<div class="h-0.5 w-8 bg-primary/40"></div>
+<p class="text-[9px] text-background-dark/80 italic">The 100th Spring Observance</p>
+</div>
+<div class="mt-auto flex justify-end relative z-10">
+<span class="material-symbols-outlined text-background-dark text-lg">local_fire_department</span>
+</div>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5 group hover:bg-aged-silk transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-charcoal font-bold text-lg">6</span>
+<span class="text-[10px] text-charcoal/60 italic font-medium">2.28</span>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5 group hover:bg-aged-silk transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-charcoal font-bold text-lg">7</span>
+<span class="text-[10px] text-charcoal/60 italic font-medium">2.29</span>
+</div>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5 group hover:bg-aged-silk transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-charcoal font-bold text-lg">8</span>
+<span class="text-[10px] text-primary font-bold">3.1</span>
+</div>
+<div class="mt-4 bg-primary/10 border-l-2 border-primary p-1.5 rounded-r">
+<p class="text-[10px] font-bold text-charcoal uppercase leading-none">Lunar New Moon</p>
+<p class="text-[9px] text-charcoal/70 mt-1 italic">Silent Prayer Duty</p>
+</div>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5 group hover:bg-aged-silk transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-charcoal font-bold text-lg">9</span>
+<span class="text-[10px] text-charcoal/60 italic font-medium">3.02</span>
+</div>
+</div>
+<!-- Current Day -->
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-primary/40 group hover:bg-aged-silk transition-colors bg-white shadow-xl scale-[1.02] z-20">
+<div class="flex justify-between items-start">
+<span class="bg-primary text-white size-8 flex items-center justify-center rounded-full font-bold text-lg">10</span>
+<span class="text-[10px] text-primary font-bold italic">3.03</span>
+</div>
+<p class="mt-4 text-[10px] text-charcoal/60 font-medium">No rituals scheduled.</p>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5 group hover:bg-aged-silk transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-charcoal font-bold text-lg">11</span>
+<span class="text-[10px] text-charcoal/60 italic font-medium">3.04</span>
+</div>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5 group hover:bg-aged-silk transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-charcoal font-bold text-lg">12</span>
+<span class="text-[10px] text-charcoal/60 italic font-medium">3.05</span>
+</div>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5 group hover:bg-aged-silk transition-colors">
+<div class="flex justify-between items-start">
+<span class="text-charcoal font-bold text-lg">13</span>
+<span class="text-[10px] text-charcoal/60 italic font-medium">3.06</span>
+</div>
+</div>
+<!-- Row 3 placeholder for visual structure -->
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5">
+<span class="text-charcoal font-bold text-lg">14</span>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5">
+<span class="text-charcoal font-bold text-lg">15</span>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5">
+<span class="text-charcoal font-bold text-lg">16</span>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5">
+<span class="text-charcoal font-bold text-lg">17</span>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5">
+<span class="text-charcoal font-bold text-lg">18</span>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5">
+<span class="text-charcoal font-bold text-lg">19</span>
+</div>
+<div class="bg-aged-silk min-h-[140px] p-2 flex flex-col border-r border-charcoal/5">
+<span class="text-charcoal font-bold text-lg">20</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Side Panel: Ritual Instructions -->
+<aside class="w-96 bg-background-dark border-l border-primary/20 overflow-auto p-6 flex flex-col gap-8 shadow-2xl">
+<div>
+<div class="flex justify-between items-center mb-4">
+<span class="text-primary font-bold text-xs uppercase tracking-[0.2em]">Selected Date Detail</span>
+<span class="text-slate-500 text-xs">April 5, 2024</span>
+</div>
+<h3 class="text-2xl font-black text-slate-100 mb-1 leading-tight">Great Grandfather Chen's Centennial</h3>
+<p class="text-slate-400 text-sm italic font-display">A solemn observance of the foundation of the Chen family line.</p>
+</div>
+<!-- Ritual Instructions Section -->
+<section class="space-y-4">
+<div class="flex items-center gap-2 border-b border-primary/20 pb-2">
+<span class="material-symbols-outlined text-primary">routine</span>
+<h4 class="font-bold text-slate-100 uppercase text-sm tracking-widest">Ritual Instructions</h4>
+</div>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="bg-primary/20 p-2 rounded-lg h-fit">
+<span class="material-symbols-outlined text-primary">potted_plant</span>
+</div>
+<div>
+<p class="text-slate-100 font-bold text-sm mb-1">Incense &amp; Fire</p>
+<p class="text-slate-400 text-xs leading-relaxed">Three sticks of premium sandalwood incense. Ensure the flame is lit from the central ancestral hearth. Let the smoke rise for 10 minutes before bowing.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="bg-primary/20 p-2 rounded-lg h-fit">
+<span class="material-symbols-outlined text-primary">restaurant</span>
+</div>
+<div>
+<p class="text-slate-100 font-bold text-sm mb-1">Food Offerings</p>
+<p class="text-slate-400 text-xs leading-relaxed">Prepare steamed sea bass (head intact), three small cups of rice wine, and a plate of five oranges representing the five virtues of the house.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Family Duties Section -->
+<section class="space-y-4">
+<div class="flex items-center gap-2 border-b border-primary/20 pb-2">
+<span class="material-symbols-outlined text-primary">groups</span>
+<h4 class="font-bold text-slate-100 uppercase text-sm tracking-widest">Family Duties</h4>
+</div>
+<ul class="space-y-3">
+<li class="flex items-center justify-between p-3 bg-primary/5 rounded border border-primary/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+<span class="text-sm text-slate-100">Clean Altar Surface</span>
+</div>
+<span class="text-[10px] font-bold text-primary px-2 py-0.5 bg-primary/10 rounded">ELDERS</span>
+</li>
+<li class="flex items-center justify-between p-3 bg-primary/5 rounded border border-primary/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-600 text-lg">radio_button_unchecked</span>
+<span class="text-sm text-slate-100">Prepare Inscriptions</span>
+</div>
+<span class="text-[10px] font-bold text-slate-400 px-2 py-0.5 bg-slate-800 rounded">HEIRS</span>
+</li>
+<li class="flex items-center justify-between p-3 bg-primary/5 rounded border border-primary/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-600 text-lg">radio_button_unchecked</span>
+<span class="text-sm text-slate-100">Recite Lineage Scroll</span>
+</div>
+<span class="text-[10px] font-bold text-slate-400 px-2 py-0.5 bg-slate-800 rounded">YOUTH</span>
+</li>
+</ul>
+</section>
+<div class="mt-auto pt-6 border-t border-primary/20">
+<button class="w-full bg-primary hover:bg-primary/80 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary/20 uppercase text-sm tracking-widest">
+<span class="material-symbols-outlined text-xl">history_edu</span>
+                        Certify Completion
+                    </button>
+</div>
+</aside>
+</main>
+</div>
+</body></html>
