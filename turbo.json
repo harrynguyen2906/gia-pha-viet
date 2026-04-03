@@ -3,6 +3,14 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "env": [
+        "AUTH_SECRET",
+        "AUTH_URL",
+        "DATABASE_URL",
+        "NEXTAUTH_URL",
+        "DIRECT_URL",
+        "SUPABASE_SERVICE_ROLE_KEY"
+      ],
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "lint": {
