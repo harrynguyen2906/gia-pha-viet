@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start -p 3001",
     "lint": "eslint",
-    "postinstall": "prisma generate",
     "db:generate":       "prisma generate",
     "db:studio":         "prisma studio",
     "db:migrate:status": "npm run --prefix .. db:migrate:status",
