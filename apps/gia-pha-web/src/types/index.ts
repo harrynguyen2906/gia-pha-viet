@@ -30,7 +30,7 @@ export type {
   MediaType,
   OfferingType,
   NotificationType,
-} from "@gia-pha/db";
+} from "@/generated/prisma/client";
 
 // ── API Response Shapes ──────────────────────────────────
 export interface ApiResponse<T> {

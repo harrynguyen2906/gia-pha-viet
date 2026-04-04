@@ -19,8 +19,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@gia-pha/db": ["../../packages/db/src/index.ts"]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
@@ -29,8 +28,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts",
-    "../../packages/db/src/**/*.ts"
+    "**/*.mts"
   ],
-  "exclude": ["node_modules", "prisma", "src/generated"]
+  "exclude": ["node_modules", "prisma"]
 }
