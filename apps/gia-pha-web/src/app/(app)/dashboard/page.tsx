@@ -16,7 +16,13 @@ async function getClanStats() {
         where: { clanId, deletedAt: null, dateSolar: { gte: new Date() } },
         take: 3,
         orderBy: { dateSolar: "asc" },
-        include: { ancestor: { select: { fullName: true } } },
+        select: {
+          id: true,
+          title: true,
+          dateSolar: true,
+          dateLunar: true,
+          ancestorId: true,
+        },
       }),
       prisma.clan.findUnique({ where: { id: clanId } }),
     ]);
@@ -224,9 +230,6 @@ export default async function Home() {
               {stats.upcomingRituals.map((r) => (
                 <Link key={r.id} href="/rituals" className="card-parchment block p-4">
                   <p className="font-header text-temple-stone text-sm font-bold tracking-wide uppercase truncate">{r.title}</p>
-                  {r.ancestor && (
-                    <p className="text-xs text-temple-stone/60 mt-0.5 font-sans">Giỗ: {r.ancestor.fullName}</p>
-                  )}
                   <p className="text-xs text-imperial-crimson font-header tracking-widest mt-2">
                     {r.dateSolar ? new Date(r.dateSolar).toLocaleDateString("vi-VN") : "—"}
                   </p>
