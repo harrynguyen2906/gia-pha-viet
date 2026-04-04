@@ -10,6 +10,7 @@
 ## 1. Overview
 
 V2 database changes are **additive** — no V1 tables are modified structurally. V2 adds:
+
 1. New table: `password_reset_tokens` (for auth password recovery)
 2. Row-Level Security (RLS) policies on all tenant-scoped tables
 3. Helper function for RLS tenant context
@@ -82,6 +83,7 @@ Token Created           Token Used/Expired          Token Cleaned
 ```
 
 **Cleanup (cron job / scheduled):**
+
 ```sql
 -- Delete expired/used tokens older than 30 days
 DELETE FROM password_reset_tokens
@@ -241,12 +243,12 @@ CREATE POLICY tenant_isolation ON notifications
 
 ### 3.4 Tables NOT Under RLS
 
-| Table | Reason |
-|-------|--------|
-| `users` | Queried by email on login (cross-tenant by nature) — protected by app logic |
-| `user_profiles` | Accessed via authenticated user's own record only |
-| `clans` | Queried by ID (user's own clan) — protected by session |
-| `password_reset_tokens` | System auth table, scoped by `user_id` at app level |
+| Table                   | Reason                                                                      |
+| ----------------------- | --------------------------------------------------------------------------- |
+| `users`                 | Queried by email on login (cross-tenant by nature) — protected by app logic |
+| `user_profiles`         | Accessed via authenticated user's own record only                           |
+| `clans`                 | Queried by ID (user's own clan) — protected by session                      |
+| `password_reset_tokens` | System auth table, scoped by `user_id` at app level                         |
 
 ---
 
@@ -300,6 +302,7 @@ The `clan_id` column on each table now serves double duty:
 ## 6. Migration Steps
 
 ### Step 1: Add PasswordResetToken to Prisma
+
 ```bash
 # Add model to prisma/schema.prisma
 # Then run:
@@ -307,6 +310,7 @@ npx prisma migrate dev --name v2_password_reset_tokens
 ```
 
 ### Step 2: Apply RLS Policies
+
 ```bash
 # Create manual migration for RLS:
 npx prisma migrate dev --name v2_rls_policies --create-only
@@ -316,6 +320,7 @@ npx prisma migrate dev
 ```
 
 ### Step 3: Verify Indexes
+
 ```bash
 # Run verification query:
 SELECT tablename, indexname FROM pg_indexes

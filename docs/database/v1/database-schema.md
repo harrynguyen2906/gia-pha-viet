@@ -256,28 +256,28 @@ CREATE INDEX idx_clans_name ON clans(name);
 CREATE TABLE members (
   id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   clan_id          UUID NOT NULL REFERENCES clans(id),
-  
+
   -- Thông tin cá nhân
   full_name        VARCHAR(200) NOT NULL,
   gender           gender_type NOT NULL DEFAULT 'MALE',
   is_deceased      BOOLEAN NOT NULL DEFAULT false,
-  
+
   -- Ngày tháng (Solar + Lunar)
   birth_date_solar DATE,
   birth_date_lunar VARCHAR(50),              -- "15 tháng Giêng năm Canh Tý"
   death_date_solar DATE,                     -- NULL nếu còn sống
   death_date_lunar VARCHAR(50),
   departure_rite   TEXT,                     -- Nghi thức tiễn biệt
-  
+
   -- Profile
   avatar_url       TEXT,
   biography        TEXT,                     -- Tiểu sử
-  
+
   -- Vị trí trong gia tộc
   generation       INTEGER NOT NULL DEFAULT 1,  -- Đời thứ mấy
   lineage_role     lineage_role DEFAULT 'MEMBER',
   branch_name      VARCHAR(100),             -- Tên nhánh (e.g., "Chi Trưởng")
-  
+
   -- Metadata
   created_by       UUID REFERENCES users(id),
   created_at       TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -302,7 +302,7 @@ CREATE TABLE relationships (
   child_id          UUID NOT NULL REFERENCES members(id) ON DELETE CASCADE,
   relationship_type relationship_type NOT NULL DEFAULT 'BIOLOGICAL',
   created_at        TIMESTAMPTZ NOT NULL DEFAULT now(),
-  
+
   CONSTRAINT unique_parent_child UNIQUE (parent_id, child_id),
   CONSTRAINT no_self_relationship CHECK (parent_id != child_id)
 );
@@ -322,7 +322,7 @@ CREATE TABLE member_spouses (
   divorce_date  DATE,                        -- NULL nếu chưa ly hôn
   is_current    BOOLEAN NOT NULL DEFAULT true,
   created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
-  
+
   CONSTRAINT unique_spouse_pair UNIQUE (member_a_id, member_b_id),
   CONSTRAINT no_self_marriage CHECK (member_a_id != member_b_id),
   CONSTRAINT ordered_pair CHECK (member_a_id < member_b_id)  -- Tránh duplicate đảo
@@ -365,17 +365,17 @@ CREATE TABLE grave_sites (
   id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   member_id     UUID NOT NULL REFERENCES members(id),  -- Người đã mất
   clan_id       UUID NOT NULL REFERENCES clans(id),
-  
+
   -- Vị trí
   section_plot  VARCHAR(200),                -- "Highland Sector C-14"
   latitude      DECIMAL(10, 8) NOT NULL,
   longitude     DECIMAL(11, 8) NOT NULL,
-  
+
   -- Thông tin
   epitaph       TEXT,                        -- Câu đối / bia mộ
   condition     site_condition NOT NULL DEFAULT 'MAINTAINED',
   site_type     site_type NOT NULL DEFAULT 'CEMETERY',
-  
+
   -- Metadata
   last_visited  DATE,
   registered_by UUID REFERENCES users(id),
@@ -385,7 +385,7 @@ CREATE TABLE grave_sites (
 );
 
 -- Spatial index cho tìm kiếm theo vị trí
-CREATE INDEX idx_grave_sites_location ON grave_sites 
+CREATE INDEX idx_grave_sites_location ON grave_sites
   USING GIST (point(longitude, latitude));
 CREATE INDEX idx_grave_sites_clan ON grave_sites(clan_id);
 CREATE INDEX idx_grave_sites_member ON grave_sites(member_id);
@@ -422,24 +422,24 @@ CREATE TABLE ritual_events (
   id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   clan_id         UUID NOT NULL REFERENCES clans(id),
   ancestor_id     UUID REFERENCES members(id),  -- Người được cúng (nullable cho lễ chung)
-  
+
   -- Thông tin sự kiện
   title           VARCHAR(300) NOT NULL,
   description     TEXT,
-  
+
   -- Ngày (Solar + Lunar)
   date_solar      DATE NOT NULL,
   date_lunar      VARCHAR(50),               -- "15 tháng 3 Âm lịch"
-  
+
   -- Lặp lại hàng năm
   is_recurring    BOOLEAN NOT NULL DEFAULT true,
   lunar_recurrence VARCHAR(50),               -- "15 tháng 3" (dùng để tính năm mới)
-  
+
   -- Trạng thái
   is_certified    BOOLEAN NOT NULL DEFAULT false,
   certified_by    UUID REFERENCES users(id),
   certified_at    TIMESTAMPTZ,
-  
+
   -- Metadata
   created_by      UUID REFERENCES users(id),
   created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -450,7 +450,7 @@ CREATE TABLE ritual_events (
 CREATE INDEX idx_ritual_events_clan ON ritual_events(clan_id);
 CREATE INDEX idx_ritual_events_date ON ritual_events(clan_id, date_solar);
 CREATE INDEX idx_ritual_events_ancestor ON ritual_events(ancestor_id);
-CREATE INDEX idx_ritual_events_upcoming ON ritual_events(clan_id, date_solar) 
+CREATE INDEX idx_ritual_events_upcoming ON ritual_events(clan_id, date_solar)
   WHERE deleted_at IS NULL AND date_solar >= CURRENT_DATE;
 ```
 
@@ -460,12 +460,12 @@ CREATE INDEX idx_ritual_events_upcoming ON ritual_events(clan_id, date_solar)
 CREATE TABLE ritual_instructions (
   id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   ritual_event_id UUID NOT NULL REFERENCES ritual_events(id) ON DELETE CASCADE,
-  
+
   icon            VARCHAR(50) NOT NULL,        -- Material Icon name: 'potted_plant'
   title           VARCHAR(200) NOT NULL,       -- "Incense & Fire"
   description     TEXT NOT NULL,
   sort_order      INTEGER NOT NULL DEFAULT 0,
-  
+
   created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at      TIMESTAMPTZ NOT NULL DEFAULT now()
 );
@@ -479,14 +479,14 @@ CREATE INDEX idx_ritual_instructions ON ritual_instructions(ritual_event_id, sor
 CREATE TABLE ritual_duties (
   id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   ritual_event_id UUID NOT NULL REFERENCES ritual_events(id) ON DELETE CASCADE,
-  
+
   description     TEXT NOT NULL,
   assigned_group  assigned_group NOT NULL DEFAULT 'ALL',
   assigned_to     UUID REFERENCES members(id),  -- Giao cụ thể (optional)
   is_completed    BOOLEAN NOT NULL DEFAULT false,
   completed_at    TIMESTAMPTZ,
   sort_order      INTEGER NOT NULL DEFAULT 0,
-  
+
   created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at      TIMESTAMPTZ NOT NULL DEFAULT now()
 );
@@ -504,31 +504,31 @@ CREATE INDEX idx_ritual_duties ON ritual_duties(ritual_event_id);
 CREATE TABLE duties (
   id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   clan_id         UUID NOT NULL REFERENCES clans(id),
-  
+
   -- Nội dung
   title           VARCHAR(300) NOT NULL,
   description     TEXT,
   category        duty_category NOT NULL,
-  
+
   -- Workflow
   status          duty_status NOT NULL DEFAULT 'QUEUE',
   priority        duty_priority NOT NULL DEFAULT 'MEDIUM',
   progress        INTEGER NOT NULL DEFAULT 0 CHECK (progress >= 0 AND progress <= 100),
-  
+
   -- Giao việc
   assigned_to     UUID REFERENCES members(id),
   assigned_by     UUID REFERENCES users(id),
-  
+
   -- Liên kết
   ritual_event_id UUID REFERENCES ritual_events(id),  -- Nếu duty gắn với buổi giỗ
-  
+
   -- Thời hạn
   due_date        DATE,
-  
+
   -- Xác nhận
   verified_by     UUID REFERENCES users(id),
   verified_at     TIMESTAMPTZ,
-  
+
   -- Metadata
   created_by      UUID REFERENCES users(id),
   created_at      TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -540,7 +540,7 @@ CREATE INDEX idx_duties_clan ON duties(clan_id);
 CREATE INDEX idx_duties_status ON duties(clan_id, status);
 CREATE INDEX idx_duties_assigned ON duties(assigned_to);
 CREATE INDEX idx_duties_ritual ON duties(ritual_event_id);
-CREATE INDEX idx_duties_due ON duties(clan_id, due_date) 
+CREATE INDEX idx_duties_due ON duties(clan_id, due_date)
   WHERE deleted_at IS NULL AND status != 'COMPLETED';
 ```
 
@@ -550,12 +550,12 @@ CREATE INDEX idx_duties_due ON duties(clan_id, due_date)
 CREATE TABLE duty_logs (
   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   duty_id     UUID NOT NULL REFERENCES duties(id) ON DELETE CASCADE,
-  
+
   action      VARCHAR(50) NOT NULL,          -- 'CREATED', 'STATUS_CHANGED', 'ASSIGNED', 'VERIFIED'
   old_value   VARCHAR(100),                  -- Giá trị cũ
   new_value   VARCHAR(100),                  -- Giá trị mới
   performed_by UUID REFERENCES users(id),
-  
+
   created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
@@ -573,10 +573,10 @@ CREATE TABLE virtual_offerings (
   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   member_id   UUID NOT NULL REFERENCES members(id),  -- Người được dâng lễ
   offered_by  UUID NOT NULL REFERENCES users(id),     -- Người dâng
-  
+
   offering_type offering_type NOT NULL,
   message       TEXT,                          -- Lời cầu nguyện (optional)
-  
+
   created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
@@ -591,18 +591,18 @@ CREATE INDEX idx_offerings_month ON virtual_offerings(member_id, created_at);
 CREATE TABLE notifications (
   id               UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id          UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  
+
   type             notification_type NOT NULL,
   title            VARCHAR(300) NOT NULL,
   body             TEXT,
-  
+
   -- Link đến entity liên quan
   reference_type   VARCHAR(50),               -- 'ritual_event', 'duty', 'member', 'site'
   reference_id     UUID,
-  
+
   is_read          BOOLEAN NOT NULL DEFAULT false,
   read_at          TIMESTAMPTZ,
-  
+
   created_at       TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
@@ -620,16 +620,16 @@ CREATE TABLE audit_logs (
   id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id       UUID REFERENCES users(id),
   clan_id       UUID REFERENCES clans(id),
-  
+
   action        VARCHAR(50) NOT NULL,          -- 'CREATE', 'UPDATE', 'DELETE'
   entity_type   VARCHAR(50) NOT NULL,          -- 'member', 'ritual_event', 'duty', etc.
   entity_id     UUID NOT NULL,
-  
+
   old_data      JSONB,                         -- Snapshot trước khi thay đổi
   new_data      JSONB,                         -- Snapshot sau khi thay đổi
   ip_address    INET,
   user_agent    TEXT,
-  
+
   created_at    TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
@@ -734,6 +734,7 @@ GROUP BY clan_id;
 
 > File tương ứng: `prisma/schema.prisma`  
 > Datasource URL được cấu hình trong `prisma.config.ts` (không phải trong schema).
+>
 > - Runtime (`pg.Pool`): `DATABASE_URL` (PgBouncer pooler, port 6543)
 > - Migrations only: `DIRECT_URL` (session mode, port 5432)
 
@@ -1225,7 +1226,9 @@ model AuditLog {
 ## 11. Seed Data Strategy
 
 ### Development Seed
+
 Tạo dữ liệu mẫu cho 1 gia tộc "Dòng họ Nguyễn Phúc" với:
+
 - 1 clan + 1 Head of House user
 - 20–30 members across 5 generations (mix living/deceased)
 - 10 relationships (parent→child)
@@ -1236,6 +1239,7 @@ Tạo dữ liệu mẫu cho 1 gia tộc "Dòng họ Nguyễn Phúc" với:
 - Sample member media (avatars + gallery photos)
 
 ### Production Seed
+
 - 1 default "admin" user
 - System notification templates
 - Default ritual instruction templates (incense, food, prayer)
@@ -1245,12 +1249,14 @@ Tạo dữ liệu mẫu cho 1 gia tộc "Dòng họ Nguyễn Phúc" với:
 ## 12. Migration Notes
 
 ### Index Strategy
+
 - **Composite indexes** trên (clan_id, ...) cho mọi query scoped theo gia tộc
 - **Partial indexes** (WHERE deleted_at IS NULL) cho soft-deleted tables
 - **GiST spatial index** trên grave_sites cho tìm kiếm theo khoảng cách
 - **B-tree DESC** trên created_at cho phân trang timeline
 
 ### Data Integrity Rules
+
 1. `members.death_date_solar` chỉ NOT NULL khi `is_deceased = true`
 2. `member_spouses` dùng CHECK `member_a_id < member_b_id` để tránh duplicate pair
 3. `relationships` có CHECK `parent_id != child_id` để tránh self-reference
