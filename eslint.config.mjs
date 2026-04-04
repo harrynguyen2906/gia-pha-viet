@@ -9,8 +9,8 @@
  */
 import tsParser from "@typescript-eslint/parser";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
-import prettierConfig from "eslint-config-prettier";
 
+/** @type {import("eslint").Linter.Config[]} */
 export default [
   // ── Global ignores ──────────────────────────────────
   {
@@ -54,6 +54,12 @@ export default [
     },
   },
 
-  // ── Prettier must ALWAYS be last (disables conflicting rules) ──
-  prettierConfig,
+  // ── Prettier conflict prevention (inline) ─────────────
+  {
+    rules: {
+      // Disable rules that Prettier handles
+      "arrow-body-style": "off",
+      "prefer-arrow-callback": "off",
+    },
+  },
 ];
