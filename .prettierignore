@@ -1,0 +1,15 @@
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# Generated code — never format these
+**/src/generated/**
+**/node_modules/**
+
+# Lock files
+package-lock.json
+
+# Prisma schema (has its own formatter: prisma format)
+**/prisma/schema.prisma

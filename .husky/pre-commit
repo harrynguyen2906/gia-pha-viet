@@ -1,0 +1,6 @@
+#!/bin/sh
+# Husky pre-commit hook — runs lint-staged on every commit.
+# This catches TypeScript errors, ESLint violations, and formatting issues
+# BEFORE they ever reach GitHub or trigger a Vercel build failure.
+
+npx lint-staged
