@@ -1,6 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
 import styles from './home/home.module.css';
+import InteractiveScene from './home/InteractiveScene';
 
 export default function HomePage() {
   return (
@@ -16,39 +16,8 @@ export default function HomePage() {
           decoding="async"
         />
 
-        {/* Layer 1 - Nha */}
-        <Link
-          href="/giapha"
-          className={`${styles.targetObject} ${styles.layer1}`}
-          data-tooltip="Gia pha ho toc - Landing page"
-          aria-label="Go to gia pha ho toc landing page"
-          style={{ '--mask-img': `url('/homepage/3.png')` } as React.CSSProperties}
-        >
-          <img
-            src="/homepage/3.png"
-            alt="Nha - Gia pha ho toc"
-            className={styles.objectImg}
-            loading="eager"
-            decoding="async"
-          />
-        </Link>
-
-        {/* Layer 2 - Chua */}
-        <a
-          href="https://viengchua.io.vn"
-          className={`${styles.targetObject} ${styles.layer2}`}
-          data-tooltip="Pagoda Online - viengchua.io.vn"
-          aria-label="Open Pagoda Online at viengchua.io.vn"
-          style={{ '--mask-img': `url('/homepage/4.png')` } as React.CSSProperties}
-        >
-          <img
-            src="/homepage/4.png"
-            alt="Chua - Pagoda Online"
-            className={styles.objectImg}
-            loading="eager"
-            decoding="async"
-          />
-        </a>
+        {/* Interactive layers with alpha hit-testing */}
+        <InteractiveScene />
       </div>
     </div>
   );
