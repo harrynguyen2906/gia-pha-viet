@@ -676,3 +676,60 @@ model AdminAuditLog {
   @@schema("admin")
   @@map("admin_audit_logs")
 }
+
+model HomepageAsset {
+  id         String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  kind       HomepageAssetKind @default(OVERLAY)
+  fileName   String            @map("file_name") @db.VarChar(255)
+  storageKey String            @unique @map("storage_key") @db.VarChar(500)
+  publicUrl  String            @map("public_url") @db.VarChar(1000)
+  mimeType   String            @map("mime_type") @db.VarChar(100)
+  fileSize   Int               @map("file_size")
+  width      Int
+  height     Int
+  hasAlpha   Boolean?          @map("has_alpha")
+  uploadedBy String?           @map("uploaded_by") @db.Uuid
+  createdAt  DateTime          @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt  DateTime          @updatedAt @map("updated_at") @db.Timestamptz()
+
+  @@index([kind, createdAt(sort: Desc)])
+  @@schema("admin")
+  @@map("homepage_assets")
+}
+
+model HomepageConfig {
+  id                String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  status            HomepageConfigStatus @default(DRAFT)
+  version           Int?                 @unique
+  name              String               @db.VarChar(160)
+  backgroundAssetId String               @map("background_asset_id") @db.Uuid
+  backgroundWidth   Int                  @map("background_width")
+  backgroundHeight  Int                  @map("background_height")
+  layers            Json
+  createdBy         String               @map("created_by") @db.Uuid
+  publishedBy       String?              @map("published_by") @db.Uuid
+  publishedAt       DateTime?            @map("published_at") @db.Timestamptz()
+  basedOnConfigId   String?              @map("based_on_config_id") @db.Uuid
+  createdAt         DateTime             @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt         DateTime             @updatedAt @map("updated_at") @db.Timestamptz()
+
+  @@index([status, updatedAt(sort: Desc)])
+  @@index([publishedAt(sort: Desc)])
+  @@schema("admin")
+  @@map("homepage_configs")
+}
+
+enum HomepageAssetKind {
+  BACKGROUND
+  OVERLAY
+
+  @@schema("admin")
+}
+
+enum HomepageConfigStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+
+  @@schema("admin")
+}
